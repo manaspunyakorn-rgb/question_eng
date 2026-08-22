@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Question ENG — สื่อการเรียนภาษาอังกฤษสุดสนุก</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Mali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ DESIGN TOKENS — cute & playful cartoon theme ============ */
+:root{
+  --ink:#4A3B78;          /* friendly dark plum used for outlines/text, softer than black */
+  --ink-2:#6C4FA0;
+  --paper:#FDF6FF;        /* soft lavender page background */
+  --paper-2:#F3ECFF;
+  --card:#FFFFFF;
+
+  --pink:#FF6FA0;
+  --pink-deep:#E84393;
+  --yellow:#FFD93D;
+  --yellow-deep:#F5B300;
+  --blue:#4FC9F7;
+  --blue-deep:#0FA7E0;
+  --purple:#B983FF;
+  --purple-deep:#8C52FF;
+  --green:#3DDC97;
+  --green-deep:#1FB27A;
+  --coral:#FF7A6E;
+  --coral-deep:#F1503F;
+
+  --text:#4A3B78;
+  --text-soft:#8577AC;
+  --border:#3B2C63;       /* thick cartoon outline color */
+  --shadow-hard: 5px 5px 0 var(--border);
+  --shadow-hard-sm: 3px 3px 0 var(--border);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 8% 12%, rgba(255,217,61,0.28) 0, transparent 45%),
+    radial-gradient(circle at 92% 18%, rgba(79,201,247,0.25) 0, transparent 45%),
+    radial-gradient(circle at 15% 90%, rgba(255,111,160,0.22) 0, transparent 42%),
+    radial-gradient(circle at 88% 85%, rgba(185,131,255,0.24) 0, transparent 42%),
+    var(--paper);
+  color:var(--text);
+  font-family:'Mali', system-ui, sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.display{
+  font-family:'Fredoka', 'Mali', sans-serif;
+  letter-spacing:-0.01em;
+}
+.mono{font-family:'Fredoka', sans-serif; font-weight:600; letter-spacing:0.01em;}
+a{color:inherit;}
+button{font-family:inherit;}
+:focus-visible{outline:3px dashed var(--purple-deep); outline-offset:3px;}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+}
+
+/* ============ TOPBAR ============ */
+.topbar{
+  position:sticky; top:0; z-index:40;
+  background:linear-gradient(100deg, var(--purple-deep) 0%, var(--pink-deep) 55%, var(--coral-deep) 100%);
+  color:#fff;
+  padding:14px 20px;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  border-bottom:4px solid var(--border);
+}
+.brand{display:flex; align-items:center; gap:10px; cursor:pointer; background:none; border:none; color:#fff; padding:0;}
+.brand-mark{
+  width:38px;height:38px;border-radius:12px;
+  background:var(--yellow);
+  border:3px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fredoka',sans-serif; font-weight:700; color:var(--border); font-size:15px;
+  transform:rotate(-8deg);
+  box-shadow:2px 2px 0 rgba(0,0,0,0.25);
+}
+.brand-text{display:flex; flex-direction:column; line-height:1.15;}
+.brand-text b{font-family:'Fredoka',sans-serif; font-size:19px;}
+.brand-text span{font-size:11px; letter-spacing:0.06em; color:#FFE3F0; text-transform:uppercase;}
+
+.gate-track{display:flex; align-items:center; gap:6px;}
+.gate-dot{
+  width:32px;height:32px;border-radius:50%;
+  border:3px solid rgba(255,255,255,0.55);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fredoka',sans-serif; font-size:12px; font-weight:700;
+  color:#fff; background:rgba(255,255,255,0.12);
+  cursor:pointer; transition:transform .15s ease;
+}
+.gate-dot:hover{transform:scale(1.12) rotate(-6deg);}
+.gate-dot.unlocked{border-color:var(--yellow); background:rgba(255,217,61,0.25); color:var(--yellow);}
+.gate-dot.passed{background:var(--green); border-color:#fff; color:#fff;}
+.gate-line{width:16px; height:3px; border-radius:2px; background:rgba(255,255,255,0.35);}
+.gate-line.filled{background:var(--yellow);}
+.topbar-right{display:flex; align-items:center; gap:10px;}
+.progress-pill{
+  font-family:'Fredoka',sans-serif; font-size:12px; font-weight:600;
+  background:var(--yellow); color:var(--border); padding:7px 14px; border-radius:99px;
+  white-space:nowrap; border:2.5px solid var(--border);
+}
+.reset-btn{
+  font-family:'Mali', sans-serif; font-size:11.5px; font-weight:600;
+  background:rgba(255,255,255,0.12); color:#fff; border:2px solid rgba(255,255,255,0.6); border-radius:99px;
+  padding:7px 14px; cursor:pointer; white-space:nowrap;
+}
+.reset-btn:hover{background:var(--coral); border-color:var(--border); color:#fff;}
+
+@media (max-width:760px){
+  .gate-track{display:none;}
+}
+
+/* ============ LAYOUT ============ */
+main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
+.section-label{
+  font-family:'Fredoka',sans-serif; font-size:13px; font-weight:600; letter-spacing:0.04em;
+  color:var(--purple-deep); margin:0 0 10px;
+  display:flex; align-items:center; gap:8px;
+}
+.section-label::before{content:'✨'; font-size:15px;}
+
+/* ============ HERO ============ */
+.hero-wrap{padding:38px 0 30px;}
+.hero-ticket{
+  background:linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+  color:#fff;
+  border-radius:28px;
+  display:grid;
+  grid-template-columns:1fr 230px;
+  overflow:hidden;
+  border:4px solid var(--border);
+  box-shadow:8px 8px 0 var(--border);
+  position:relative;
+}
+.hero-main{padding:38px 40px; position:relative; overflow:hidden;}
+.hero-main::before{
+  content:'⭐';
+  position:absolute; top:14px; right:24px; font-size:26px; opacity:0.5; transform:rotate(12deg);
+}
+.hero-eyebrow{
+  font-family:'Fredoka',sans-serif; font-size:12.5px; font-weight:600; letter-spacing:0.06em;
+  color:var(--yellow); text-transform:uppercase; margin-bottom:14px;
+}
+.hero-ticket h1{
+  font-size:clamp(26px,4vw,38px); line-height:1.25; margin:0 0 14px; font-weight:700;
+  text-shadow:2px 2px 0 rgba(0,0,0,0.12);
+}
+.hero-ticket p.lead{color:#FFF0F7; font-size:15.5px; line-height:1.75; max-width:520px; margin:0 0 26px;}
+.route-row{display:flex; align-items:center; gap:14px; margin-bottom:28px;}
+.route-node{font-family:'Fredoka',sans-serif; font-size:18px; font-weight:700;}
+.route-node small{display:block; font-family:'Mali',sans-serif; font-size:10.5px; color:#FFE3F0; font-weight:400; letter-spacing:0.05em; text-transform:uppercase; margin-top:2px;}
+.route-dash{flex:1; height:0; border-top:3px dashed rgba(255,255,255,0.55); position:relative; min-width:40px;}
+.route-dash::after{content:'🚀'; position:absolute; top:-13px; left:50%; transform:translateX(-50%); font-size:18px;}
+.hero-cta{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--yellow); color:var(--border); border:3px solid var(--border);
+  font-family:'Fredoka',sans-serif; font-weight:700; font-size:15px; padding:13px 24px; border-radius:14px; cursor:pointer;
+  box-shadow:var(--shadow-hard-sm);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.hero-cta:hover{transform:translate(-2px,-2px); box-shadow:5px 5px 0 var(--border);}
+.hero-cta:active{transform:translate(1px,1px); box-shadow:1px 1px 0 var(--border);}
+
+.hero-stub{
+  border-left:3px dashed rgba(255,255,255,0.55);
+  padding:34px 26px;
+  display:flex; flex-direction:column; justify-content:space-between;
+  position:relative;
+  background:rgba(255,255,255,0.14);
+}
+.hero-stub::before,.hero-stub::after{
+  content:''; position:absolute; left:-15px; width:28px; height:28px; border-radius:50%; background:var(--paper-2);
+  border:3px solid var(--border);
+}
+.hero-stub::before{top:-15px;}
+.hero-stub::after{bottom:-15px;}
+.stub-label{font-family:'Fredoka',sans-serif; font-size:10.5px; letter-spacing:0.06em; color:#FFE3F0; text-transform:uppercase; font-weight:600;}
+.stub-value{font-family:'Fredoka',sans-serif; font-size:24px; margin:4px 0 18px; font-weight:700;}
+.barcode{
+  height:30px; margin-top:auto;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.9) 3px, transparent 3px);
+  background-size: 14px 14px;
+  opacity:0.9;
+}
+
+@media (max-width:760px){
+  .hero-ticket{grid-template-columns:1fr;}
+  .hero-stub{border-left:none; border-top:3px dashed rgba(255,255,255,0.55); flex-direction:row; align-items:center; gap:20px;}
+  .hero-stub::before{left:-15px; top:-15px;}
+  .hero-stub::after{left:auto; right:-15px; bottom:-15px; top:-15px;}
+  .barcode{display:none;}
+  .stub-value{margin:0;}
+}
+
+/* ============ LESSON GRID (CARDS) ============ */
+.lesson-grid{
+  display:grid; grid-template-columns:repeat(2,1fr); gap:22px; margin-top:18px;
+}
+@media (max-width:700px){ .lesson-grid{grid-template-columns:1fr;} }
+
+.ticket{
+  background:var(--card);
+  border-radius:22px;
+  overflow:hidden;
+  border:3.5px solid var(--border);
+  box-shadow:var(--shadow-hard);
+  display:flex; flex-direction:column;
+  position:relative;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.ticket.locked{opacity:0.6; filter:saturate(0.55);}
+.ticket:not(.locked){cursor:pointer;}
+.ticket:not(.locked):hover{transform:translate(-3px,-3px); box-shadow:8px 8px 0 var(--border);}
+
+.ticket-top{padding:22px 22px 18px; display:flex; justify-content:space-between; gap:12px;}
+.ticket-gate{font-family:'Fredoka',sans-serif; font-size:11.5px; font-weight:700; color:#fff; letter-spacing:0.04em; margin-bottom:8px;
+  display:inline-block; background:var(--purple-deep); padding:4px 10px; border-radius:99px;}
+.ticket-top h3{margin:0 0 6px; font-size:19px; font-weight:700; font-family:'Fredoka',sans-serif;}
+.ticket-top p{margin:0; color:var(--text-soft); font-size:13.5px; line-height:1.55;}
+.ticket-status{
+  font-family:'Fredoka',sans-serif; font-size:10.5px; font-weight:700; padding:6px 12px; border-radius:99px; height:fit-content;
+  white-space:nowrap; border:2px solid var(--border);
+}
+.ticket-status.locked{background:#EDE7F7; color:#8577AC;}
+.ticket-status.open{background:var(--yellow); color:var(--border);}
+.ticket-status.passed{background:var(--green); color:#fff;}
+
+.ticket-stub-line{
+  border-top:3px dashed var(--paper-2); position:relative; margin:0 18px;
+}
+.ticket-stub-line::before,.ticket-stub-line::after{
+  content:''; position:absolute; top:-10px; width:20px; height:20px; border-radius:50%; background:var(--paper);
+  border:3px solid var(--border);
+}
+.ticket-stub-line::before{left:-29px;}
+.ticket-stub-line::after{right:-29px;}
+
+.ticket-bottom{padding:14px 22px 20px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.ticket-bottom .mono{font-size:12px; color:var(--text-soft); font-weight:600;}
+.stamp{
+  font-family:'Fredoka',sans-serif; font-weight:700; font-size:11.5px;
+  color:#fff; background:var(--coral); border:2.5px solid var(--border); border-radius:10px;
+  padding:5px 10px; transform:rotate(-8deg); letter-spacing:0.03em;
+}
+
+/* ============ LESSON VIEW ============ */
+#view-lesson{display:none;}
+.back-btn{
+  display:inline-flex; align-items:center; gap:8px; background:none; border:none;
+  color:var(--purple-deep); font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; padding:18px 0 0; margin-bottom:6px;
+}
+.back-btn:hover{color:var(--pink-deep);}
+.lesson-header{padding:14px 0 20px; border-bottom:3px dashed var(--paper-2); margin-bottom:22px;}
+.lesson-header .ticket-gate{margin-bottom:10px;}
+.lesson-header h2{margin:0 0 8px; font-size:clamp(22px,3.2vw,30px); font-weight:700;}
+.lesson-header p{margin:0; color:var(--text-soft); max-width:640px;}
+
+.tab-bar{
+  display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; margin-bottom:26px;
+}
+.tab-btn{
+  background:var(--card); border:2.5px solid var(--border); padding:10px 16px; font-size:13.5px; font-weight:600;
+  font-family:'Fredoka',sans-serif;
+  color:var(--text-soft); cursor:pointer; white-space:nowrap; border-radius:14px;
+  display:flex; align-items:center; gap:7px;
+  box-shadow:3px 3px 0 var(--border);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.tab-btn:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--border);}
+.tab-btn .num{
+  width:19px;height:19px;border-radius:50%; background:var(--paper-2); color:var(--text-soft);
+  display:inline-flex; align-items:center; justify-content:center; font-size:10.5px; font-family:'Fredoka',sans-serif; font-weight:700;
+}
+.tab-btn.active{color:#fff; background:var(--purple-deep); border-color:var(--border);}
+.tab-btn.active .num{background:var(--yellow); color:var(--border);}
+.tab-panel{display:none; animation:popin .28s cubic-bezier(.34,1.56,.64,1);}
+.tab-panel.active{display:block;}
+@keyframes popin{from{opacity:0; transform:translateY(10px) scale(0.98);} to{opacity:1; transform:none;}}
+
+/* content blocks */
+.content-block{background:var(--card); border:3px solid var(--border); border-radius:20px; padding:22px 24px; margin-bottom:18px; box-shadow:var(--shadow-hard-sm);}
+.content-block h4{margin:0 0 12px; font-size:16.5px; font-family:'Fredoka',sans-serif; font-weight:700; display:flex; align-items:center; gap:8px; color:var(--purple-deep);}
+.content-block h4::before{content:'🌟'; font-size:16px;}
+.content-block ul{margin:0; padding-left:20px; line-height:1.9; font-size:14.5px; color:var(--text);}
+.content-block ul li b{color:var(--pink-deep);}
+.phrase-box{
+  background:var(--ink); color:#fff; border-radius:20px; padding:22px 24px; margin-bottom:18px; border:3px solid var(--border); box-shadow:var(--shadow-hard-sm);
+}
+.phrase-box h4{margin:0 0 12px; font-size:15.5px; font-family:'Fredoka',sans-serif; font-weight:700; color:var(--yellow); display:flex; align-items:center; gap:8px;}
+.phrase-box ul{margin:0; padding-left:0; list-style:none;}
+.phrase-box li{
+  font-family:'Mali', sans-serif; font-size:14px; padding:9px 0; border-bottom:2px dashed rgba(255,255,255,0.2);
+  color:#F3ECFF;
+}
+.phrase-box li:before{content:'💬 '; }
+.phrase-box li:last-child{border-bottom:none;}
+
+/* video */
+.video-wrap{background:var(--card); border:3px solid var(--border); border-radius:20px; padding:20px; margin-bottom:18px; box-shadow:var(--shadow-hard-sm);}
+.video-frame{position:relative; padding-bottom:56.25%; height:0; border-radius:14px; overflow:hidden; background:#000; border:2px solid var(--border);}
+.video-frame iframe{position:absolute; inset:0; width:100%; height:100%; border:0;}
+.video-wrap .video-title{font-weight:700; font-family:'Fredoka',sans-serif; margin:14px 2px 2px; font-size:14.5px; color:var(--purple-deep);}
+.video-wrap .video-note{color:var(--text-soft); font-size:13px; margin:4px 2px 0;}
+
+/* quiz */
+.quiz-progress{display:flex; gap:4px; margin-bottom:18px; flex-wrap:wrap;}
+.quiz-progress span{flex:1; min-width:8px; height:7px; border-radius:99px; background:var(--paper-2); border:1.5px solid var(--border);}
+.quiz-progress span.done{background:var(--yellow);}
+.quiz-card{background:var(--card); border:3px solid var(--border); border-radius:20px; padding:24px; margin-bottom:18px; box-shadow:var(--shadow-hard-sm);}
+.quiz-q{font-weight:700; font-family:'Fredoka',sans-serif; font-size:15.5px; margin-bottom:16px; color:var(--ink);}
+.quiz-q .qnum{color:var(--pink-deep); font-family:'Fredoka',sans-serif; margin-right:6px;}
+.opt-btn{
+  display:block; width:100%; text-align:left; background:var(--paper-2); border:2.5px solid var(--border);
+  border-radius:14px; padding:12px 16px; margin-bottom:10px; font-size:14px; font-family:'Mali',sans-serif; cursor:pointer; transition:all .12s ease;
+}
+.opt-btn:hover{background:#fff; transform:translate(-1px,-1px); box-shadow:2px 2px 0 var(--border);}
+.opt-btn.selected{border-color:var(--purple-deep); background:#EFE3FF;}
+.opt-btn.correct{border-color:var(--green-deep); background:#D8FBEC; color:var(--green-deep); font-weight:700;}
+.opt-btn.wrong{border-color:var(--coral-deep); background:#FFE2DE; color:var(--coral-deep); font-weight:700;}
+.opt-btn:disabled{cursor:default;}
+.quiz-explain{font-size:13px; color:var(--text-soft); margin-top:8px; padding-top:10px; border-top:2px dashed var(--paper-2);}
+.primary-btn{
+  background:var(--purple-deep); color:#fff; border:3px solid var(--border); font-family:'Fredoka',sans-serif; font-weight:700; font-size:14px;
+  padding:12px 24px; border-radius:14px; cursor:pointer; box-shadow:var(--shadow-hard-sm);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.primary-btn:hover{transform:translate(-2px,-2px); box-shadow:5px 5px 0 var(--border);}
+.primary-btn:active{transform:translate(1px,1px); box-shadow:1px 1px 0 var(--border);}
+.primary-btn:disabled{background:#CFC5E8; color:#8577AC; cursor:not-allowed; box-shadow:var(--shadow-hard-sm); transform:none;}
+.ghost-btn{
+  background:#fff; border:2.5px solid var(--border); color:var(--text); font-family:'Fredoka',sans-serif; font-weight:600; font-size:13.5px;
+  padding:10px 18px; border-radius:14px; cursor:pointer; box-shadow:var(--shadow-hard-sm);
+}
+.ghost-btn:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--border);}
+
+.result-card{
+  background:linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%); color:#fff; border-radius:24px; padding:32px; text-align:center; margin-bottom:18px;
+  border:3.5px solid var(--border); box-shadow:var(--shadow-hard);
+}
+.result-card .score{font-family:'Fredoka',sans-serif; font-size:50px; font-weight:700; color:var(--yellow); margin:6px 0; text-shadow:2px 2px 0 rgba(0,0,0,0.15);}
+.result-card p{color:#FFF0F7; margin:0 0 18px; font-size:14px;}
+.compare-row{display:flex; justify-content:center; gap:36px; margin-top:18px; flex-wrap:wrap;}
+.compare-item{text-align:center;}
+.compare-item .cval{font-family:'Fredoka',sans-serif; font-size:26px; font-weight:700;}
+.compare-item .clabel{font-size:11px; color:#FFE3F0; text-transform:uppercase; letter-spacing:0.06em; font-family:'Fredoka',sans-serif; font-weight:600;}
+
+/* games */
+.game-nav{display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap;}
+.game-chip{
+  background:var(--card); border:2.5px solid var(--border); border-radius:99px; padding:9px 16px;
+  font-size:13px; font-family:'Fredoka',sans-serif; font-weight:600; cursor:pointer; color:var(--text-soft);
+  box-shadow:2px 2px 0 var(--border);
+}
+.game-chip.active{background:var(--purple-deep); color:#fff; border-color:var(--border);}
+.game-chip:hover{transform:translate(-1px,-1px);}
+.game-panel{display:none;}
+.game-panel.active{display:block;}
+.game-card{background:var(--card); border:3px solid var(--border); border-radius:20px; padding:24px; box-shadow:var(--shadow-hard-sm);}
+.game-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; flex-wrap:wrap; gap:10px;}
+.game-head h4{margin:0; font-size:16px; font-family:'Fredoka',sans-serif; font-weight:700; color:var(--purple-deep);}
+.game-score{font-family:'Fredoka',sans-serif; font-weight:600; font-size:12.5px; background:var(--yellow); color:var(--border); padding:6px 12px; border-radius:99px; border:2px solid var(--border);}
+.game-timer{font-family:'Fredoka',sans-serif; font-weight:700; font-size:12.5px; background:var(--coral); color:#fff; padding:6px 12px; border-radius:99px; border:2px solid var(--border);}
+
+.match-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+@media (max-width:640px){ .match-grid{grid-template-columns:repeat(2,1fr);} }
+.match-tile{
+  background:var(--paper-2); border:2.5px solid var(--border); border-radius:14px; padding:14px 10px;
+  font-size:13.5px; font-family:'Mali',sans-serif; text-align:center; cursor:pointer; min-height:56px; display:flex; align-items:center; justify-content:center;
+  transition:all .12s ease; box-shadow:2px 2px 0 var(--border);
+}
+.match-tile:hover{transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--border);}
+.match-tile.picked{border-color:var(--purple-deep); background:#EFE3FF;}
+.match-tile.matched{border-color:var(--green-deep); background:#D8FBEC; color:var(--green-deep); cursor:default; font-weight:700; box-shadow:none;}
+.match-tile.shake{border-color:var(--coral-deep); background:#FFE2DE;}
+
+.fill-item{margin-bottom:20px; padding-bottom:18px; border-bottom:2px dashed var(--paper-2);}
+.fill-item:last-child{border-bottom:none; margin-bottom:0;}
+.fill-sentence{font-size:14.5px; margin-bottom:10px; line-height:1.7;}
+.fill-sentence .blank{font-family:'Fredoka',sans-serif; font-weight:700; color:var(--pink-deep); border-bottom:3px solid var(--pink-deep); padding:0 4px;}
+.chip-row{display:flex; gap:8px; flex-wrap:wrap;}
+.fill-chip{
+  border:2.5px solid var(--border); background:var(--paper-2); border-radius:10px; padding:8px 14px; font-size:13px; font-family:'Mali',sans-serif; cursor:pointer;
+  box-shadow:2px 2px 0 var(--border);
+}
+.fill-chip.selected{border-color:var(--purple-deep); background:#EFE3FF;}
+.fill-chip.correct{border-color:var(--green-deep); background:#D8FBEC; color:var(--green-deep);}
+.fill-chip.wrong{border-color:var(--coral-deep); background:#FFE2DE; color:var(--coral-deep);}
+
+.scramble-item{margin-bottom:18px; padding-bottom:18px; border-bottom:2px dashed var(--paper-2);}
+.scramble-item:last-child{border-bottom:none;}
+.scramble-word{font-family:'Fredoka',sans-serif; font-size:23px; font-weight:700; letter-spacing:0.12em; color:var(--purple-deep); margin-bottom:6px;}
+.scramble-hint{font-size:12.5px; color:var(--text-soft); margin-bottom:10px;}
+.scramble-input-row{display:flex; gap:8px; flex-wrap:wrap; align-items:center;}
+.scramble-input{
+  border:2.5px solid var(--border); border-radius:10px; padding:9px 12px; font-size:14px; font-family:'Fredoka',sans-serif;
+  width:200px; max-width:100%;
+}
+.scramble-input.correct{border-color:var(--green-deep); background:#D8FBEC;}
+.scramble-input.wrong{border-color:var(--coral-deep); background:#FFE2DE;}
+.check-icon{font-size:13px; font-weight:700; font-family:'Fredoka',sans-serif;}
+
+/* sentence builder */
+.builder-item{margin-bottom:26px; padding-bottom:22px; border-bottom:2px dashed var(--paper-2);}
+.builder-item:last-child{border-bottom:none;}
+.builder-zone{
+  min-height:52px; border:3px dashed var(--border); border-radius:14px; padding:10px;
+  display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; background:var(--paper-2);
+}
+.builder-word-slot{
+  background:var(--yellow); border:2.5px solid var(--border); border-radius:10px; padding:7px 12px; font-size:13.5px; font-family:'Mali',sans-serif; cursor:pointer;
+}
+.builder-bank{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px;}
+.bank-word{
+  background:#fff; border:2.5px solid var(--border); border-radius:10px; padding:7px 12px; font-size:13.5px; font-family:'Mali',sans-serif; cursor:pointer;
+  box-shadow:2px 2px 0 var(--border);
+}
+.bank-word:disabled{opacity:0.35; cursor:default; box-shadow:none;}
+.builder-controls{display:flex; gap:10px; align-items:center;}
+.builder-feedback{font-size:12.5px; margin-left:4px; font-family:'Fredoka',sans-serif; font-weight:600;}
+.builder-feedback.correct{color:var(--green-deep);}
+.builder-feedback.wrong{color:var(--coral-deep);}
+
+/* speed round */
+.speed-card{text-align:center;}
+.speed-timer-bar{height:10px; border-radius:99px; background:var(--paper-2); overflow:hidden; margin-bottom:20px; border:2px solid var(--border);}
+.speed-timer-fill{height:100%; background:var(--coral); width:100%; transition:width 1s linear;}
+.speed-term{font-family:'Fredoka',sans-serif; font-size:30px; font-weight:700; color:var(--purple-deep); margin:10px 0 22px;}
+.speed-options{display:grid; grid-template-columns:1fr 1fr; gap:10px; max-width:520px; margin:0 auto;}
+@media (max-width:560px){ .speed-options{grid-template-columns:1fr;} }
+.speed-opt{
+  background:var(--paper-2); border:2.5px solid var(--border); border-radius:14px; padding:14px; font-size:13.5px; font-family:'Mali',sans-serif; cursor:pointer;
+  box-shadow:2px 2px 0 var(--border);
+}
+.speed-opt.correct{border-color:var(--green-deep); background:#D8FBEC;}
+.speed-opt.wrong{border-color:var(--coral-deep); background:#FFE2DE;}
+.speed-start{padding:30px 0;}
+.speed-final .score{font-family:'Fredoka',sans-serif; font-size:44px; font-weight:700; color:var(--pink-deep); margin:8px 0;}
+
+footer{
+  text-align:center; padding:34px 20px 50px; color:var(--text-soft); font-size:12.5px; line-height:1.9;
+}
+footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <button class="brand" id="brand-home-btn">
+    <span class="brand-mark">EN</span>
+    <span class="brand-text"><b>Question ENG 🎈</b><span>English for Career Skills</span></span>
+  </button>
+  <div class="gate-track" id="gate-track"></div>
+  <div class="topbar-right">
+    <div class="progress-pill" id="progress-pill">⭐ 0/4</div>
+    <button class="reset-btn" id="reset-btn" title="ล้างคะแนนและความคืบหน้าทั้งหมด">รีเซ็ตความคืบหน้า</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HOME VIEW ============ -->
+  <section id="view-home">
+    <div class="hero-wrap">
+      <div class="hero-ticket">
+        <div class="hero-main">
+          <div class="hero-eyebrow">🎉 Your Learning Adventure · Business English</div>
+          <h1>เตรียมความพร้อมสู่โลกการทำงาน<br>ด้วยภาษาอังกฤษ 4 ด่านสุดสนุก!</h1>
+          <p class="lead">สื่อการเรียนรู้สำหรับนักศึกษาบริหารธุรกิจ สาขาคอมพิวเตอร์ธุรกิจ ครอบคลุมการแนะนำตัว การพูดถึงความรับผิดชอบ การนำเสนอโครงการ และการเข้าสังคมในที่ทำงาน — เรียนเนื้อหา ทำแบบทดสอบ 10 ข้อ ดูวิดีโอ และฝึกฝนผ่าน 5 เกมสุดมันส์ในทุกบท คะแนนของคุณจะถูกบันทึกไว้ในเครื่องนี้โดยอัตโนมัติ</p>
+          <div class="route-row">
+            <div class="route-node">🐣 STUDENT<small>Gate 00</small></div>
+            <div class="route-dash"></div>
+            <div class="route-node">🏆 PROFESSIONAL<small>Gate 04</small></div>
+          </div>
+          <button class="hero-cta" id="hero-start-btn">เริ่มด่านแรก · Introducing Yourself →</button>
+        </div>
+        <div class="hero-stub">
+          <div>
+            <div class="stub-label">Player</div>
+            <div class="stub-value" id="stub-name">STUDENT</div>
+            <div class="stub-label">Stars Collected</div>
+            <div class="stub-value mono" id="stub-progress" style="font-family:'Fredoka',sans-serif; font-size:20px;">0 / 4</div>
+          </div>
+          <div class="barcode"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">Your Journey · เส้นทาง 4 ด่านสู่การทำงาน</div>
+    <div class="lesson-grid" id="lesson-grid"></div>
+  </section>
+
+  <!-- ============ LESSON VIEW ============ -->
+  <section id="view-lesson">
+    <button class="back-btn" id="back-btn">← กลับหน้ารวมด่าน</button>
+    <div class="lesson-header">
+      <div class="ticket-gate mono" id="lv-gate"></div>
+      <h2 id="lv-title"></h2>
+      <p id="lv-subtitle"></p>
+    </div>
+
+    <div class="tab-bar" id="tab-bar">
+      <button class="tab-btn" data-tab="pre"><span class="num">1</span> ทดสอบก่อนเรียน</button>
+      <button class="tab-btn" data-tab="content"><span class="num">2</span> เนื้อหาบทเรียน</button>
+      <button class="tab-btn" data-tab="video"><span class="num">3</span> วิดีโอ</button>
+      <button class="tab-btn" data-tab="games"><span class="num">4</span> เกมฝึกทักษะ</button>
+      <button class="tab-btn" data-tab="post"><span class="num">5</span> ทดสอบหลังเรียน</button>
+    </div>
+
+    <div class="tab-panel" data-panel="pre" id="panel-pre"></div>
+    <div class="tab-panel" data-panel="content" id="panel-content"></div>
+    <div class="tab-panel" data-panel="video" id="panel-video"></div>
+    <div class="tab-panel" data-panel="games" id="panel-games"></div>
+    <div class="tab-panel" data-panel="post" id="panel-post"></div>
+  </section>
+
+</main>
+
+<footer>
+  <div><b>Question ENG 🎈</b> — สื่อการเรียนการสอนภาษาอังกฤษเพื่อการทำงาน</div>
+  <div>โครงงานปริญญาตรี คณะบริหารธุรกิจ สาขาคอมพิวเตอร์ธุรกิจ</div>
+  <div>ผู้จัดทำ: นายกิจพงษ์ เบญจดำรงกิจ รหัสนักศึกษา 6614012620057 · นายปัญญากร มีเสน รหัสนักศึกษา 6614012620154</div>
+  <div>อาจารย์ที่ปรึกษา: ดร.กนกวรรณ ไทยประดิษฐ · ปีการศึกษา 2569</div>
+  <div>คะแนนและความคืบหน้าจะถูกบันทึกไว้ในเบราว์เซอร์นี้โดยอัตโนมัติ (localStorage) กด "รีเซ็ตความคืบหน้า" ด้านบนเพื่อเริ่มใหม่</div>
+</footer>
+
+<script>
+// ============================================================
+// LESSON DATA
+// เนื้อหา คำศัพท์ แบบทดสอบ (10 ข้อ) และข้อมูลเกม สำหรับทั้ง 4 บทเรียน
+// อ้างอิงจากเอกสารประกอบการสอนจริง:
+// บทที่ 1 Introducing Yourself
+// บทที่ 2 Talking about Responsibility
+// บทที่ 3 Presentation New Project
+// บทที่ 4 Socialization
+// แก้ไข/เพิ่มเนื้อหาได้จากไฟล์นี้ไฟล์เดียว โดยไม่ต้องแตะ app.js
+// ============================================================
+
+const LESSONS = [
+  // ============ LESSON 1 : INTRODUCING YOURSELF ============
+  {
+    id: 1,
+    gate: "GATE 01 · INTRO-01",
+    title: "บทที่ 1 · การแนะนำตัว (Introducing Yourself)",
+    subtitle: "เรียนรู้คำศัพท์เกี่ยวกับโครงสร้างองค์กร (Organization) และบทสนทนาแนะนำตัวในที่ทำงานภาษาอังกฤษ",
+    videoId: "yMLDiA6Hy-Y",
+    videoTitle: "Business English: Introduce Yourself and Your Job",
+    contentBlocks: [
+      {
+        heading: "Vocabulary: Organization",
+        items: [
+          "<b>Authority</b> — อำนาจในการสั่งการ ตัดสินใจ และควบคุมภายในองค์กร",
+          "<b>Hierarchy</b> — ระบบลำดับชั้นของอำนาจภายในองค์กร",
+          "<b>Decision-making</b> — กระบวนการเลือกแนวทางที่ดีที่สุดเพื่อบรรลุเป้าหมาย",
+          "<b>Responsibility</b> — หน้าที่หรือพันธะในการปฏิบัติงาน",
+          "<b>Delegation</b> — การมอบหมายงานให้ผู้อื่น โดยยังคงความรับผิดชอบโดยรวม",
+          "<b>Chain of command</b> — สายการบังคับบัญชาอย่างเป็นทางการภายในองค์กร",
+          "<b>Accountability</b> — ภาระที่ต้องรับผิดชอบต่อการกระทำและผลลัพธ์ของตน",
+          "<b>Organizational structure</b> — การจัดวางบทบาทและความสัมพันธ์ภายในองค์กร",
+          "<b>Communication</b> — การแลกเปลี่ยนข้อมูล ความคิด และความคิดเห็นระหว่างกัน",
+          "<b>Alignment</b> — การทำให้เป้าหมายของบุคคล/ทีมสอดคล้องกับเป้าหมายองค์กร",
+          "<b>Efficiency</b> — ความสามารถในการทำงานให้สำเร็จโดยสูญเสียทรัพยากร เวลา หรือแรงน้อยที่สุด",
+          "<b>Organizational culture</b> — ค่านิยม ความเชื่อ และพฤติกรรมร่วมที่หล่อหลอมองค์กร"
+        ]
+      },
+      {
+        heading: "บทสนทนา: Introducing yourself",
+        items: [
+          "James: Good morning, I'm Distribution Manager. My name is James Miller. I'm working for Kenchinton in the Logistics department.",
+          "Steve: Good morning, James, I'm Steve, Steve White from the service engineer team from CNBE. Nice to meet you.",
+          "James: Nice to meet you too, Steve."
+        ]
+      },
+      {
+        heading: "บทสนทนา: How to say “Hello” and “Goodbye”",
+        items: [
+          "Richard: Hey, Susan! Good to see you again.",
+          "Susan: Richard, hi. I didn't expect to see you here. How are you?",
+          "Richard: Thanks, fine. And you?",
+          "Susan: Not bad. Is Veronica coming too? — Richard: No. She can't come.",
+          "Susan: Ah look, here's Jasmin."
+        ]
+      }
+    ],
+    phrases: [
+      "Good morning, I'm Distribution Manager. My name is James Miller.",
+      "I'm working for Kenchinton in the Logistics department.",
+      "Nice to meet you, Steve. / Nice to meet you too.",
+      "Hey! Good to see you again.",
+      "I didn't expect to see you here. How are you?"
+    ],
+    sentenceBuilder: [
+      { answer: "Nice to meet you too." },
+      { answer: "Good to see you again." },
+      { answer: "I'm working for Kenchinton in the Logistics department." },
+      { answer: "I didn't expect to see you here." }
+    ],
+    vocab: [
+      { term: "Authority", meaning: "อำนาจสั่งการ / อำนาจหน้าที่" },
+      { term: "Hierarchy", meaning: "ลำดับชั้นการบังคับบัญชา" },
+      { term: "Responsibility", meaning: "ความรับผิดชอบ" },
+      { term: "Delegation", meaning: "การมอบหมายงาน" },
+      { term: "Communication", meaning: "การสื่อสาร" },
+      { term: "Accountability", meaning: "ความรับผิดชอบต่อผลลัพธ์" }
+    ],
+    fillBlank: [
+      { sentence: "The manager has the ___ to approve new budgets for the department.", answer: "authority", options: ["authority", "hierarchy", "communication", "delegation"] },
+      { sentence: "In a strict ___, employees report directly to their supervisors.", answer: "hierarchy", options: ["hierarchy", "authority", "accountability", "responsibility"] },
+      { sentence: "Good ___ between departments prevents misunderstandings at work.", answer: "communication", options: ["communication", "delegation", "hierarchy", "authority"] },
+      { sentence: "She was given ___ for organizing the annual company event.", answer: "responsibility", options: ["responsibility", "authority", "accountability", "communication"] },
+      { sentence: "___ means assigning tasks to team members while staying accountable for the result.", answer: "delegation", options: ["delegation", "hierarchy", "communication", "responsibility"] }
+    ],
+    scramble: [
+      { word: "AUTHORITY", hint: "อำนาจสั่งการ" },
+      { word: "HIERARCHY", hint: "ลำดับชั้นการบังคับบัญชา" },
+      { word: "RESPONSIBILITY", hint: "ความรับผิดชอบ" },
+      { word: "DELEGATION", hint: "การมอบหมายงาน" },
+      { word: "COMMUNICATION", hint: "การสื่อสาร" },
+      { word: "ACCOUNTABILITY", hint: "ความรับผิดชอบต่อผลลัพธ์" }
+    ],
+    quiz: [
+      { q: "What does “Authority” mean in a workplace context?", options: ["The power to give orders and make decisions", "A type of meeting", "A job title", "A lunch break"], answer: 0, explain: "Authority คืออำนาจในการสั่งการและตัดสินใจภายในองค์กร" },
+      { q: "“Chain of command” refers to...", options: ["A list of holidays", "The formal line of authority within an organization", "Employee salaries", "A software system"], answer: 1, explain: "Chain of command คือสายการบังคับบัญชาอย่างเป็นทางการ" },
+      { q: "Which phrase is used to greet someone you already know?", options: ["“Nice to meet you.”", "“Good to see you again.”", "“Goodbye forever.”", "“I disagree.”"], answer: 1, explain: "“Good to see you again” ใช้ทักทายคนที่เคยรู้จักกันมาก่อน" },
+      { q: "“Accountability” means...", options: ["Ignoring your mistakes", "Accepting responsibility for your actions and decisions", "Taking a vacation", "Avoiding teamwork"], answer: 1, explain: "Accountability คือการยอมรับผิดชอบต่อการกระทำและการตัดสินใจของตนเอง" },
+      { q: "“Hierarchy” best means...", options: ["A system of levels of authority within an organization", "A type of software", "A company holiday", "A sales discount"], answer: 0, explain: "Hierarchy คือระบบลำดับชั้นของอำนาจภายในองค์กร" },
+      { q: "“Delegation” means...", options: ["Assigning tasks to others while staying accountable for the result", "Refusing to do any work", "Quitting a job", "Ignoring instructions"], answer: 0, explain: "Delegation คือการมอบหมายงานโดยยังรับผิดชอบผลลัพธ์โดยรวม" },
+      { q: "“Communication” in the workplace means...", options: ["The exchange of information, ideas, and feedback among people", "Working completely alone", "Taking a day off", "Signing a contract"], answer: 0, explain: "Communication คือการแลกเปลี่ยนข้อมูล ความคิด และความคิดเห็นระหว่างกัน" },
+      { q: "“Responsibility” means...", options: ["The duty or obligation to perform certain tasks or fulfill specific roles", "A salary bonus", "A public holiday", "A software tool"], answer: 0, explain: "Responsibility คือหน้าที่หรือพันธะในการปฏิบัติงาน" },
+      { q: "When introducing yourself in a business setting, it's best to...", options: ["State your name and position clearly", "Avoid saying your name", "Talk only about your hobbies", "Ignore the other person"], answer: 0, explain: "การแนะนำตัวที่ดีควรบอกชื่อและตำแหน่งอย่างชัดเจน" },
+      { q: "A polite way to greet a colleague you haven't seen for a while is to say...", options: ["“Good to see you again.”", "“Who are you?”", "“I'm busy.”", "“Go away.”"], answer: 0, explain: "“Good to see you again” เป็นวลีทักทายที่สุภาพสำหรับคนที่เคยรู้จักกัน" }
+    ]
+  },
+
+  // ============ LESSON 2 : TALKING ABOUT RESPONSIBILITY ============
+  {
+    id: 2,
+    gate: "GATE 02 · RESPONS-02",
+    title: "บทที่ 2 · การพูดถึงความรับผิดชอบ (Talking about Responsibility)",
+    subtitle: "ฝึกคำศัพท์เกี่ยวกับความรับผิดชอบส่วนบุคคลในที่ทำงาน และวิธีพูดถึงหน้าที่ของตนเองเป็นภาษาอังกฤษ",
+    videoId: "nJBIAxVlAgs",
+    videoTitle: "Business English – Talking about your Responsibilities",
+    contentBlocks: [
+      {
+        heading: "Vocabulary: Personal responsibility in the workplace",
+        items: [
+          "<b>Personal responsibility</b> — หน้าที่และความรับผิดชอบส่วนบุคคลต่อการกระทำและผลลัพธ์ในที่ทำงาน",
+          "<b>Obligation</b> — พันธะทางศีลธรรมหรือกฎหมายที่ต้องปฏิบัติตาม",
+          "<b>Duties</b> — งานหรือหน้าที่ที่คาดหวังให้ปฏิบัติในตำแหน่งงาน",
+          "<b>Accountable</b> — ต้องตอบคำถามหรือรับผิดชอบต่อการกระทำของตน",
+          "<b>Behaviors</b> — พฤติกรรมหรือการกระทำที่แสดงออกในที่ทำงาน",
+          "<b>Ownership</b> — การรับผิดชอบและควบคุมงานที่ได้รับมอบหมายอย่างเต็มที่",
+          "<b>Deadlines</b> — วันหรือเวลาที่กำหนดให้งานเสร็จสิ้น",
+          "<b>Communicating effectively</b> — ความสามารถในการสื่อสารข้อมูลอย่างชัดเจนและครบถ้วน",
+          "<b>Integrity</b> — การยึดมั่นในหลักจริยธรรมและความซื่อสัตย์",
+          "<b>Contribution</b> — การมีส่วนร่วมและสร้างคุณค่าให้องค์กรหรือทีม",
+          "<b>Work ethic</b> — ชุดค่านิยมที่ผลักดันให้ทำงานอย่างขยันขันแข็งและทุ่มเท",
+          "<b>Growth</b> — การพัฒนาตนเองทั้งด้านส่วนตัวและวิชาชีพ",
+          "<b>Adaptation</b> — ความสามารถในการปรับตัวต่อการเปลี่ยนแปลง",
+          "<b>Collaboration</b> — การทำงานร่วมกับเพื่อนร่วมงานเพื่อบรรลุเป้าหมายร่วมกัน",
+          "<b>Professional development</b> — กิจกรรมเพื่อพัฒนาความรู้และทักษะในสายอาชีพ",
+          "<b>Positive work environment</b> — สภาพแวดล้อมการทำงานที่ส่งเสริมความร่วมมือและความเคารพซึ่งกันและกัน"
+        ]
+      },
+      {
+        heading: "บทสนทนา: Introducing your responsibility",
+        items: [
+          "John Willson: Hello, I'm Rachel. Can I join you? — Rachel Martin: Yes, of course.",
+          "John Willson: I hear you work for the production department. Is this your first time here?",
+          "Samanta Parker: No, I was here last year. Please take a seat.",
+          "Samanta Parker: Excuse me, Mr. Willson, where are you from?",
+          "John Willson: I'm originally from London, but now I live in Samut Prakan. I work for Thai Summit in the International Sales department. How about you?",
+          "Samanta Parker: I'm with Dycin. I'm in Marketing. I'm responsible for ___."
+        ]
+      }
+    ],
+    phrases: [
+      "I hear you work for the production department. Is this your first time here?",
+      "Excuse me, Mr. Willson, where are you from?",
+      "I'm originally from London, but now I live in Samut Prakan.",
+      "I work for Thai Summit in the International Sales department.",
+      "I'm responsible for..."
+    ],
+    sentenceBuilder: [
+      { answer: "Excuse me, where are you from?" },
+      { answer: "I work for Thai Summit in the International Sales department." },
+      { answer: "Is this your first time here?" },
+      { answer: "Please take a seat." }
+    ],
+    vocab: [
+      { term: "Obligation", meaning: "พันธะ / หน้าที่ที่ต้องทำ" },
+      { term: "Duties", meaning: "หน้าที่ความรับผิดชอบ" },
+      { term: "Accountable", meaning: "ต้องรับผิดชอบ / ตอบคำถามได้" },
+      { term: "Ownership", meaning: "ความเป็นเจ้าของงาน (รับผิดชอบเต็มที่)" },
+      { term: "Integrity", meaning: "ความซื่อสัตย์ / หลักจริยธรรม" },
+      { term: "Collaboration", meaning: "การทำงานร่วมกัน" }
+    ],
+    fillBlank: [
+      { sentence: "Every employee has an ___ to complete their assigned tasks on time.", answer: "obligation", options: ["obligation", "duties", "integrity", "collaboration"] },
+      { sentence: "My daily ___ include answering emails and preparing reports.", answer: "duties", options: ["duties", "obligation", "ownership", "accountable"] },
+      { sentence: "As a team leader, I am ___ for my team's performance.", answer: "accountable", options: ["accountable", "obligation", "collaboration", "integrity"] },
+      { sentence: "Taking ___ of a project means being fully responsible for its outcome.", answer: "ownership", options: ["ownership", "duties", "integrity", "obligation"] },
+      { sentence: "___ means being honest and following strong ethical principles at work.", answer: "integrity", options: ["integrity", "ownership", "duties", "accountable"] }
+    ],
+    scramble: [
+      { word: "OBLIGATION", hint: "พันธะ / หน้าที่ที่ต้องทำ" },
+      { word: "DUTIES", hint: "หน้าที่ความรับผิดชอบ" },
+      { word: "ACCOUNTABLE", hint: "ต้องรับผิดชอบ / ตอบคำถามได้" },
+      { word: "OWNERSHIP", hint: "ความเป็นเจ้าของงาน" },
+      { word: "INTEGRITY", hint: "ความซื่อสัตย์ / หลักจริยธรรม" },
+      { word: "COLLABORATION", hint: "การทำงานร่วมกัน" }
+    ],
+    quiz: [
+      { q: "“Accountable” means...", options: ["Being answerable for your actions", "Ignoring deadlines", "Working alone always", "Taking a day off"], answer: 0, explain: "Accountable คือการต้องรับผิดชอบและตอบคำถามเกี่ยวกับการกระทำของตนเอง" },
+      { q: "“Duties” refers to...", options: ["Vacation days", "Tasks expected as part of your job", "Salary amount", "Company logo"], answer: 1, explain: "Duties คือหน้าที่หรืองานที่คาดหวังให้ทำในตำแหน่งงาน" },
+      { q: "A strong “work ethic” means...", options: ["Avoiding responsibility", "Performing work diligently and with dedication", "Arriving late often", "Refusing teamwork"], answer: 1, explain: "Work ethic คือค่านิยมที่ทำให้ทำงานอย่างขยันขันแข็งและทุ่มเท" },
+      { q: "“Collaboration” at work means...", options: ["Competing against colleagues", "Working together to achieve common goals", "Working completely alone", "Ignoring feedback"], answer: 1, explain: "Collaboration คือการทำงานร่วมกับผู้อื่นเพื่อบรรลุเป้าหมายร่วมกัน" },
+      { q: "“Obligation” best means...", options: ["A moral or legal duty to fulfill responsibilities", "A vacation request", "A salary increase", "A resignation letter"], answer: 0, explain: "Obligation คือพันธะทางศีลธรรมหรือกฎหมายที่ต้องปฏิบัติตาม" },
+      { q: "“Ownership” of a task means...", options: ["Taking full responsibility and control over it", "Ignoring it completely", "Giving it to someone else without follow-up", "Refusing to discuss it"], answer: 0, explain: "Ownership คือการรับผิดชอบและควบคุมงานที่ได้รับมอบหมายอย่างเต็มที่" },
+      { q: "“Deadlines” are...", options: ["Specific dates or times by which tasks must be completed", "A type of employee benefit", "A company slogan", "A meeting room name"], answer: 0, explain: "Deadlines คือกำหนดเวลาที่งานต้องเสร็จสิ้น" },
+      { q: "“Communicating effectively” means...", options: ["Conveying information clearly, accurately, and comprehensively", "Avoiding all conversations", "Speaking only in meetings", "Writing very long emails"], answer: 0, explain: "หมายถึงความสามารถในการสื่อสารข้อมูลอย่างชัดเจนและครบถ้วน" },
+      { q: "“Integrity” means...", options: ["Adhering to strong moral and ethical principles", "Working the longest hours", "Having the highest salary", "Avoiding teamwork"], answer: 0, explain: "Integrity คือการยึดมั่นในหลักจริยธรรมและความซื่อสัตย์" },
+      { q: "A “positive work environment” is characterized by...", options: ["Cooperation, respect, and support among colleagues", "Constant conflict and blame", "No communication at all", "Strict silence at all times"], answer: 0, explain: "สภาพแวดล้อมการทำงานเชิงบวกส่งเสริมความร่วมมือและความเคารพซึ่งกันและกัน" }
+    ]
+  },
+
+  // ============ LESSON 3 : PRESENTATION NEW PROJECT ============
+  {
+    id: 3,
+    gate: "GATE 03 · PRESENT-03",
+    title: "บทที่ 3 · การนำเสนอโครงการใหม่ (Presentation New Project)",
+    subtitle: "เรียนรู้วลีมาตรฐานสำหรับเปิด กำหนดจุดประสงค์ และวางโครงสร้างการนำเสนองานเป็นภาษาอังกฤษ",
+    videoId: "fXVoT7VMCpM",
+    videoTitle: "How to Give a Presentation in English",
+    contentBlocks: [
+      {
+        heading: "โครงสร้างการนำเสนอ (Presentation Structure)",
+        items: [
+          "<b>Introduction</b> — “Good morning/afternoon, ladies and gentlemen.”",
+          "<b>Introducing yourself</b> — “Let me introduce myself. I'm... From...”",
+          "<b>Introducing your topic</b> — “What I'd like to present to you today is...”",
+          "<b>Starting your purpose</b> — “The purpose/objective/aim of this presentation is to...”",
+          "<b>Structuring</b> — “In my presentation, I'll focus on three major issues.”",
+          "<b>Sequencing</b> — “First, I'll be looking at..., second..., and third...”",
+          "<b>Timing</b> — “My presentation will take about 30 minutes.”",
+          "<b>Saying what is coming</b> — “In this part of my presentation, I'd like to talk about...”"
+        ]
+      },
+      {
+        heading: "คำศัพท์เพิ่มเติมสำหรับการนำเสนอ",
+        items: [
+          "<b>Overview</b> — ภาพรวมของสิ่งที่จะนำเสนอ",
+          "<b>Audience</b> — ผู้ฟังหรือผู้ชมการนำเสนอ",
+          "<b>Transition</b> — คำหรือวลีที่ใช้เชื่อมโยงระหว่างหัวข้อ",
+          "<b>Conclusion</b> — บทสรุปปิดท้ายการนำเสนอ"
+        ]
+      }
+    ],
+    phrases: [
+      "Good morning, ladies and gentlemen.",
+      "Let me introduce myself. I'm... From...",
+      "The purpose of this presentation is to...",
+      "First, I'll be looking at..., second..., and third...",
+      "My presentation will take about 30 minutes."
+    ],
+    sentenceBuilder: [
+      { answer: "Good morning, ladies and gentlemen." },
+      { answer: "Let me introduce myself." },
+      { answer: "My presentation will take about 30 minutes." },
+      { answer: "I'll focus on three major issues." }
+    ],
+    vocab: [
+      { term: "Introduction", meaning: "การเปิดการนำเสนอ" },
+      { term: "Objective", meaning: "จุดประสงค์" },
+      { term: "Structure", meaning: "โครงสร้างการนำเสนอ" },
+      { term: "Sequence", meaning: "ลำดับขั้นตอน" },
+      { term: "Timing", meaning: "การกำหนดเวลา" },
+      { term: "Purpose", meaning: "จุดมุ่งหมาย" }
+    ],
+    fillBlank: [
+      { sentence: "The ___ of this presentation is to introduce our new project plan.", answer: "purpose", options: ["purpose", "timing", "hierarchy", "feedback"] },
+      { sentence: "“In my presentation, I'll focus on three major issues” describes the ___ of my talk.", answer: "structure", options: ["structure", "salary", "meeting", "vacancy"] },
+      { sentence: "“First..., second..., and third...” shows the ___ of ideas.", answer: "sequence", options: ["sequence", "objective", "timing", "purpose"] },
+      { sentence: "“My presentation will take about 30 minutes” tells the audience about ___.", answer: "timing", options: ["timing", "structure", "sequence", "objective"] },
+      { sentence: "“Good morning, ladies and gentlemen” is the ___ of a presentation.", answer: "introduction", options: ["introduction", "purpose", "structure", "sequence"] }
+    ],
+    scramble: [
+      { word: "INTRODUCTION", hint: "การเปิดการนำเสนอ" },
+      { word: "OBJECTIVE", hint: "จุดประสงค์" },
+      { word: "STRUCTURE", hint: "โครงสร้างการนำเสนอ" },
+      { word: "SEQUENCE", hint: "ลำดับขั้นตอน" },
+      { word: "TIMING", hint: "การกำหนดเวลา" },
+      { word: "PURPOSE", hint: "จุดมุ่งหมาย" }
+    ],
+    quiz: [
+      { q: "Which phrase is used to start a presentation politely?", options: ["“Good morning/afternoon, ladies and gentlemen.”", "“Give me your attention now!”", "“Let's end this.”", "“I don't want to be here.”"], answer: 0, explain: "เป็นวลีมาตรฐานที่สุภาพสำหรับเปิดการนำเสนอ" },
+      { q: "“The purpose of this presentation is to...” is used to...", options: ["End the presentation", "State the objective/aim of the talk", "Introduce yourself", "Ask a question"], answer: 1, explain: "ใช้บอกจุดประสงค์ของการนำเสนอ" },
+      { q: "“First, I'll be looking at..., second..., and third...” is an example of...", options: ["Sequencing", "Timing", "Closing", "Small talk"], answer: 0, explain: "เป็นการเรียงลำดับหัวข้อที่จะพูดถึง (Sequencing)" },
+      { q: "“My presentation will take about 30 minutes” tells the audience about...", options: ["The topic", "The timing", "The speaker's name", "The purpose"], answer: 1, explain: "บอกระยะเวลาที่ใช้ในการนำเสนอ (Timing)" },
+      { q: "“In this part of my presentation, I'd like to talk about...” is used to...", options: ["Say what is coming next", "End the presentation", "Introduce yourself", "Thank the audience"], answer: 0, explain: "ใช้บอกล่วงหน้าว่ากำลังจะพูดถึงหัวข้อถัดไป" },
+      { q: "An “Objective” in a presentation is...", options: ["The goal or aim of the presentation", "The name of the speaker", "The length of the talk", "The location of the meeting"], answer: 0, explain: "Objective คือจุดประสงค์หรือเป้าหมายของการนำเสนอ" },
+      { q: "“Structure” in a presentation refers to...", options: ["How the presentation is organized", "The audience's opinions", "The speaker's clothing", "The date of the talk"], answer: 0, explain: "Structure คือวิธีการจัดระเบียบเนื้อหาของการนำเสนอ" },
+      { q: "An “Audience” is...", options: ["The people listening to a presentation", "The speaker's notes", "A type of slide", "A meeting agenda"], answer: 0, explain: "Audience คือผู้ฟังหรือผู้ชมการนำเสนอ" },
+      { q: "Which is NOT a good way to begin a presentation?", options: ["“Good morning, ladies and gentlemen.”", "“Let me introduce myself.”", "“Give me your attention now!”", "“The purpose of this presentation is to...”"], answer: 2, explain: "“Give me your attention now!” ฟังดูไม่สุภาพสำหรับการเปิดการนำเสนอ" },
+      { q: "Which of these best completes a presentation professionally?", options: ["A clear conclusion summarizing the key points", "Walking away without saying anything", "Talking about an unrelated topic", "Ending mid-sentence"], answer: 0, explain: "การปิดท้ายด้วยบทสรุปที่ชัดเจนแสดงความเป็นมืออาชีพ" }
+    ]
+  },
+
+  // ============ LESSON 4 : SOCIALIZATION ============
+  {
+    id: 4,
+    gate: "GATE 04 · SOCIAL-04",
+    title: "บทที่ 4 · การเข้าสังคม (Socialization)",
+    subtitle: "ฝึกบทสนทนา Small Talk ในสถานการณ์ต่างๆ และการขอร้องอย่างสุภาพด้วย “Would you mind...?”",
+    videoId: "MqeA407ce74",
+    videoTitle: "Small Talk: What to Say and What NOT to Say",
+    contentBlocks: [
+      {
+        heading: "บทสนทนา Small Talk ในสถานการณ์ต่างๆ",
+        items: [
+          "<b>At a networking event</b> — “Hi, I'm Sarah. Have you been to this event before?”",
+          "<b>In an elevator</b> — “Nice weather we're having today, isn't it?”",
+          "<b>Waiting in line at a coffee shop</b> — “I love their coffee here. Have you tried it before?”",
+          "<b>At a social gathering</b> — “Hi, I'm Mike. What brings you to this party?”",
+          "<b>In a shared office space</b> — “Do you work here often? I've seen you around.”",
+          "<b>On a flight</b> — “Are you traveling for business or pleasure?”",
+          "<b>In a gym or fitness class</b> — “This workout is intense, right?”",
+          "<b>At a community event</b> — “I'm excited about the upcoming festival. Have you been before?”",
+          "<b>Waiting for public transportation</b> — “The bus is running a bit late today, isn't it?”",
+          "<b>In a bookstore</b> — “I see you're browsing the fiction section. Any recommendations?”"
+        ]
+      },
+      {
+        heading: "Would you mind...? (การขอร้องอย่างสุภาพ)",
+        items: [
+          "“Would you mind closing the window?”",
+          "“Would you mind passing me the salt?”",
+          "“Would you mind if I borrowed your pen?”",
+          "“Would you mind holding the door for me?”",
+          "การตอบรับ: “No, I wouldn't mind at all.”"
+        ]
+      },
+      {
+        heading: "หัวข้อ Small Talk ในงานปาร์ตี้",
+        items: [
+          "<b>Party Venue</b> — “This is a great venue for a party, isn't it?”",
+          "<b>Food and Drinks</b> — “Have you tried the appetizers? They're delicious!”",
+          "<b>Music</b> — “The music selection tonight is fantastic, don't you think?”",
+          "<b>Weekend plans</b> — “Any exciting plans for the weekend?”",
+          "<b>Hobbies/Interests</b> — “What do you enjoy doing in your free time?”"
+        ]
+      }
+    ],
+    phrases: [
+      "Have you been to this event before?",
+      "Would you mind if I borrowed your pen?",
+      "No, I wouldn't mind at all.",
+      "Any exciting plans for the weekend?",
+      "What do you enjoy doing in your free time?"
+    ],
+    sentenceBuilder: [
+      { answer: "Have you been to this event before?" },
+      { answer: "Would you mind if I borrowed your pen?" },
+      { answer: "No, I wouldn't mind at all." },
+      { answer: "What do you enjoy doing in your free time?" }
+    ],
+    vocab: [
+      { term: "Networking", meaning: "การสร้างเครือข่าย / พบปะผู้คน" },
+      { term: "Acquaintance", meaning: "คนรู้จัก (ไม่สนิทมาก)" },
+      { term: "Icebreaker", meaning: "บทสนทนาเปิดตัว / ละลายพฤติกรรม" },
+      { term: "Rapport", meaning: "ความสัมพันธ์อันดี / ความคุ้นเคย" },
+      { term: "Hobby", meaning: "งานอดิเรก" },
+      { term: "Recommend", meaning: "แนะนำ" }
+    ],
+    fillBlank: [
+      { sentence: "Would you ___ closing the window?", answer: "mind", options: ["mind", "recommend", "network", "introduce"] },
+      { sentence: "“Have you been to this event before?” is a common ___ question.", answer: "icebreaker", options: ["icebreaker", "deadline", "agenda", "meeting"] },
+      { sentence: "I love mystery novels. Can you ___ any good books?", answer: "recommend", options: ["recommend", "reschedule", "delegate", "network"] },
+      { sentence: "This is a great ___ event; I've met so many new people.", answer: "networking", options: ["networking", "feedback", "meeting", "deadline"] },
+      { sentence: "What do you enjoy doing in your free time? — talking about your ___.", answer: "hobby", options: ["hobby", "salary", "deadline", "agenda"] }
+    ],
+    scramble: [
+      { word: "NETWORKING", hint: "การสร้างเครือข่าย" },
+      { word: "ACQUAINTANCE", hint: "คนรู้จัก" },
+      { word: "ICEBREAKER", hint: "บทสนทนาเปิดตัว" },
+      { word: "RAPPORT", hint: "ความสัมพันธ์อันดี" },
+      { word: "HOBBY", hint: "งานอดิเรก" },
+      { word: "RECOMMEND", hint: "แนะนำ" }
+    ],
+    quiz: [
+      { q: "“Would you mind closing the window?” is a way to...", options: ["Give an order rudely", "Make a polite request", "Say goodbye", "Introduce yourself"], answer: 1, explain: "“Would you mind...?” เป็นรูปแบบการขอร้องอย่างสุภาพ" },
+      { q: "Which is an appropriate response to “Would you mind if I borrowed your pen?”", options: ["“No, I wouldn't mind at all.”", "“Yes, go away.”", "“I don't know you.”", "“That's illegal.”"], answer: 0, explain: "“No, I wouldn't mind at all.” เป็นการตอบรับคำขอร้องอย่างสุภาพ" },
+      { q: "“Are you traveling for business or pleasure?” is small talk typically used...", options: ["On a flight", "At a funeral", "During a job interview", "In a job application letter"], answer: 0, explain: "เป็นบทสนทนาที่ใช้บ่อยระหว่างการเดินทางโดยเครื่องบิน" },
+      { q: "Asking “Have you been to this event before?” at a networking event is a good way to...", options: ["Start a conversation (icebreaker)", "End a conversation", "Criticize someone", "Give a presentation"], answer: 0, explain: "เป็นคำถามที่ใช้เปิดบทสนทนา (icebreaker) ได้ดี" },
+      { q: "A “Networking” event is mainly for...", options: ["Meeting new people and building professional connections", "Sleeping", "Filing taxes", "Repairing computers"], answer: 0, explain: "Networking คือการสร้างเครือข่ายและพบปะผู้คนใหม่ๆ" },
+      { q: "An “Acquaintance” is...", options: ["Someone you know, but not very well", "Your best friend", "A total stranger", "A family member"], answer: 0, explain: "Acquaintance คือคนรู้จักที่ไม่ได้สนิทมาก" },
+      { q: "An “Icebreaker” is...", options: ["A question or comment used to start a conversation", "A type of cold drink", "A formal contract", "A job title"], answer: 0, explain: "Icebreaker คือบทสนทนาที่ใช้เปิดตัวหรือละลายพฤติกรรม" },
+      { q: "“Rapport” means...", options: ["A good relationship or familiarity with someone", "A type of report document", "A salary negotiation", "A job resignation"], answer: 0, explain: "Rapport คือความสัมพันธ์อันดีหรือความคุ้นเคยกัน" },
+      { q: "The general purpose of small talk is to...", options: ["Build rapport and feel comfortable in a conversation", "Negotiate a business contract", "Give a formal presentation", "File a complaint"], answer: 0, explain: "Small talk ช่วยสร้างความสัมพันธ์อันดีและความสบายใจในการสนทนา" },
+      { q: "“Recommend” means...", options: ["To suggest something as good or suitable", "To refuse something", "To delete something", "To postpone something"], answer: 0, explain: "Recommend คือการแนะนำสิ่งที่ดีหรือเหมาะสม" }
+    ]
+  }
+];
+
+</script>
+<script>
+// ============================================================
+// APP LOGIC
+// คะแนน/ความคืบหน้าถูกบันทึกลง localStorage ของเบราว์เซอร์ผู้ใช้โดยอัตโนมัติ
+// (เมื่อเปิดไฟล์นี้ตามปกติในเบราว์เซอร์ หรือโฮสต์เป็นเว็บไซต์จริง)
+// หากพื้นที่ที่แสดงผลบล็อก localStorage (เช่น หน้าพรีวิวบางประเภท) ระบบจะยัง
+// ทำงานได้ปกติแต่จะไม่บันทึกคะแนนข้ามการโหลดหน้าใหม่
+// ============================================================
+
+const STORAGE_KEY = "careerpass_en_progress_v1";
+
+const LESSON_BY_ID = Object.fromEntries(LESSONS.map(l => [l.id, l]));
+const TOTAL_GATES = LESSONS.length;
+
+// progress[lessonId] = { preScore, postScore, gamesDone:{match,fill,scramble,builder,speed} }
+const PROGRESS = {};
+LESSONS.forEach(l => {
+  PROGRESS[l.id] = { preScore: null, postScore: null, gamesDone: { match:false, fill:false, scramble:false, builder:false, speed:false } };
+});
+
+function loadProgress(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return;
+    const saved = JSON.parse(raw);
+    LESSONS.forEach(l => {
+      if(saved[l.id]){
+        PROGRESS[l.id] = Object.assign(
+          { preScore: null, postScore: null, gamesDone: { match:false, fill:false, scramble:false, builder:false, speed:false } },
+          saved[l.id]
+        );
+      }
+    });
+  } catch(e){ /* localStorage unavailable — continue with in-memory defaults */ }
+}
+function saveProgress(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(PROGRESS));
+  } catch(e){ /* storage blocked — progress stays in-memory for this session only */ }
+}
+function resetProgress(){
+  LESSONS.forEach(l => { PROGRESS[l.id] = { preScore: null, postScore: null, gamesDone: { match:false, fill:false, scramble:false, builder:false, speed:false } }; });
+  try{ localStorage.removeItem(STORAGE_KEY); } catch(e){}
+  saveProgress();
+  goHome();
+}
+
+let currentLessonId = null;
+let currentTab = 'pre';
+
+// ---------- helpers ----------
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function scrambleWord(word){
+  let letters;
+  do{
+    letters = shuffle(word.split(''));
+  } while(letters.join('') === word && word.length > 1);
+  return letters.join('');
+}
+function pct(score,total){ return total ? Math.round((score/total)*100) : 0; }
+
+function isUnlocked(lessonId){
+  if(lessonId === LESSONS[0].id) return true;
+  const idx = LESSONS.findIndex(l=>l.id===lessonId);
+  const prevLesson = LESSONS[idx-1];
+  const prevProg = PROGRESS[prevLesson.id];
+  if(!prevProg || prevProg.postScore==null) return false;
+  return pct(prevProg.postScore, prevLesson.quiz.length) >= 60;
+}
+function isPassed(lessonId){
+  const p = PROGRESS[lessonId];
+  if(!p || p.postScore==null) return false;
+  return pct(p.postScore, LESSON_BY_ID[lessonId].quiz.length) >= 60;
+}
+function passedCount(){
+  return LESSONS.filter(l=>isPassed(l.id)).length;
+}
+
+// ---------- top chrome (gate track + progress pill + hero stub) ----------
+function renderChrome(){
+  const track = document.getElementById('gate-track');
+  track.innerHTML = '';
+  LESSONS.forEach((l, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'gate-dot' + (isPassed(l.id) ? ' passed' : (isUnlocked(l.id) ? ' unlocked' : ''));
+    dot.textContent = String(l.id).padStart(2,'0');
+    dot.title = l.title;
+    dot.addEventListener('click', () => { if(isUnlocked(l.id)) openLesson(l.id); });
+    track.appendChild(dot);
+    if(i < LESSONS.length-1){
+      const line = document.createElement('div');
+      line.className = 'gate-line' + (isPassed(l.id) ? ' filled' : '');
+      track.appendChild(line);
+    }
+  });
+  document.getElementById('progress-pill').textContent = `STAMPS ${passedCount()}/${TOTAL_GATES}`;
+  document.getElementById('stub-progress').textContent = `${passedCount()} / ${TOTAL_GATES}`;
+}
+
+// ---------- HOME VIEW ----------
+function renderHome(){
+  const grid = document.getElementById('lesson-grid');
+  grid.innerHTML = '';
+  LESSONS.forEach(l => {
+    const unlocked = isUnlocked(l.id);
+    const passed = isPassed(l.id);
+    const card = document.createElement('div');
+    card.className = 'ticket' + (unlocked ? '' : ' locked');
+    const statusClass = passed ? 'passed' : (unlocked ? 'open' : 'locked');
+    const statusText = passed ? 'ผ่านด่านแล้ว' : (unlocked ? 'พร้อมเรียน' : 'ล็อกอยู่');
+    card.innerHTML = `
+      <div class="ticket-top">
+        <div>
+          <div class="ticket-gate mono">${l.gate}</div>
+          <h3>${l.title}</h3>
+          <p>${l.subtitle}</p>
+        </div>
+        <div class="ticket-status ${statusClass} mono">${statusText}</div>
+      </div>
+      <div class="ticket-stub-line"></div>
+      <div class="ticket-bottom">
+        <span class="mono">${unlocked ? (passed ? `Post-test: ${pct(PROGRESS[l.id].postScore, l.quiz.length)}%` : 'เริ่มได้เลย →') : 'ผ่านด่านก่อนหน้า ≥ 60% เพื่อปลดล็อก'}</span>
+        ${passed ? '<span class="stamp">PASSED</span>' : ''}
+      </div>
+    `;
+    if(unlocked){
+      card.addEventListener('click', () => openLesson(l.id));
+    }
+    grid.appendChild(card);
+  });
+}
+
+function goHome(){
+  currentLessonId = null;
+  document.getElementById('view-lesson').style.display = 'none';
+  document.getElementById('view-home').style.display = 'block';
+  renderChrome();
+  renderHome();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ---------- LESSON VIEW ----------
+function openLesson(id){
+  currentLessonId = id;
+  const lesson = LESSON_BY_ID[id];
+  document.getElementById('view-home').style.display = 'none';
+  document.getElementById('view-lesson').style.display = 'block';
+
+  document.getElementById('lv-gate').textContent = lesson.gate;
+  document.getElementById('lv-title').textContent = lesson.title;
+  document.getElementById('lv-subtitle').textContent = lesson.subtitle;
+
+  renderContentTab(lesson);
+  renderVideoTab(lesson);
+  renderGamesTab(lesson);
+  renderQuizPanel(lesson, 'pre');
+  renderQuizPanel(lesson, 'post');
+
+  switchTab('pre');
+  renderChrome();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function switchTab(tab){
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.dataset.panel === tab));
+}
+
+document.getElementById('tab-bar').addEventListener('click', e => {
+  const btn = e.target.closest('.tab-btn');
+  if(btn) switchTab(btn.dataset.tab);
+});
+
+// ---------- CONTENT TAB ----------
+function renderContentTab(lesson){
+  const panel = document.getElementById('panel-content');
+  let html = '';
+  lesson.contentBlocks.forEach(block => {
+    html += `<div class="content-block"><h4>${block.heading}</h4><ul>${block.items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  });
+  html += `<div class="phrase-box"><h4>✎ วลีที่ใช้ได้จริง (Useful Phrases)</h4><ul>${lesson.phrases.map(p=>`<li>${p}</li>`).join('')}</ul></div>`;
+  panel.innerHTML = html;
+}
+
+// ---------- VIDEO TAB ----------
+function renderVideoTab(lesson){
+  const panel = document.getElementById('panel-video');
+  panel.innerHTML = `
+    <div class="video-wrap">
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/${lesson.videoId}" title="${lesson.videoTitle}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="video-title">${lesson.videoTitle}</div>
+      <div class="video-note">ชมวิดีโอนี้ประกอบเนื้อหาบทเรียน แล้วลองสังเกตคำศัพท์และวลีที่ปรากฏในวิดีโอ</div>
+    </div>
+  `;
+}
+
+// ---------- QUIZ (PRE / POST — 10 ข้อ) ----------
+function renderQuizPanel(lesson, mode){
+  const panel = document.getElementById(mode === 'pre' ? 'panel-pre' : 'panel-post');
+  const introText = mode === 'pre'
+    ? `ทำแบบทดสอบก่อนเรียน ${lesson.quiz.length} ข้อ เพื่อประเมินความรู้พื้นฐานของคุณก่อนเข้าสู่บทเรียนนี้`
+    : `ทำแบบทดสอบหลังเรียน ${lesson.quiz.length} ข้อ เพื่อวัดผลการเรียนรู้ — ต้องได้คะแนน 60% ขึ้นไปเพื่อปลดล็อกด่านถัดไป`;
+  panel.innerHTML = `<p style="color:var(--text-soft); margin:0 0 18px; font-size:14px;">${introText}</p><div id="quiz-body-${mode}"></div>`;
+  buildQuiz(lesson, mode, document.getElementById(`quiz-body-${mode}`));
+}
+
+function buildQuiz(lesson, mode, mount){
+  const total = lesson.quiz.length;
+  const answers = new Array(total).fill(null);
+
+  mount.innerHTML = `
+    <div class="quiz-progress">${lesson.quiz.map(()=>'<span></span>').join('')}</div>
+    <div class="quiz-list"></div>
+    <button class="primary-btn" disabled>ตรวจคำตอบ</button>
+    <div class="quiz-result-slot"></div>
+  `;
+  const list = mount.querySelector('.quiz-list');
+  const progressSpans = mount.querySelectorAll('.quiz-progress span');
+  const submitBtn = mount.querySelector('.primary-btn');
+  const resultSlot = mount.querySelector('.quiz-result-slot');
+
+  lesson.quiz.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.innerHTML = `<div class="quiz-q"><span class="qnum">Q${qi+1}.</span>${q.q}</div>` +
+      q.options.map((opt, oi) => `<button class="opt-btn" data-qi="${qi}" data-oi="${oi}">${opt}</button>`).join('') +
+      `<div class="quiz-explain" style="display:none"></div>`;
+    list.appendChild(card);
+  });
+
+  list.addEventListener('click', e => {
+    const btn = e.target.closest('.opt-btn');
+    if(!btn || btn.disabled) return;
+    const qi = +btn.dataset.qi;
+    list.querySelectorAll(`.opt-btn[data-qi="${qi}"]`).forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    answers[qi] = +btn.dataset.oi;
+    progressSpans[qi].classList.add('done');
+    submitBtn.disabled = answers.includes(null);
+  });
+
+  submitBtn.addEventListener('click', () => {
+    let score = 0;
+    lesson.quiz.forEach((q, qi) => {
+      const card = list.children[qi];
+      card.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+      card.querySelector(`.opt-btn[data-oi="${q.answer}"]`).classList.add('correct');
+      if(answers[qi] === q.answer){ score++; }
+      else{
+        const wrongBtn = card.querySelector(`.opt-btn[data-oi="${answers[qi]}"]`);
+        if(wrongBtn) wrongBtn.classList.add('wrong');
+      }
+      const ex = card.querySelector('.quiz-explain');
+      ex.style.display = 'block';
+      ex.textContent = q.explain;
+    });
+    submitBtn.style.display = 'none';
+
+    if(mode === 'pre') PROGRESS[lesson.id].preScore = score;
+    else PROGRESS[lesson.id].postScore = score;
+    saveProgress();
+
+    renderQuizResult(resultSlot, lesson, mode, score, total, () => buildQuiz(lesson, mode, mount));
+    renderChrome();
+  });
+}
+
+function renderQuizResult(slot, lesson, mode, score, total, onRetake){
+  const percent = pct(score, total);
+  const passed = percent >= 60;
+  let extra = '';
+  if(mode === 'post'){
+    const preScore = PROGRESS[lesson.id].preScore;
+    if(preScore != null){
+      extra = `
+        <div class="compare-row">
+          <div class="compare-item"><div class="cval">${pct(preScore,total)}%</div><div class="clabel">ก่อนเรียน</div></div>
+          <div class="compare-item"><div class="cval" style="color:var(--teal)">${percent}%</div><div class="clabel">หลังเรียน</div></div>
+          <div class="compare-item"><div class="cval">${percent - pct(preScore,total) >= 0 ? '+' : ''}${percent - pct(preScore,total)}%</div><div class="clabel">พัฒนาการ</div></div>
+        </div>`;
+    }
+    extra += passed
+      ? `<p style="margin-top:18px;">🎉 ยินดีด้วย! คุณปลดล็อกด่านถัดไปแล้ว</p>`
+      : `<p style="margin-top:18px;">ยังไม่ถึง 60% ลองทบทวนเนื้อหาและเล่นเกมฝึกทักษะอีกครั้ง แล้วทำแบบทดสอบใหม่</p>`;
+  }
+  slot.innerHTML = `
+    <div class="result-card">
+      <div style="color:#9AA6C6; font-size:12px; letter-spacing:0.1em; text-transform:uppercase;" class="mono">${mode === 'pre' ? 'Pre-test Result' : 'Post-test Result'}</div>
+      <div class="score">${score}/${total}</div>
+      <p>คิดเป็น ${percent}% · บันทึกคะแนนแล้ว</p>
+      ${extra}
+      <div style="margin-top:20px;">
+        <button class="ghost-btn" style="background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.3); color:#fff;" id="retake-btn">ทำแบบทดสอบใหม่อีกครั้ง</button>
+      </div>
+    </div>
+  `;
+  slot.querySelector('#retake-btn').addEventListener('click', onRetake);
+}
+
+// ---------- GAMES TAB ----------
+function renderGamesTab(lesson){
+  const panel = document.getElementById('panel-games');
+  panel.innerHTML = `
+    <div class="game-nav">
+      <button class="game-chip active" data-game="match">🧩 จับคู่คำศัพท์</button>
+      <button class="game-chip" data-game="fill">✏️ เติมคำในประโยค</button>
+      <button class="game-chip" data-game="scramble">🔤 เรียงตัวอักษร</button>
+      <button class="game-chip" data-game="builder">🧱 เรียงประโยค</button>
+      <button class="game-chip" data-game="speed">⚡ ทายความหมายเร็ว</button>
+    </div>
+    <div class="game-panel active" data-game-panel="match"></div>
+    <div class="game-panel" data-game-panel="fill"></div>
+    <div class="game-panel" data-game-panel="scramble"></div>
+    <div class="game-panel" data-game-panel="builder"></div>
+    <div class="game-panel" data-game-panel="speed"></div>
+  `;
+  panel.querySelector('.game-nav').addEventListener('click', e => {
+    const chip = e.target.closest('.game-chip');
+    if(!chip) return;
+    panel.querySelectorAll('.game-chip').forEach(c => c.classList.toggle('active', c === chip));
+    panel.querySelectorAll('.game-panel').forEach(p => p.classList.toggle('active', p.dataset.gamePanel === chip.dataset.game));
+  });
+
+  buildMatchGame(lesson, panel.querySelector('[data-game-panel="match"]'));
+  buildFillGame(lesson, panel.querySelector('[data-game-panel="fill"]'));
+  buildScrambleGame(lesson, panel.querySelector('[data-game-panel="scramble"]'));
+  buildSentenceBuilderGame(lesson, panel.querySelector('[data-game-panel="builder"]'));
+  buildSpeedRoundGame(lesson, panel.querySelector('[data-game-panel="speed"]'));
+}
+
+// --- Game 1: Word Match ---
+function buildMatchGame(lesson, mount){
+  const pairs = lesson.vocab.map((v, i) => ({ pairIndex: i, term: v.term, meaning: v.meaning }));
+  let tiles = shuffle([
+    ...pairs.map(p => ({ pairIndex: p.pairIndex, label: p.term, type: 'term' })),
+    ...pairs.map(p => ({ pairIndex: p.pairIndex, label: p.meaning, type: 'meaning' }))
+  ]);
+
+  mount.innerHTML = `
+    <div class="game-card">
+      <div class="game-head">
+        <h4>จับคู่คำศัพท์ภาษาอังกฤษกับความหมายภาษาไทย</h4>
+        <span class="game-score mono">จับคู่แล้ว <span id="match-count">0</span>/${pairs.length}</span>
+      </div>
+      <div class="match-grid"></div>
+    </div>
+  `;
+  const grid = mount.querySelector('.match-grid');
+  const countEl = mount.querySelector('#match-count');
+  let picked = null;
+  let matched = 0;
+  let locked = false;
+
+  tiles.forEach((t, i) => {
+    const el = document.createElement('button');
+    el.className = 'match-tile';
+    el.textContent = t.label;
+    el.dataset.index = i;
+    el.dataset.pair = t.pairIndex;
+    grid.appendChild(el);
+
+    el.addEventListener('click', () => {
+      if(locked || el.classList.contains('matched') || el.classList.contains('picked')) return;
+      if(!picked){
+        picked = el;
+        el.classList.add('picked');
+        return;
+      }
+      if(picked === el) return;
+      if(picked.dataset.pair === el.dataset.pair){
+        picked.classList.remove('picked'); picked.classList.add('matched');
+        el.classList.add('matched');
+        matched++;
+        countEl.textContent = matched;
+        picked = null;
+        if(matched === pairs.length){
+          PROGRESS[lesson.id].gamesDone.match = true;
+          saveProgress();
+        }
+      } else {
+        locked = true;
+        el.classList.add('shake');
+        picked.classList.add('shake');
+        setTimeout(() => {
+          el.classList.remove('shake');
+          picked.classList.remove('shake','picked');
+          picked = null;
+          locked = false;
+        }, 550);
+      }
+    });
+  });
+}
+
+// --- Game 2: Fill in the Blank ---
+function buildFillGame(lesson, mount){
+  mount.innerHTML = `
+    <div class="game-card">
+      <div class="game-head">
+        <h4>เลือกคำที่ถูกต้องเติมลงในประโยค</h4>
+        <span class="game-score mono" id="fill-score">0/${lesson.fillBlank.length}</span>
+      </div>
+      <div class="fill-list"></div>
+      <button class="primary-btn" id="fill-check" style="margin-top:8px;">ตรวจคำตอบ</button>
+    </div>
+  `;
+  const list = mount.querySelector('.fill-list');
+  const selections = new Array(lesson.fillBlank.length).fill(null);
+
+  lesson.fillBlank.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'fill-item';
+    div.innerHTML = `
+      <div class="fill-sentence">${idx+1}. ${item.sentence.replace('___', '<span class="blank">____</span>')}</div>
+      <div class="chip-row">${item.options.map(opt => `<button class="fill-chip" data-idx="${idx}" data-val="${opt}">${opt}</button>`).join('')}</div>
+    `;
+    list.appendChild(div);
+  });
+
+  list.addEventListener('click', e => {
+    const chip = e.target.closest('.fill-chip');
+    if(!chip) return;
+    const idx = +chip.dataset.idx;
+    list.querySelectorAll(`.fill-chip[data-idx="${idx}"]`).forEach(c => c.classList.remove('selected'));
+    chip.classList.add('selected');
+    selections[idx] = chip.dataset.val;
+  });
+
+  mount.querySelector('#fill-check').addEventListener('click', () => {
+    let score = 0;
+    lesson.fillBlank.forEach((item, idx) => {
+      const chips = list.querySelectorAll(`.fill-chip[data-idx="${idx}"]`);
+      chips.forEach(c => {
+        c.disabled = true;
+        if(c.dataset.val.toLowerCase() === item.answer.toLowerCase()) c.classList.add('correct');
+        else if(c.classList.contains('selected')) c.classList.add('wrong');
+      });
+      if(selections[idx] && selections[idx].toLowerCase() === item.answer.toLowerCase()) score++;
+    });
+    mount.querySelector('#fill-score').textContent = `${score}/${lesson.fillBlank.length}`;
+    mount.querySelector('#fill-check').disabled = true;
+    if(score === lesson.fillBlank.length){ PROGRESS[lesson.id].gamesDone.fill = true; saveProgress(); }
+  });
+}
+
+// --- Game 3: Word Scramble ---
+function buildScrambleGame(lesson, mount){
+  mount.innerHTML = `
+    <div class="game-card">
+      <div class="game-head">
+        <h4>เรียงตัวอักษรที่สลับกันให้เป็นคำศัพท์ที่ถูกต้อง</h4>
+        <span class="game-score mono" id="scramble-score">0/${lesson.scramble.length}</span>
+      </div>
+      <div class="scramble-list"></div>
+      <button class="primary-btn" id="scramble-check" style="margin-top:8px;">ตรวจคำตอบ</button>
+    </div>
+  `;
+  const list = mount.querySelector('.scramble-list');
+  lesson.scramble.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'scramble-item';
+    div.innerHTML = `
+      <div class="scramble-word">${scrambleWord(item.word)}</div>
+      <div class="scramble-hint">คำใบ้: ${item.hint}</div>
+      <div class="scramble-input-row">
+        <input class="scramble-input" data-idx="${idx}" data-answer="${item.word}" placeholder="พิมพ์คำตอบที่นี่" autocomplete="off">
+        <span class="check-icon" data-check="${idx}"></span>
+      </div>
+    `;
+    list.appendChild(div);
+  });
+
+  mount.querySelector('#scramble-check').addEventListener('click', () => {
+    let score = 0;
+    lesson.scramble.forEach((item, idx) => {
+      const input = list.querySelector(`.scramble-input[data-idx="${idx}"]`);
+      const icon = list.querySelector(`.check-icon[data-check="${idx}"]`);
+      input.disabled = true;
+      const correct = input.value.trim().toUpperCase() === item.word.toUpperCase();
+      input.classList.add(correct ? 'correct' : 'wrong');
+      icon.textContent = correct ? '✓ ถูกต้อง' : `✗ คำตอบคือ ${item.word}`;
+      icon.style.color = correct ? 'var(--teal-deep)' : 'var(--coral)';
+      if(correct) score++;
+    });
+    mount.querySelector('#scramble-score').textContent = `${score}/${lesson.scramble.length}`;
+    mount.querySelector('#scramble-check').disabled = true;
+    if(score === lesson.scramble.length){ PROGRESS[lesson.id].gamesDone.scramble = true; saveProgress(); }
+  });
+}
+
+// --- Game 4: Sentence Builder ---
+function buildSentenceBuilderGame(lesson, mount){
+  mount.innerHTML = `
+    <div class="game-card">
+      <div class="game-head">
+        <h4>คลิกคำศัพท์เพื่อเรียงเป็นประโยคที่ถูกต้อง</h4>
+        <span class="game-score mono" id="builder-score">0/${lesson.sentenceBuilder.length}</span>
+      </div>
+      <div class="builder-list"></div>
+    </div>
+  `;
+  const list = mount.querySelector('.builder-list');
+  let solvedCount = 0;
+
+  lesson.sentenceBuilder.forEach((item, idx) => {
+    const words = item.answer.split(' ');
+    const shuffledWords = shuffle(words.map((w, wi) => ({ word: w, id: wi })));
+
+    const div = document.createElement('div');
+    div.className = 'builder-item';
+    div.innerHTML = `
+      <div class="scramble-hint">ประโยคที่ ${idx+1} — คลิกคำตามลำดับให้ถูกต้อง</div>
+      <div class="builder-zone" data-zone="${idx}"></div>
+      <div class="builder-bank" data-bank="${idx}"></div>
+      <div class="builder-controls">
+        <button class="ghost-btn" data-reset="${idx}">รีเซ็ตประโยคนี้</button>
+        <span class="builder-feedback" data-feedback="${idx}"></span>
+      </div>
+    `;
+    list.appendChild(div);
+
+    const zone = div.querySelector(`[data-zone="${idx}"]`);
+    const bank = div.querySelector(`[data-bank="${idx}"]`);
+    const feedback = div.querySelector(`[data-feedback="${idx}"]`);
+    let built = [];
+    let solved = false;
+
+    function renderBank(){
+      bank.innerHTML = '';
+      shuffledWords.forEach(sw => {
+        const btn = document.createElement('button');
+        btn.className = 'bank-word';
+        btn.textContent = sw.word;
+        btn.disabled = built.some(b => b.id === sw.id) || solved;
+        btn.addEventListener('click', () => {
+          if(solved) return;
+          built.push(sw);
+          renderZone();
+          renderBank();
+          checkComplete();
+        });
+        bank.appendChild(btn);
+      });
+    }
+    function renderZone(){
+      zone.innerHTML = '';
+      built.forEach((b) => {
+        const slot = document.createElement('button');
+        slot.className = 'builder-word-slot';
+        slot.textContent = b.word;
+        slot.disabled = solved;
+        slot.addEventListener('click', () => {
+          if(solved) return;
+          built = built.filter(x => x !== b);
+          renderZone();
+          renderBank();
+        });
+        zone.appendChild(slot);
+      });
+    }
+    function checkComplete(){
+      if(built.length !== words.length) return;
+      const attempt = built.map(b => b.word).join(' ');
+      if(attempt === item.answer){
+        solved = true;
+        solvedCount++;
+        feedback.textContent = '✓ ถูกต้อง!';
+        feedback.className = 'builder-feedback correct';
+        mount.querySelector('#builder-score').textContent = `${solvedCount}/${lesson.sentenceBuilder.length}`;
+        renderZone(); renderBank();
+        if(solvedCount === lesson.sentenceBuilder.length){
+          PROGRESS[lesson.id].gamesDone.builder = true;
+          saveProgress();
+        }
+      } else {
+        feedback.textContent = '✗ ลำดับยังไม่ถูกต้อง ลองใหม่';
+        feedback.className = 'builder-feedback wrong';
+      }
+    }
+    div.querySelector(`[data-reset="${idx}"]`).addEventListener('click', () => {
+      if(solved) return;
+      built = [];
+      feedback.textContent = '';
+      feedback.className = 'builder-feedback';
+      renderZone(); renderBank();
+    });
+
+    renderZone();
+    renderBank();
+  });
+}
+
+// --- Game 5: Speed Round (timed vocabulary quiz) ---
+function buildSpeedRoundGame(lesson, mount){
+  const ROUND_SECONDS = 30;
+  renderStart();
+
+  function renderStart(){
+    mount.innerHTML = `
+      <div class="game-card speed-card speed-start">
+        <h4 style="margin:0 0 10px;">ทายความหมายคำศัพท์ให้เร็วที่สุดใน ${ROUND_SECONDS} วินาที</h4>
+        <p style="color:var(--text-soft); font-size:13.5px; margin:0 0 20px;">ตอบคำถามให้ได้มากที่สุดก่อนเวลาหมด — มีทั้งหมด ${lesson.vocab.length} คำศัพท์</p>
+        <button class="primary-btn" id="speed-start-btn">เริ่มจับเวลา ⚡</button>
+      </div>
+    `;
+    mount.querySelector('#speed-start-btn').addEventListener('click', runRound);
+  }
+
+  function runRound(){
+    const questions = shuffle(lesson.vocab).map(v => {
+      const wrongPool = lesson.vocab.filter(x => x.term !== v.term).map(x => x.meaning);
+      const distractors = shuffle(wrongPool).slice(0, 3);
+      const options = shuffle([v.meaning, ...distractors]);
+      return { term: v.term, correct: v.meaning, options };
+    });
+
+    let qIndex = 0;
+    let score = 0;
+    let timeLeft = ROUND_SECONDS;
+    let timer = null;
+    let answered = false;
+
+    mount.innerHTML = `
+      <div class="game-card speed-card">
+        <div class="game-head" style="justify-content:space-between;">
+          <span class="game-score mono">คะแนน <span id="speed-score">0</span></span>
+          <span class="game-timer mono" id="speed-timer">${timeLeft}s</span>
+        </div>
+        <div class="speed-timer-bar"><div class="speed-timer-fill" id="speed-timer-fill"></div></div>
+        <div class="speed-term" id="speed-term"></div>
+        <div class="speed-options" id="speed-options"></div>
+      </div>
+    `;
+    const scoreEl = mount.querySelector('#speed-score');
+    const timerEl = mount.querySelector('#speed-timer');
+    const fillEl = mount.querySelector('#speed-timer-fill');
+    const termEl = mount.querySelector('#speed-term');
+    const optionsEl = mount.querySelector('#speed-options');
+
+    function showQuestion(){
+      answered = false;
+      if(qIndex >= questions.length){ endRound(); return; }
+      const q = questions[qIndex];
+      termEl.textContent = q.term;
+      optionsEl.innerHTML = '';
+      q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'speed-opt';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => {
+          if(answered) return;
+          answered = true;
+          const correct = opt === q.correct;
+          btn.classList.add(correct ? 'correct' : 'wrong');
+          if(!correct){
+            const correctBtn = Array.from(optionsEl.children).find(b => b.textContent === q.correct);
+            if(correctBtn) correctBtn.classList.add('correct');
+          } else {
+            score++;
+            scoreEl.textContent = score;
+          }
+          setTimeout(() => { qIndex++; showQuestion(); }, 500);
+        });
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    timer = setInterval(() => {
+      timeLeft--;
+      timerEl.textContent = `${timeLeft}s`;
+      fillEl.style.width = `${(timeLeft / ROUND_SECONDS) * 100}%`;
+      if(timeLeft <= 0){ endRound(); }
+    }, 1000);
+
+    function endRound(){
+      clearInterval(timer);
+      mount.innerHTML = `
+        <div class="game-card speed-card speed-final">
+          <div style="color:var(--text-soft); font-size:12px; letter-spacing:0.1em; text-transform:uppercase;" class="mono">Speed Round Result</div>
+          <div class="score">${score}/${questions.length}</div>
+          <p style="color:var(--text-soft); font-size:13.5px;">ตอบถูก ${score} จาก ${questions.length} คำศัพท์ภายใน ${ROUND_SECONDS} วินาที</p>
+          <button class="primary-btn" id="speed-retry-btn">เล่นอีกครั้ง</button>
+        </div>
+      `;
+      if(score >= Math.ceil(questions.length * 0.6)){
+        PROGRESS[lesson.id].gamesDone.speed = true;
+        saveProgress();
+      }
+      mount.querySelector('#speed-retry-btn').addEventListener('click', renderStart);
+    }
+
+    showQuestion();
+  }
+}
+
+// ---------- WIRE UP GLOBAL NAV ----------
+document.getElementById('brand-home-btn').addEventListener('click', goHome);
+document.getElementById('back-btn').addEventListener('click', goHome);
+document.getElementById('hero-start-btn').addEventListener('click', () => openLesson(LESSONS[0].id));
+document.getElementById('reset-btn').addEventListener('click', () => {
+  if(confirm('ต้องการล้างคะแนนและความคืบหน้าทั้งหมดหรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้')){
+    resetProgress();
+  }
+});
+
+// ---------- INIT ----------
+loadProgress();
+renderChrome();
+renderHome();
+
+</script>
+</body>
+</html>
