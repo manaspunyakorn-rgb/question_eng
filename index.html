@@ -456,6 +456,7 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
   </button>
   <div class="gate-track" id="gate-track"></div>
   <div class="topbar-right">
+    <button class="reset-btn" id="student-badge" title="แก้ไขชื่อผู้เรียน">👤</button>
     <div class="progress-pill" id="progress-pill">⭐ 0/4</div>
     <button class="reset-btn" id="reset-btn" title="ล้างคะแนนและความคืบหน้าทั้งหมด">รีเซ็ตความคืบหน้า</button>
   </div>
@@ -470,7 +471,7 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
         <div class="hero-main">
           <div class="hero-eyebrow">🎉 Your Learning Adventure · Business English</div>
           <h1>เตรียมความพร้อมสู่โลกการทำงาน<br>ด้วยภาษาอังกฤษ 4 ด่านสุดสนุก!</h1>
-          <p class="lead">สื่อการเรียนรู้สำหรับนักศึกษาบริหารธุรกิจ สาขาคอมพิวเตอร์ธุรกิจ ครอบคลุมการแนะนำตัว การพูดถึงความรับผิดชอบ การนำเสนอโครงการ และการเข้าสังคมในที่ทำงาน — เรียนเนื้อหา ทำแบบทดสอบ 10 ข้อ ดูวิดีโอ และฝึกฝนผ่าน 5 เกมสุดมันส์ในทุกบท คะแนนของคุณจะถูกบันทึกไว้ในเครื่องนี้โดยอัตโนมัติ</p>
+          <p class="lead">สื่อการเรียนรู้สำหรับนักศึกษาบริหารธุรกิจ สาขาคอมพิวเตอร์ธุรกิจ ครอบคลุมการแนะนำตัว การพูดถึงความรับผิดชอบ การนำเสนอโครงการ และการเข้าสังคมในที่ทำงาน — เรียนเนื้อหา ทำแบบทดสอบ 5 ข้อ ดูวิดีโอ และฝึกฝนผ่าน 5 เกมสุดมันส์ในทุกบท คะแนนของคุณจะถูกบันทึกลงฐานข้อมูลโดยอัตโนมัติ</p>
           <div class="route-row">
             <div class="route-node">🐣 STUDENT<small>Gate 00</small></div>
             <div class="route-dash"></div>
@@ -525,13 +526,13 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
   <div>โครงงานปริญญาตรี คณะบริหารธุรกิจ สาขาคอมพิวเตอร์ธุรกิจ</div>
   <div>ผู้จัดทำ: นายกิจพงษ์ เบญจดำรงกิจ รหัสนักศึกษา 6614012620057 · นายปัญญากร มีเสน รหัสนักศึกษา 6614012620154</div>
   <div>อาจารย์ที่ปรึกษา: ดร.กนกวรรณ ไทยประดิษฐ · ปีการศึกษา 2569</div>
-  <div>คะแนนและความคืบหน้าจะถูกบันทึกไว้ในเบราว์เซอร์นี้โดยอัตโนมัติ (localStorage) กด "รีเซ็ตความคืบหน้า" ด้านบนเพื่อเริ่มใหม่</div>
+  <div>คะแนนของคุณจะถูกส่งไปบันทึกลงฐานข้อมูล (Google Sheet) โดยอัตโนมัติทุกครั้งที่ทำแบบทดสอบหรือเล่นเกมจบ พร้อมเก็บความคืบหน้าการปลดล็อกด่านไว้ในเบราว์เซอร์นี้ด้วย กด "รีเซ็ตความคืบหน้า" ด้านบนเพื่อเริ่มใหม่ในเครื่องนี้</div>
 </footer>
 
 <script>
 // ============================================================
 // LESSON DATA
-// เนื้อหา คำศัพท์ แบบทดสอบ (10 ข้อ) และข้อมูลเกม สำหรับทั้ง 4 บทเรียน
+// เนื้อหา คำศัพท์ แบบทดสอบ (5 ข้อ) และข้อมูลเกม สำหรับทั้ง 4 บทเรียน
 // อ้างอิงจากเอกสารประกอบการสอนจริง:
 // บทที่ 1 Introducing Yourself
 // บทที่ 2 Talking about Responsibility
@@ -624,15 +625,10 @@ const LESSONS = [
     ],
     quiz: [
       { q: "What does “Authority” mean in a workplace context?", options: ["The power to give orders and make decisions", "A type of meeting", "A job title", "A lunch break"], answer: 0, explain: "Authority คืออำนาจในการสั่งการและตัดสินใจภายในองค์กร" },
-      { q: "“Chain of command” refers to...", options: ["A list of holidays", "The formal line of authority within an organization", "Employee salaries", "A software system"], answer: 1, explain: "Chain of command คือสายการบังคับบัญชาอย่างเป็นทางการ" },
-      { q: "Which phrase is used to greet someone you already know?", options: ["“Nice to meet you.”", "“Good to see you again.”", "“Goodbye forever.”", "“I disagree.”"], answer: 1, explain: "“Good to see you again” ใช้ทักทายคนที่เคยรู้จักกันมาก่อน" },
       { q: "“Accountability” means...", options: ["Ignoring your mistakes", "Accepting responsibility for your actions and decisions", "Taking a vacation", "Avoiding teamwork"], answer: 1, explain: "Accountability คือการยอมรับผิดชอบต่อการกระทำและการตัดสินใจของตนเอง" },
       { q: "“Hierarchy” best means...", options: ["A system of levels of authority within an organization", "A type of software", "A company holiday", "A sales discount"], answer: 0, explain: "Hierarchy คือระบบลำดับชั้นของอำนาจภายในองค์กร" },
-      { q: "“Delegation” means...", options: ["Assigning tasks to others while staying accountable for the result", "Refusing to do any work", "Quitting a job", "Ignoring instructions"], answer: 0, explain: "Delegation คือการมอบหมายงานโดยยังรับผิดชอบผลลัพธ์โดยรวม" },
       { q: "“Communication” in the workplace means...", options: ["The exchange of information, ideas, and feedback among people", "Working completely alone", "Taking a day off", "Signing a contract"], answer: 0, explain: "Communication คือการแลกเปลี่ยนข้อมูล ความคิด และความคิดเห็นระหว่างกัน" },
-      { q: "“Responsibility” means...", options: ["The duty or obligation to perform certain tasks or fulfill specific roles", "A salary bonus", "A public holiday", "A software tool"], answer: 0, explain: "Responsibility คือหน้าที่หรือพันธะในการปฏิบัติงาน" },
-      { q: "When introducing yourself in a business setting, it's best to...", options: ["State your name and position clearly", "Avoid saying your name", "Talk only about your hobbies", "Ignore the other person"], answer: 0, explain: "การแนะนำตัวที่ดีควรบอกชื่อและตำแหน่งอย่างชัดเจน" },
-      { q: "A polite way to greet a colleague you haven't seen for a while is to say...", options: ["“Good to see you again.”", "“Who are you?”", "“I'm busy.”", "“Go away.”"], answer: 0, explain: "“Good to see you again” เป็นวลีทักทายที่สุภาพสำหรับคนที่เคยรู้จักกัน" }
+      { q: "When introducing yourself in a business setting, it's best to...", options: ["State your name and position clearly", "Avoid saying your name", "Talk only about your hobbies", "Ignore the other person"], answer: 0, explain: "การแนะนำตัวที่ดีควรบอกชื่อและตำแหน่งอย่างชัดเจน" }
     ]
   },
 
@@ -718,11 +714,6 @@ const LESSONS = [
       { q: "“Accountable” means...", options: ["Being answerable for your actions", "Ignoring deadlines", "Working alone always", "Taking a day off"], answer: 0, explain: "Accountable คือการต้องรับผิดชอบและตอบคำถามเกี่ยวกับการกระทำของตนเอง" },
       { q: "“Duties” refers to...", options: ["Vacation days", "Tasks expected as part of your job", "Salary amount", "Company logo"], answer: 1, explain: "Duties คือหน้าที่หรืองานที่คาดหวังให้ทำในตำแหน่งงาน" },
       { q: "A strong “work ethic” means...", options: ["Avoiding responsibility", "Performing work diligently and with dedication", "Arriving late often", "Refusing teamwork"], answer: 1, explain: "Work ethic คือค่านิยมที่ทำให้ทำงานอย่างขยันขันแข็งและทุ่มเท" },
-      { q: "“Collaboration” at work means...", options: ["Competing against colleagues", "Working together to achieve common goals", "Working completely alone", "Ignoring feedback"], answer: 1, explain: "Collaboration คือการทำงานร่วมกับผู้อื่นเพื่อบรรลุเป้าหมายร่วมกัน" },
-      { q: "“Obligation” best means...", options: ["A moral or legal duty to fulfill responsibilities", "A vacation request", "A salary increase", "A resignation letter"], answer: 0, explain: "Obligation คือพันธะทางศีลธรรมหรือกฎหมายที่ต้องปฏิบัติตาม" },
-      { q: "“Ownership” of a task means...", options: ["Taking full responsibility and control over it", "Ignoring it completely", "Giving it to someone else without follow-up", "Refusing to discuss it"], answer: 0, explain: "Ownership คือการรับผิดชอบและควบคุมงานที่ได้รับมอบหมายอย่างเต็มที่" },
-      { q: "“Deadlines” are...", options: ["Specific dates or times by which tasks must be completed", "A type of employee benefit", "A company slogan", "A meeting room name"], answer: 0, explain: "Deadlines คือกำหนดเวลาที่งานต้องเสร็จสิ้น" },
-      { q: "“Communicating effectively” means...", options: ["Conveying information clearly, accurately, and comprehensively", "Avoiding all conversations", "Speaking only in meetings", "Writing very long emails"], answer: 0, explain: "หมายถึงความสามารถในการสื่อสารข้อมูลอย่างชัดเจนและครบถ้วน" },
       { q: "“Integrity” means...", options: ["Adhering to strong moral and ethical principles", "Working the longest hours", "Having the highest salary", "Avoiding teamwork"], answer: 0, explain: "Integrity คือการยึดมั่นในหลักจริยธรรมและความซื่อสัตย์" },
       { q: "A “positive work environment” is characterized by...", options: ["Cooperation, respect, and support among colleagues", "Constant conflict and blame", "No communication at all", "Strict silence at all times"], answer: 0, explain: "สภาพแวดล้อมการทำงานเชิงบวกส่งเสริมความร่วมมือและความเคารพซึ่งกันและกัน" }
     ]
@@ -801,12 +792,7 @@ const LESSONS = [
       { q: "“The purpose of this presentation is to...” is used to...", options: ["End the presentation", "State the objective/aim of the talk", "Introduce yourself", "Ask a question"], answer: 1, explain: "ใช้บอกจุดประสงค์ของการนำเสนอ" },
       { q: "“First, I'll be looking at..., second..., and third...” is an example of...", options: ["Sequencing", "Timing", "Closing", "Small talk"], answer: 0, explain: "เป็นการเรียงลำดับหัวข้อที่จะพูดถึง (Sequencing)" },
       { q: "“My presentation will take about 30 minutes” tells the audience about...", options: ["The topic", "The timing", "The speaker's name", "The purpose"], answer: 1, explain: "บอกระยะเวลาที่ใช้ในการนำเสนอ (Timing)" },
-      { q: "“In this part of my presentation, I'd like to talk about...” is used to...", options: ["Say what is coming next", "End the presentation", "Introduce yourself", "Thank the audience"], answer: 0, explain: "ใช้บอกล่วงหน้าว่ากำลังจะพูดถึงหัวข้อถัดไป" },
-      { q: "An “Objective” in a presentation is...", options: ["The goal or aim of the presentation", "The name of the speaker", "The length of the talk", "The location of the meeting"], answer: 0, explain: "Objective คือจุดประสงค์หรือเป้าหมายของการนำเสนอ" },
-      { q: "“Structure” in a presentation refers to...", options: ["How the presentation is organized", "The audience's opinions", "The speaker's clothing", "The date of the talk"], answer: 0, explain: "Structure คือวิธีการจัดระเบียบเนื้อหาของการนำเสนอ" },
-      { q: "An “Audience” is...", options: ["The people listening to a presentation", "The speaker's notes", "A type of slide", "A meeting agenda"], answer: 0, explain: "Audience คือผู้ฟังหรือผู้ชมการนำเสนอ" },
-      { q: "Which is NOT a good way to begin a presentation?", options: ["“Good morning, ladies and gentlemen.”", "“Let me introduce myself.”", "“Give me your attention now!”", "“The purpose of this presentation is to...”"], answer: 2, explain: "“Give me your attention now!” ฟังดูไม่สุภาพสำหรับการเปิดการนำเสนอ" },
-      { q: "Which of these best completes a presentation professionally?", options: ["A clear conclusion summarizing the key points", "Walking away without saying anything", "Talking about an unrelated topic", "Ending mid-sentence"], answer: 0, explain: "การปิดท้ายด้วยบทสรุปที่ชัดเจนแสดงความเป็นมืออาชีพ" }
+      { q: "Which is NOT a good way to begin a presentation?", options: ["“Good morning, ladies and gentlemen.”", "“Let me introduce myself.”", "“Give me your attention now!”", "“The purpose of this presentation is to...”"], answer: 2, explain: "“Give me your attention now!” ฟังดูไม่สุภาพสำหรับการเปิดการนำเสนอ" }
     ]
   },
 
@@ -893,15 +879,10 @@ const LESSONS = [
     ],
     quiz: [
       { q: "“Would you mind closing the window?” is a way to...", options: ["Give an order rudely", "Make a polite request", "Say goodbye", "Introduce yourself"], answer: 1, explain: "“Would you mind...?” เป็นรูปแบบการขอร้องอย่างสุภาพ" },
-      { q: "Which is an appropriate response to “Would you mind if I borrowed your pen?”", options: ["“No, I wouldn't mind at all.”", "“Yes, go away.”", "“I don't know you.”", "“That's illegal.”"], answer: 0, explain: "“No, I wouldn't mind at all.” เป็นการตอบรับคำขอร้องอย่างสุภาพ" },
       { q: "“Are you traveling for business or pleasure?” is small talk typically used...", options: ["On a flight", "At a funeral", "During a job interview", "In a job application letter"], answer: 0, explain: "เป็นบทสนทนาที่ใช้บ่อยระหว่างการเดินทางโดยเครื่องบิน" },
-      { q: "Asking “Have you been to this event before?” at a networking event is a good way to...", options: ["Start a conversation (icebreaker)", "End a conversation", "Criticize someone", "Give a presentation"], answer: 0, explain: "เป็นคำถามที่ใช้เปิดบทสนทนา (icebreaker) ได้ดี" },
-      { q: "A “Networking” event is mainly for...", options: ["Meeting new people and building professional connections", "Sleeping", "Filing taxes", "Repairing computers"], answer: 0, explain: "Networking คือการสร้างเครือข่ายและพบปะผู้คนใหม่ๆ" },
       { q: "An “Acquaintance” is...", options: ["Someone you know, but not very well", "Your best friend", "A total stranger", "A family member"], answer: 0, explain: "Acquaintance คือคนรู้จักที่ไม่ได้สนิทมาก" },
-      { q: "An “Icebreaker” is...", options: ["A question or comment used to start a conversation", "A type of cold drink", "A formal contract", "A job title"], answer: 0, explain: "Icebreaker คือบทสนทนาที่ใช้เปิดตัวหรือละลายพฤติกรรม" },
       { q: "“Rapport” means...", options: ["A good relationship or familiarity with someone", "A type of report document", "A salary negotiation", "A job resignation"], answer: 0, explain: "Rapport คือความสัมพันธ์อันดีหรือความคุ้นเคยกัน" },
-      { q: "The general purpose of small talk is to...", options: ["Build rapport and feel comfortable in a conversation", "Negotiate a business contract", "Give a formal presentation", "File a complaint"], answer: 0, explain: "Small talk ช่วยสร้างความสัมพันธ์อันดีและความสบายใจในการสนทนา" },
-      { q: "“Recommend” means...", options: ["To suggest something as good or suitable", "To refuse something", "To delete something", "To postpone something"], answer: 0, explain: "Recommend คือการแนะนำสิ่งที่ดีหรือเหมาะสม" }
+      { q: "The general purpose of small talk is to...", options: ["Build rapport and feel comfortable in a conversation", "Negotiate a business contract", "Give a formal presentation", "File a complaint"], answer: 0, explain: "Small talk ช่วยสร้างความสัมพันธ์อันดีและความสบายใจในการสนทนา" }
     ]
   }
 ];
@@ -953,6 +934,60 @@ function resetProgress(){
   saveProgress();
   goHome();
 }
+
+// ============================================================
+// DATABASE LOGGING (Google Sheet ผ่าน Google Apps Script Web App)
+// คะแนนแบบทดสอบก่อนเรียน/หลังเรียน และผลเกมทุกครั้ง จะถูกส่งไปบันทึก
+// เป็นแถวใหม่ในชีตออนไลน์ทันที (นอกเหนือจาก localStorage ที่ยังใช้เก็บ
+// ความคืบหน้าในเครื่องเพื่อคำนวณการปลดล็อกด่านตามเดิม)
+//
+// วิธีเปิดใช้งาน: ผู้จัดทำต้อง deploy Google Apps Script เป็น Web App
+// แล้วนำ URL ที่ได้มาแทนที่ค่า SHEET_WEBAPP_URL ด้านล่างนี้
+// (ดูขั้นตอนและโค้ด Apps Script ที่แนบมาให้แยกต่างหาก)
+// ถ้ายังไม่ตั้งค่า URL ระบบจะข้ามการบันทึกลงฐานข้อมูลไปเงียบๆ
+// โดยไม่กระทบการทำงานส่วนอื่นของเว็บ
+// ============================================================
+const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzA6X2SatkS0nWdDpvevplw56YgVQgSF-l7gR3sOQmbKTlqhAe_Y3hO7s824-ZbJUn1/exec";
+const STUDENT_KEY = "qeng_student_name";
+
+function getStudentName(){
+  let name = null;
+  try{ name = localStorage.getItem(STUDENT_KEY); } catch(e){}
+  if(!name){
+    name = (window.prompt("กรุณากรอกชื่อ-นามสกุลของคุณ เพื่อบันทึกคะแนนลงฐานข้อมูล", "") || "").trim();
+    if(!name) name = "ไม่ระบุชื่อ";
+    try{ localStorage.setItem(STUDENT_KEY, name); } catch(e){}
+  }
+  return name;
+}
+function changeStudentName(){
+  const current = getStudentName();
+  const next = (window.prompt("แก้ไขชื่อ-นามสกุลของคุณ", current === "ไม่ระบุชื่อ" ? "" : current) || "").trim();
+  if(next){
+    try{ localStorage.setItem(STUDENT_KEY, next); } catch(e){}
+    renderStudentBadge();
+  }
+}
+function renderStudentBadge(){
+  const el = document.getElementById('student-badge');
+  if(el) el.textContent = `👤 ${getStudentName()}`;
+}
+
+function logToDB(record){
+  if(!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.indexOf("PASTE_YOUR") === 0){
+    return; // ยังไม่ได้ตั้งค่า URL ฐานข้อมูล — ข้ามการบันทึกแบบเงียบๆ
+  }
+  const payload = Object.assign({ student: getStudentName(), timestamp: new Date().toISOString() }, record);
+  try{
+    fetch(SHEET_WEBAPP_URL, {
+      method: 'POST',
+      mode: 'no-cors', // Apps Script web app ไม่รองรับ CORS แบบอ่านผลลัพธ์ได้ จึงส่งแบบ fire-and-forget
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    }).catch(() => { /* เครือข่ายมีปัญหา — ไม่กระทบการใช้งานเว็บ */ });
+  } catch(e){ /* เบราว์เซอร์บล็อก fetch — ไม่กระทบการใช้งานเว็บ */ }
+}
+
 
 let currentLessonId = null;
 let currentTab = 'pre';
@@ -1113,7 +1148,7 @@ function renderVideoTab(lesson){
   `;
 }
 
-// ---------- QUIZ (PRE / POST — 10 ข้อ) ----------
+// ---------- QUIZ (PRE / POST — 5 ข้อ) ----------
 function renderQuizPanel(lesson, mode){
   const panel = document.getElementById(mode === 'pre' ? 'panel-pre' : 'panel-post');
   const introText = mode === 'pre'
@@ -1178,6 +1213,7 @@ function buildQuiz(lesson, mode, mount){
     if(mode === 'pre') PROGRESS[lesson.id].preScore = score;
     else PROGRESS[lesson.id].postScore = score;
     saveProgress();
+    logToDB({ lessonId: lesson.id, lessonTitle: lesson.title, type: mode === 'pre' ? 'pretest' : 'posttest', gameName: '', score, total });
 
     renderQuizResult(resultSlot, lesson, mode, score, total, () => buildQuiz(lesson, mode, mount));
     renderChrome();
@@ -1295,6 +1331,7 @@ function buildMatchGame(lesson, mount){
         if(matched === pairs.length){
           PROGRESS[lesson.id].gamesDone.match = true;
           saveProgress();
+          logToDB({ lessonId: lesson.id, lessonTitle: lesson.title, type: 'game', gameName: 'จับคู่คำศัพท์ (Match)', score: pairs.length, total: pairs.length });
         }
       } else {
         locked = true;
@@ -1358,6 +1395,7 @@ function buildFillGame(lesson, mount){
     });
     mount.querySelector('#fill-score').textContent = `${score}/${lesson.fillBlank.length}`;
     mount.querySelector('#fill-check').disabled = true;
+    logToDB({ lessonId: lesson.id, lessonTitle: lesson.title, type: 'game', gameName: 'เติมคำในประโยค (Fill Blank)', score, total: lesson.fillBlank.length });
     if(score === lesson.fillBlank.length){ PROGRESS[lesson.id].gamesDone.fill = true; saveProgress(); }
   });
 }
@@ -1403,6 +1441,7 @@ function buildScrambleGame(lesson, mount){
     });
     mount.querySelector('#scramble-score').textContent = `${score}/${lesson.scramble.length}`;
     mount.querySelector('#scramble-check').disabled = true;
+    logToDB({ lessonId: lesson.id, lessonTitle: lesson.title, type: 'game', gameName: 'เรียงตัวอักษร (Scramble)', score, total: lesson.scramble.length });
     if(score === lesson.scramble.length){ PROGRESS[lesson.id].gamesDone.scramble = true; saveProgress(); }
   });
 }
@@ -1490,6 +1529,7 @@ function buildSentenceBuilderGame(lesson, mount){
         if(solvedCount === lesson.sentenceBuilder.length){
           PROGRESS[lesson.id].gamesDone.builder = true;
           saveProgress();
+          logToDB({ lessonId: lesson.id, lessonTitle: lesson.title, type: 'game', gameName: 'เรียงประโยค (Sentence Builder)', score: solvedCount, total: lesson.sentenceBuilder.length });
         }
       } else {
         feedback.textContent = '✗ ลำดับยังไม่ถูกต้อง ลองใหม่';
@@ -1605,6 +1645,7 @@ function buildSpeedRoundGame(lesson, mount){
         PROGRESS[lesson.id].gamesDone.speed = true;
         saveProgress();
       }
+      logToDB({ lessonId: lesson.id, lessonTitle: lesson.title, type: 'game', gameName: 'ทายความหมายเร็ว (Speed Round)', score, total: questions.length });
       mount.querySelector('#speed-retry-btn').addEventListener('click', renderStart);
     }
 
@@ -1621,9 +1662,12 @@ document.getElementById('reset-btn').addEventListener('click', () => {
     resetProgress();
   }
 });
+document.getElementById('student-badge').addEventListener('click', changeStudentName);
 
 // ---------- INIT ----------
 loadProgress();
+getStudentName();
+renderStudentBadge();
 renderChrome();
 renderHome();
 
