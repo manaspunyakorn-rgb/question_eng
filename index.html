@@ -203,6 +203,33 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 }
 @media (max-width:700px){ .lesson-grid{grid-template-columns:1fr;} }
 
+/* ============ EVALUATION FORMS SECTION ============ */
+.eval-wrap{margin-top:56px;}
+.eval-banner{
+  border-radius:20px; padding:18px 22px; margin-bottom:20px; border:3px solid var(--border);
+  font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px;
+  box-shadow:var(--shadow-hard-sm);
+}
+.eval-banner.pending{background:var(--paper-2); color:var(--text);}
+.eval-banner.done{background:linear-gradient(120deg, var(--green) 0%, var(--blue) 100%); color:#fff;}
+.eval-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:22px;}
+@media (max-width:700px){ .eval-grid{grid-template-columns:1fr;} }
+.eval-card{
+  display:block; text-decoration:none; color:inherit;
+  background:var(--card); border:3.5px solid var(--border); border-radius:22px; padding:26px 24px;
+  box-shadow:var(--shadow-hard); transition:transform .15s ease, box-shadow .15s ease;
+}
+.eval-card:hover{transform:translate(-3px,-3px); box-shadow:8px 8px 0 var(--border);}
+.eval-icon{font-size:34px; margin-bottom:10px;}
+.eval-card h3{margin:0 0 8px; font-size:17px; font-family:'Fredoka',sans-serif; font-weight:700; color:var(--purple-deep);}
+.eval-card p{margin:0 0 16px; font-size:13.5px; color:var(--text-soft); line-height:1.6;}
+.eval-btn{
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--yellow); color:var(--border); border:2.5px solid var(--border);
+  font-family:'Fredoka',sans-serif; font-weight:700; font-size:13.5px; padding:9px 16px; border-radius:12px;
+}
+.eval-card.satisfaction .eval-btn{background:var(--blue);}
+
 .ticket{
   background:var(--card);
   border-radius:22px;
@@ -493,6 +520,25 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
 
     <div class="section-label">Your Journey · เส้นทาง 4 ด่านสู่การทำงาน</div>
     <div class="lesson-grid" id="lesson-grid"></div>
+
+    <div class="eval-wrap">
+      <div class="section-label">📝 แบบประเมินผล · Evaluation</div>
+      <div id="eval-banner"></div>
+      <div class="eval-grid">
+        <a class="eval-card achievement" href="https://docs.google.com/forms/d/e/1FAIpQLSe8lzbpY2cgAgFywl_tzstxg8yeA5ggtr9OcblVBz9DIQRdhQ/viewform?usp=dialog" target="_blank" rel="noopener">
+          <div class="eval-icon">📊</div>
+          <h3>แบบทดสอบวัดผลสัมฤทธิ์ทางการเรียน</h3>
+          <p>ทำแบบทดสอบสรุปเพื่อวัดผลสัมฤทธิ์ทางการเรียนโดยรวมหลังใช้งานเว็บไซต์ (ใช้เวลาไม่นาน ทำได้ครั้งเดียวหรือหลังเรียนครบทุกด่านก็ได้)</p>
+          <span class="eval-btn">เปิดแบบทดสอบ →</span>
+        </a>
+        <a class="eval-card satisfaction" href="https://docs.google.com/forms/d/e/1FAIpQLScQinjhQbzO383DDjZkhxBIoqMyK6F9CXKvmmD9sXFvTyNbug/viewform?usp=publish-editor" target="_blank" rel="noopener">
+          <div class="eval-icon">💬</div>
+          <h3>แบบสอบถามความพึงพอใจในการใช้งาน</h3>
+          <p>ร่วมประเมินความพึงพอใจต่อการใช้งานเว็บไซต์ Question ENG เพื่อเป็นข้อมูลปรับปรุงระบบต่อไป</p>
+          <span class="eval-btn">เปิดแบบสอบถาม →</span>
+        </a>
+      </div>
+    </div>
   </section>
 
   <!-- ============ LESSON VIEW ============ -->
@@ -1079,6 +1125,17 @@ function renderHome(){
     }
     grid.appendChild(card);
   });
+  renderEvalBanner();
+}
+
+function renderEvalBanner(){
+  const el = document.getElementById('eval-banner');
+  if(!el) return;
+  const done = passedCount() === TOTAL_GATES;
+  el.className = 'eval-banner ' + (done ? 'done' : 'pending');
+  el.textContent = done
+    ? '🎉 ยินดีด้วย! คุณเรียนครบทุกด่านแล้ว กรุณาทำแบบทดสอบวัดผลสัมฤทธิ์และแบบสอบถามความพึงพอใจด้านล่างนี้ เพื่อเป็นข้อมูลประเมินผลของโครงงาน'
+    : '💡 เมื่อเรียนครบทุกด่านแล้ว สามารถทำแบบทดสอบวัดผลสัมฤทธิ์และแบบสอบถามความพึงพอใจด้านล่างนี้ได้ทุกเมื่อ';
 }
 
 function goHome(){
