@@ -205,6 +205,60 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 
 /* ============ EVALUATION FORMS SECTION ============ */
 .eval-wrap{margin-top:56px;}
+
+/* ============ PRE-TEST BANNER ============ */
+.pretest-banner{
+  display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+  text-decoration:none; color:inherit;
+  background:linear-gradient(100deg, var(--yellow) 0%, var(--coral) 100%);
+  border:3.5px solid var(--border); border-radius:22px; padding:20px 24px; margin:8px 0 30px;
+  box-shadow:var(--shadow-hard); transition:transform .15s ease, box-shadow .15s ease;
+}
+.pretest-banner:hover{transform:translate(-3px,-3px); box-shadow:8px 8px 0 var(--border);}
+.pretest-icon{font-size:36px; flex-shrink:0;}
+.pretest-text{flex:1; min-width:220px;}
+.pretest-text h3{margin:0 0 4px; font-size:16px; font-family:'Fredoka',sans-serif; font-weight:700; color:var(--border);}
+.pretest-text p{margin:0; font-size:13px; color:#3B2C63; opacity:0.85;}
+.pretest-btn{
+  flex-shrink:0; background:var(--border); color:#fff; font-family:'Fredoka',sans-serif; font-weight:700;
+  font-size:13.5px; padding:11px 18px; border-radius:12px; white-space:nowrap;
+}
+
+/* ============ TUTORIAL / ONBOARDING MODAL ============ */
+.tutorial-overlay{
+  position:fixed; inset:0; z-index:100; background:rgba(59,44,99,0.55);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+  animation:fadein-ov .2s ease;
+}
+@keyframes fadein-ov{from{opacity:0;} to{opacity:1;}}
+.tutorial-modal{
+  background:var(--card); border:4px solid var(--border); border-radius:26px;
+  max-width:460px; width:100%; padding:34px 30px 28px; text-align:center;
+  box-shadow:9px 9px 0 var(--border); position:relative;
+  animation:popin .25s cubic-bezier(.34,1.56,.64,1);
+}
+.tutorial-close{
+  position:absolute; top:14px; right:16px; background:none; border:none; font-size:18px;
+  color:var(--text-soft); cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:700;
+}
+.tutorial-close:hover{color:var(--coral-deep);}
+.tutorial-icon{font-size:48px; margin-bottom:8px;}
+.tutorial-step-label{
+  font-family:'Fredoka',sans-serif; font-size:11.5px; font-weight:600; letter-spacing:0.06em;
+  color:var(--purple-deep); text-transform:uppercase; margin-bottom:10px;
+}
+.tutorial-modal h3{margin:0 0 14px; font-size:19px; font-family:'Fredoka',sans-serif; font-weight:700; color:var(--ink);}
+.tutorial-modal p{margin:0 0 20px; font-size:14px; line-height:1.75; color:var(--text-soft); text-align:left;}
+.tutorial-dots{display:flex; justify-content:center; gap:7px; margin-bottom:22px;}
+.tutorial-dot{width:9px; height:9px; border-radius:50%; background:var(--paper-2); border:2px solid var(--border);}
+.tutorial-dot.active{background:var(--yellow);}
+.tutorial-nav{display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;}
+.tutorial-nav .ghost-btn{font-size:12.5px; padding:9px 14px;}
+.tutorial-nav .primary-btn{font-size:13.5px; padding:10px 20px;}
+@media (max-width:480px){
+  .tutorial-nav{flex-direction:column-reverse;}
+  .tutorial-nav > *{width:100%;}
+}
 .eval-banner{
   border-radius:20px; padding:18px 22px; margin-bottom:20px; border:3px solid var(--border);
   font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px;
@@ -483,6 +537,7 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
   </button>
   <div class="gate-track" id="gate-track"></div>
   <div class="topbar-right">
+    <button class="reset-btn" id="tutorial-btn" title="วิธีใช้งานเว็บไซต์">📖 วิธีใช้งาน</button>
     <button class="reset-btn" id="student-badge" title="แก้ไขชื่อผู้เรียน">👤</button>
     <div class="progress-pill" id="progress-pill">⭐ 0/4</div>
     <button class="reset-btn" id="reset-btn" title="ล้างคะแนนและความคืบหน้าทั้งหมด">รีเซ็ตความคืบหน้า</button>
@@ -517,6 +572,15 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
         </div>
       </div>
     </div>
+
+    <a class="pretest-banner" href="https://docs.google.com/forms/d/e/1FAIpQLSe8lzbpY2cgAgFywl_tzstxg8yeA5ggtr9OcblVBz9DIQRdhQ/viewform?usp=dialog" target="_blank" rel="noopener">
+      <div class="pretest-icon">📋</div>
+      <div class="pretest-text">
+        <h3>ก่อนเริ่มเรียน กรุณาทำแบบทดสอบก่อนเรียนนี้ก่อน!</h3>
+        <p>แบบทดสอบก่อนเรียน (Google Form) ใช้เวลาไม่นาน — ทำเพียงครั้งเดียวก่อนเริ่มด่านที่ 1</p>
+      </div>
+      <span class="pretest-btn">ทำแบบทดสอบก่อนเรียน →</span>
+    </a>
 
     <div class="section-label">Your Journey · เส้นทาง 4 ด่านสู่การทำงาน</div>
     <div class="lesson-grid" id="lesson-grid"></div>
@@ -574,6 +638,23 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
   <div>อาจารย์ที่ปรึกษา: ดร.กนกวรรณ ไทยประดิษฐ · ปีการศึกษา 2569</div>
   <div>คะแนนของคุณจะถูกส่งไปบันทึกลงฐานข้อมูล (Google Sheet) โดยอัตโนมัติทุกครั้งที่ทำแบบทดสอบหรือเล่นเกมจบ พร้อมเก็บความคืบหน้าการปลดล็อกด่านไว้ในเบราว์เซอร์นี้ด้วย กด "รีเซ็ตความคืบหน้า" ด้านบนเพื่อเริ่มใหม่ในเครื่องนี้</div>
 </footer>
+
+<!-- ============ TUTORIAL / ONBOARDING MODAL ============ -->
+<div class="tutorial-overlay" id="tutorial-overlay" style="display:none;">
+  <div class="tutorial-modal">
+    <button class="tutorial-close" id="tutorial-close" title="ปิด">✕</button>
+    <div class="tutorial-icon" id="tutorial-icon">👋</div>
+    <div class="tutorial-step-label" id="tutorial-step-label">ขั้นตอนที่ 1 / 7</div>
+    <h3 id="tutorial-title">ยินดีต้อนรับสู่ Question ENG!</h3>
+    <p id="tutorial-text"></p>
+    <div class="tutorial-dots" id="tutorial-dots"></div>
+    <div class="tutorial-nav">
+      <button class="ghost-btn" id="tutorial-prev">← ย้อนกลับ</button>
+      <button class="ghost-btn" id="tutorial-skip">ข้ามทั้งหมด</button>
+      <button class="primary-btn" id="tutorial-next">ถัดไป →</button>
+    </div>
+  </div>
+</div>
 
 <script>
 // ============================================================
@@ -1721,12 +1802,95 @@ document.getElementById('reset-btn').addEventListener('click', () => {
 });
 document.getElementById('student-badge').addEventListener('click', changeStudentName);
 
+// ============================================================
+// TUTORIAL / ONBOARDING SYSTEM — สอนวิธีใช้งานเว็บไซต์
+// แสดงอัตโนมัติในการเข้าชมครั้งแรก (จำผ่าน localStorage) และเปิดซ้ำได้
+// ทุกเมื่อผ่านปุ่ม "📖 วิธีใช้งาน" บนแถบเมนู
+// ============================================================
+const TUTORIAL_SEEN_KEY = "qeng_tutorial_seen";
+const TUTORIAL_STEPS = [
+  {
+    icon: "👋",
+    title: "ยินดีต้อนรับสู่ Question ENG!",
+    text: "เว็บไซต์นี้ช่วยฝึกภาษาอังกฤษเพื่อการทำงาน 4 บทเรียน ผ่านเนื้อหา วิดีโอ แบบทดสอบ และเกม ก่อนเริ่มใช้งานจริง เรามาทำความรู้จักส่วนต่างๆ ของเว็บกันสั้นๆ ครับ"
+  },
+  {
+    icon: "🗺️",
+    title: "หน้าหลักและด่านเรียนทั้ง 4 ด่าน",
+    text: "ในหน้าหลักจะเห็นการ์ดบทเรียน 4 ใบ แต่ละใบมีสถานะ “ล็อกอยู่ / พร้อมเรียน / ผ่านด่านแล้ว” ต้องทำแบบทดสอบหลังเรียนของด่านก่อนหน้าให้ได้คะแนน ≥60% จึงจะปลดล็อกด่านถัดไป"
+  },
+  {
+    icon: "📋",
+    title: "ก่อนเริ่มเรียน",
+    text: "อย่าลืมทำ “แบบทดสอบก่อนเรียน” (ปุ่มสีเหลือง-ส้มด้านบนการ์ดบทเรียน) ก่อนเริ่มด่านที่ 1 เพื่อวัดพื้นฐานความรู้ก่อนเข้าสู่บทเรียน"
+  },
+  {
+    icon: "📚",
+    title: "ภายในแต่ละบทเรียนมี 5 แท็บ",
+    text: "ทดสอบก่อนเรียน → เนื้อหาบทเรียน → วิดีโอ → เกมฝึกทักษะ → ทดสอบหลังเรียน สามารถคลิกสลับแท็บดูได้อิสระตามต้องการ"
+  },
+  {
+    icon: "🎮",
+    title: "เกมฝึกทักษะ 5 รูปแบบ",
+    text: "จับคู่คำศัพท์ / เติมคำในประโยค / เรียงตัวอักษร / เรียงประโยค / ทายความหมายเร็ว — เล่นได้ไม่จำกัดจำนวนครั้งเพื่อฝึกฝนก่อนทำแบบทดสอบหลังเรียน"
+  },
+  {
+    icon: "⭐",
+    title: "คะแนนถูกบันทึกอัตโนมัติ",
+    text: "ทุกครั้งที่ทำแบบทดสอบหรือเล่นเกมจบ คะแนนจะถูกบันทึกลงฐานข้อมูลโดยอัตโนมัติ และความคืบหน้าการปลดล็อกด่านจะถูกจำไว้ในเบราว์เซอร์เครื่องนี้"
+  },
+  {
+    icon: "📝",
+    title: "เมื่อเรียนครบทุกด่านแล้ว",
+    text: "อย่าลืมทำ “แบบทดสอบวัดผลสัมฤทธิ์ทางการเรียน” และ “แบบสอบถามความพึงพอใจ” ที่ด้านล่างสุดของหน้าหลัก เพื่อเป็นข้อมูลประเมินผลของโครงงาน ขอให้สนุกกับการเรียนครับ! 🎉"
+  }
+];
+let tutorialIndex = 0;
+
+function renderTutorialStep(){
+  const step = TUTORIAL_STEPS[tutorialIndex];
+  document.getElementById('tutorial-icon').textContent = step.icon;
+  document.getElementById('tutorial-title').textContent = step.title;
+  document.getElementById('tutorial-text').textContent = step.text;
+  document.getElementById('tutorial-step-label').textContent = `ขั้นตอนที่ ${tutorialIndex + 1} / ${TUTORIAL_STEPS.length}`;
+  const dotsEl = document.getElementById('tutorial-dots');
+  dotsEl.innerHTML = TUTORIAL_STEPS.map((_, i) => `<span class="tutorial-dot${i === tutorialIndex ? ' active' : ''}"></span>`).join('');
+  document.getElementById('tutorial-prev').style.visibility = tutorialIndex === 0 ? 'hidden' : 'visible';
+  document.getElementById('tutorial-next').textContent = tutorialIndex === TUTORIAL_STEPS.length - 1 ? 'เริ่มใช้งานเลย! 🚀' : 'ถัดไป →';
+}
+function openTutorial(){
+  tutorialIndex = 0;
+  renderTutorialStep();
+  document.getElementById('tutorial-overlay').style.display = 'flex';
+}
+function closeTutorial(){
+  document.getElementById('tutorial-overlay').style.display = 'none';
+  try{ localStorage.setItem(TUTORIAL_SEEN_KEY, '1'); } catch(e){}
+}
+document.getElementById('tutorial-btn').addEventListener('click', openTutorial);
+document.getElementById('tutorial-close').addEventListener('click', closeTutorial);
+document.getElementById('tutorial-skip').addEventListener('click', closeTutorial);
+document.getElementById('tutorial-prev').addEventListener('click', () => {
+  if(tutorialIndex > 0){ tutorialIndex--; renderTutorialStep(); }
+});
+document.getElementById('tutorial-next').addEventListener('click', () => {
+  if(tutorialIndex < TUTORIAL_STEPS.length - 1){ tutorialIndex++; renderTutorialStep(); }
+  else{ closeTutorial(); }
+});
+
 // ---------- INIT ----------
 loadProgress();
 getStudentName();
 renderStudentBadge();
 renderChrome();
 renderHome();
+
+// เปิดสอนใช้งานอัตโนมัติเฉพาะการเข้าชมครั้งแรกของเบราว์เซอร์เครื่องนี้
+(function autoShowTutorialOnFirstVisit(){
+  let seen = false;
+  try{ seen = localStorage.getItem(TUTORIAL_SEEN_KEY) === '1'; } catch(e){}
+  if(!seen) openTutorial();
+})();
 
 </script>
 </body>
