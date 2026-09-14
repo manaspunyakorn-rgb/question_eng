@@ -10,6 +10,7 @@
 <style>
 /* ============ DESIGN TOKENS — cute & playful cartoon theme ============ */
 :root{
+  --fs-scale:1;            /* ปรับขนาดตัวอักษรทั้งเว็บ เปลี่ยนค่าได้ผ่านปุ่ม A- / A+ */
   --ink:#4A3B78;          /* friendly dark plum used for outlines/text, softer than black */
   --ink-2:#6C4FA0;
   --paper:#FDF6FF;        /* soft lavender page background */
@@ -34,6 +35,45 @@
   --border:#3B2C63;       /* thick cartoon outline color */
   --shadow-hard: 5px 5px 0 var(--border);
   --shadow-hard-sm: 3px 3px 0 var(--border);
+}
+
+/* ============ DARK THEME ============ */
+html[data-theme="dark"]{
+  --ink:#E8E0FF; --ink-2:#C9B8FF;
+  --paper:#171225; --paper-2:#241D35; --card:#2A2340;
+  --pink:#FF8FB8; --pink-deep:#FF6FA0;
+  --yellow:#FFE066; --yellow-deep:#FFD93D;
+  --blue:#6ED4FF; --blue-deep:#4FC9F7;
+  --purple:#C9A6FF; --purple-deep:#A97FFF;
+  --green:#5EE8AC; --green-deep:#3DDC97;
+  --coral:#FF9B8F; --coral-deep:#FF7A6E;
+  --text:#E8E0FF; --text-soft:#A99BC9;
+  --border:#0D0A16;
+}
+html[data-theme="dark"] body{
+  background:
+    radial-gradient(circle at 8% 12%, rgba(255,217,61,0.12) 0, transparent 45%),
+    radial-gradient(circle at 92% 18%, rgba(79,201,247,0.12) 0, transparent 45%),
+    radial-gradient(circle at 15% 90%, rgba(255,111,160,0.10) 0, transparent 42%),
+    radial-gradient(circle at 88% 85%, rgba(185,131,255,0.12) 0, transparent 42%),
+    var(--paper);
+}
+
+/* ============ EYE-CARE THEME (โหมดถนอมสายตา) ============ */
+html[data-theme="eyecare"]{
+  --ink:#4A3624; --ink-2:#6B4F35;
+  --paper:#F5EFDD; --paper-2:#EDE4CC; --card:#FBF6E9;
+  --pink:#E8927C; --pink-deep:#C97158;
+  --yellow:#E8C468; --yellow-deep:#D1A83E;
+  --blue:#7FB5AE; --blue-deep:#5C948C;
+  --purple:#B08CA0; --purple-deep:#8C6B7D;
+  --green:#8FB86D; --green-deep:#6D9650;
+  --coral:#D98B6B; --coral-deep:#B96A4A;
+  --text:#4A3624; --text-soft:#7A6650;
+  --border:#4A3624;
+}
+html[data-theme="eyecare"] body{
+  background: var(--paper);
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -76,20 +116,20 @@ button{font-family:inherit;}
   background:var(--yellow);
   border:3px solid var(--border);
   display:flex;align-items:center;justify-content:center;
-  font-family:'Fredoka',sans-serif; font-weight:700; color:var(--border); font-size:15px;
+  font-family:'Fredoka',sans-serif; font-weight:700; color:var(--border); font-size:calc(15px * var(--fs-scale));
   transform:rotate(-8deg);
   box-shadow:2px 2px 0 rgba(0,0,0,0.25);
 }
 .brand-text{display:flex; flex-direction:column; line-height:1.15;}
-.brand-text b{font-family:'Fredoka',sans-serif; font-size:19px;}
-.brand-text span{font-size:11px; letter-spacing:0.06em; color:#FFE3F0; text-transform:uppercase;}
+.brand-text b{font-family:'Fredoka',sans-serif; font-size:calc(19px * var(--fs-scale));}
+.brand-text span{font-size:calc(11px * var(--fs-scale)); letter-spacing:0.06em; color:#FFE3F0; text-transform:uppercase;}
 
 .gate-track{display:flex; align-items:center; gap:6px;}
 .gate-dot{
   width:32px;height:32px;border-radius:50%;
   border:3px solid rgba(255,255,255,0.55);
   display:flex;align-items:center;justify-content:center;
-  font-family:'Fredoka',sans-serif; font-size:12px; font-weight:700;
+  font-family:'Fredoka',sans-serif; font-size:calc(12px * var(--fs-scale)); font-weight:700;
   color:#fff; background:rgba(255,255,255,0.12);
   cursor:pointer; transition:transform .15s ease;
 }
@@ -100,16 +140,40 @@ button{font-family:inherit;}
 .gate-line.filled{background:var(--yellow);}
 .topbar-right{display:flex; align-items:center; gap:10px;}
 .progress-pill{
-  font-family:'Fredoka',sans-serif; font-size:12px; font-weight:600;
+  font-family:'Fredoka',sans-serif; font-size:calc(12px * var(--fs-scale)); font-weight:600;
   background:var(--yellow); color:var(--border); padding:7px 14px; border-radius:99px;
   white-space:nowrap; border:2.5px solid var(--border);
 }
 .reset-btn{
-  font-family:'Mali', sans-serif; font-size:11.5px; font-weight:600;
+  font-family:'Mali', sans-serif; font-size:calc(11.5px * var(--fs-scale)); font-weight:600;
   background:rgba(255,255,255,0.12); color:#fff; border:2px solid rgba(255,255,255,0.6); border-radius:99px;
   padding:7px 14px; cursor:pointer; white-space:nowrap;
 }
 .reset-btn:hover{background:var(--coral); border-color:var(--border); color:#fff;}
+.fontsize-group{
+  display:flex; align-items:center; gap:4px; background:rgba(255,255,255,0.12);
+  border:2px solid rgba(255,255,255,0.6); border-radius:99px; padding:3px;
+}
+.fontsize-btn{
+  background:transparent; border:none; color:#fff; cursor:pointer; border-radius:99px;
+  width:26px; height:26px; display:flex; align-items:center; justify-content:center;
+  font-family:'Fredoka',sans-serif; font-weight:700; font-size:13px; line-height:1;
+}
+.fontsize-btn:hover{background:rgba(255,255,255,0.25);}
+.fontsize-label{
+  font-family:'Fredoka',sans-serif; font-size:10.5px; font-weight:600; color:#fff; padding:0 4px; min-width:30px; text-align:center;
+}
+.theme-group{
+  display:flex; align-items:center; gap:2px; background:rgba(255,255,255,0.12);
+  border:2px solid rgba(255,255,255,0.6); border-radius:99px; padding:3px;
+}
+.theme-btn{
+  background:transparent; border:none; cursor:pointer; border-radius:99px;
+  width:26px; height:26px; display:flex; align-items:center; justify-content:center;
+  font-size:13px; line-height:1; opacity:0.6;
+}
+.theme-btn:hover{background:rgba(255,255,255,0.25); opacity:0.9;}
+.theme-btn.active{background:rgba(255,255,255,0.35); opacity:1;}
 
 @media (max-width:760px){
   .gate-track{display:none;}
@@ -118,11 +182,11 @@ button{font-family:inherit;}
 /* ============ LAYOUT ============ */
 main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 .section-label{
-  font-family:'Fredoka',sans-serif; font-size:13px; font-weight:600; letter-spacing:0.04em;
+  font-family:'Fredoka',sans-serif; font-size:calc(13px * var(--fs-scale)); font-weight:600; letter-spacing:0.04em;
   color:var(--purple-deep); margin:0 0 10px;
   display:flex; align-items:center; gap:8px;
 }
-.section-label::before{content:'✨'; font-size:15px;}
+.section-label::before{content:'✨'; font-size:calc(15px * var(--fs-scale));}
 
 /* ============ HERO ============ */
 .hero-wrap{padding:38px 0 30px;}
@@ -140,26 +204,26 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 .hero-main{padding:38px 40px; position:relative; overflow:hidden;}
 .hero-main::before{
   content:'⭐';
-  position:absolute; top:14px; right:24px; font-size:26px; opacity:0.5; transform:rotate(12deg);
+  position:absolute; top:14px; right:24px; font-size:calc(26px * var(--fs-scale)); opacity:0.5; transform:rotate(12deg);
 }
 .hero-eyebrow{
-  font-family:'Fredoka',sans-serif; font-size:12.5px; font-weight:600; letter-spacing:0.06em;
+  font-family:'Fredoka',sans-serif; font-size:calc(12.5px * var(--fs-scale)); font-weight:600; letter-spacing:0.06em;
   color:var(--yellow); text-transform:uppercase; margin-bottom:14px;
 }
 .hero-ticket h1{
   font-size:clamp(26px,4vw,38px); line-height:1.25; margin:0 0 14px; font-weight:700;
   text-shadow:2px 2px 0 rgba(0,0,0,0.12);
 }
-.hero-ticket p.lead{color:#FFF0F7; font-size:15.5px; line-height:1.75; max-width:520px; margin:0 0 26px;}
+.hero-ticket p.lead{color:#FFF0F7; font-size:calc(15.5px * var(--fs-scale)); line-height:1.75; max-width:520px; margin:0 0 26px;}
 .route-row{display:flex; align-items:center; gap:14px; margin-bottom:28px;}
-.route-node{font-family:'Fredoka',sans-serif; font-size:18px; font-weight:700;}
-.route-node small{display:block; font-family:'Mali',sans-serif; font-size:10.5px; color:#FFE3F0; font-weight:400; letter-spacing:0.05em; text-transform:uppercase; margin-top:2px;}
+.route-node{font-family:'Fredoka',sans-serif; font-size:calc(18px * var(--fs-scale)); font-weight:700;}
+.route-node small{display:block; font-family:'Mali',sans-serif; font-size:calc(10.5px * var(--fs-scale)); color:#FFE3F0; font-weight:400; letter-spacing:0.05em; text-transform:uppercase; margin-top:2px;}
 .route-dash{flex:1; height:0; border-top:3px dashed rgba(255,255,255,0.55); position:relative; min-width:40px;}
-.route-dash::after{content:'🚀'; position:absolute; top:-13px; left:50%; transform:translateX(-50%); font-size:18px;}
+.route-dash::after{content:'🚀'; position:absolute; top:-13px; left:50%; transform:translateX(-50%); font-size:calc(18px * var(--fs-scale));}
 .hero-cta{
   display:inline-flex; align-items:center; gap:10px;
   background:var(--yellow); color:var(--border); border:3px solid var(--border);
-  font-family:'Fredoka',sans-serif; font-weight:700; font-size:15px; padding:13px 24px; border-radius:14px; cursor:pointer;
+  font-family:'Fredoka',sans-serif; font-weight:700; font-size:calc(15px * var(--fs-scale)); padding:13px 24px; border-radius:14px; cursor:pointer;
   box-shadow:var(--shadow-hard-sm);
   transition:transform .12s ease, box-shadow .12s ease;
 }
@@ -179,8 +243,8 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 }
 .hero-stub::before{top:-15px;}
 .hero-stub::after{bottom:-15px;}
-.stub-label{font-family:'Fredoka',sans-serif; font-size:10.5px; letter-spacing:0.06em; color:#FFE3F0; text-transform:uppercase; font-weight:600;}
-.stub-value{font-family:'Fredoka',sans-serif; font-size:24px; margin:4px 0 18px; font-weight:700;}
+.stub-label{font-family:'Fredoka',sans-serif; font-size:calc(10.5px * var(--fs-scale)); letter-spacing:0.06em; color:#FFE3F0; text-transform:uppercase; font-weight:600;}
+.stub-value{font-family:'Fredoka',sans-serif; font-size:calc(24px * var(--fs-scale)); margin:4px 0 18px; font-weight:700;}
 .barcode{
   height:30px; margin-top:auto;
   background-image: radial-gradient(circle, rgba(255,255,255,0.9) 3px, transparent 3px);
@@ -215,13 +279,13 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
   box-shadow:var(--shadow-hard); transition:transform .15s ease, box-shadow .15s ease;
 }
 .pretest-banner:hover{transform:translate(-3px,-3px); box-shadow:8px 8px 0 var(--border);}
-.pretest-icon{font-size:36px; flex-shrink:0;}
+.pretest-icon{font-size:calc(36px * var(--fs-scale)); flex-shrink:0;}
 .pretest-text{flex:1; min-width:220px;}
-.pretest-text h3{margin:0 0 4px; font-size:16px; font-family:'Fredoka',sans-serif; font-weight:700; color:var(--border);}
-.pretest-text p{margin:0; font-size:13px; color:#3B2C63; opacity:0.85;}
+.pretest-text h3{margin:0 0 4px; font-size:calc(16px * var(--fs-scale)); font-family:'Fredoka',sans-serif; font-weight:700; color:var(--border);}
+.pretest-text p{margin:0; font-size:calc(13px * var(--fs-scale)); color:#3B2C63; opacity:0.85;}
 .pretest-btn{
   flex-shrink:0; background:var(--border); color:#fff; font-family:'Fredoka',sans-serif; font-weight:700;
-  font-size:13.5px; padding:11px 18px; border-radius:12px; white-space:nowrap;
+  font-size:calc(13.5px * var(--fs-scale)); padding:11px 18px; border-radius:12px; white-space:nowrap;
 }
 
 /* ============ TUTORIAL / ONBOARDING MODAL ============ */
@@ -238,30 +302,30 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
   animation:popin .25s cubic-bezier(.34,1.56,.64,1);
 }
 .tutorial-close{
-  position:absolute; top:14px; right:16px; background:none; border:none; font-size:18px;
+  position:absolute; top:14px; right:16px; background:none; border:none; font-size:calc(18px * var(--fs-scale));
   color:var(--text-soft); cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:700;
 }
 .tutorial-close:hover{color:var(--coral-deep);}
-.tutorial-icon{font-size:48px; margin-bottom:8px;}
+.tutorial-icon{font-size:calc(48px * var(--fs-scale)); margin-bottom:8px;}
 .tutorial-step-label{
-  font-family:'Fredoka',sans-serif; font-size:11.5px; font-weight:600; letter-spacing:0.06em;
+  font-family:'Fredoka',sans-serif; font-size:calc(11.5px * var(--fs-scale)); font-weight:600; letter-spacing:0.06em;
   color:var(--purple-deep); text-transform:uppercase; margin-bottom:10px;
 }
-.tutorial-modal h3{margin:0 0 14px; font-size:19px; font-family:'Fredoka',sans-serif; font-weight:700; color:var(--ink);}
-.tutorial-modal p{margin:0 0 20px; font-size:14px; line-height:1.75; color:var(--text-soft); text-align:left;}
+.tutorial-modal h3{margin:0 0 14px; font-size:calc(19px * var(--fs-scale)); font-family:'Fredoka',sans-serif; font-weight:700; color:var(--ink);}
+.tutorial-modal p{margin:0 0 20px; font-size:calc(14px * var(--fs-scale)); line-height:1.75; color:var(--text-soft); text-align:left;}
 .tutorial-dots{display:flex; justify-content:center; gap:7px; margin-bottom:22px;}
 .tutorial-dot{width:9px; height:9px; border-radius:50%; background:var(--paper-2); border:2px solid var(--border);}
 .tutorial-dot.active{background:var(--yellow);}
 .tutorial-nav{display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;}
-.tutorial-nav .ghost-btn{font-size:12.5px; padding:9px 14px;}
-.tutorial-nav .primary-btn{font-size:13.5px; padding:10px 20px;}
+.tutorial-nav .ghost-btn{font-size:calc(12.5px * var(--fs-scale)); padding:9px 14px;}
+.tutorial-nav .primary-btn{font-size:calc(13.5px * var(--fs-scale)); padding:10px 20px;}
 @media (max-width:480px){
   .tutorial-nav{flex-direction:column-reverse;}
   .tutorial-nav > *{width:100%;}
 }
 .eval-banner{
   border-radius:20px; padding:18px 22px; margin-bottom:20px; border:3px solid var(--border);
-  font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px;
+  font-family:'Fredoka',sans-serif; font-weight:600; font-size:calc(14.5px * var(--fs-scale));
   box-shadow:var(--shadow-hard-sm);
 }
 .eval-banner.pending{background:var(--paper-2); color:var(--text);}
@@ -274,13 +338,13 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
   box-shadow:var(--shadow-hard); transition:transform .15s ease, box-shadow .15s ease;
 }
 .eval-card:hover{transform:translate(-3px,-3px); box-shadow:8px 8px 0 var(--border);}
-.eval-icon{font-size:34px; margin-bottom:10px;}
-.eval-card h3{margin:0 0 8px; font-size:17px; font-family:'Fredoka',sans-serif; font-weight:700; color:var(--purple-deep);}
-.eval-card p{margin:0 0 16px; font-size:13.5px; color:var(--text-soft); line-height:1.6;}
+.eval-icon{font-size:calc(34px * var(--fs-scale)); margin-bottom:10px;}
+.eval-card h3{margin:0 0 8px; font-size:calc(17px * var(--fs-scale)); font-family:'Fredoka',sans-serif; font-weight:700; color:var(--purple-deep);}
+.eval-card p{margin:0 0 16px; font-size:calc(13.5px * var(--fs-scale)); color:var(--text-soft); line-height:1.6;}
 .eval-btn{
   display:inline-flex; align-items:center; gap:8px;
   background:var(--yellow); color:var(--border); border:2.5px solid var(--border);
-  font-family:'Fredoka',sans-serif; font-weight:700; font-size:13.5px; padding:9px 16px; border-radius:12px;
+  font-family:'Fredoka',sans-serif; font-weight:700; font-size:calc(13.5px * var(--fs-scale)); padding:9px 16px; border-radius:12px;
 }
 .eval-card.satisfaction .eval-btn{background:var(--blue);}
 
@@ -299,12 +363,12 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 .ticket:not(.locked):hover{transform:translate(-3px,-3px); box-shadow:8px 8px 0 var(--border);}
 
 .ticket-top{padding:22px 22px 18px; display:flex; justify-content:space-between; gap:12px;}
-.ticket-gate{font-family:'Fredoka',sans-serif; font-size:11.5px; font-weight:700; color:#fff; letter-spacing:0.04em; margin-bottom:8px;
+.ticket-gate{font-family:'Fredoka',sans-serif; font-size:calc(11.5px * var(--fs-scale)); font-weight:700; color:#fff; letter-spacing:0.04em; margin-bottom:8px;
   display:inline-block; background:var(--purple-deep); padding:4px 10px; border-radius:99px;}
-.ticket-top h3{margin:0 0 6px; font-size:19px; font-weight:700; font-family:'Fredoka',sans-serif;}
-.ticket-top p{margin:0; color:var(--text-soft); font-size:13.5px; line-height:1.55;}
+.ticket-top h3{margin:0 0 6px; font-size:calc(19px * var(--fs-scale)); font-weight:700; font-family:'Fredoka',sans-serif;}
+.ticket-top p{margin:0; color:var(--text-soft); font-size:calc(13.5px * var(--fs-scale)); line-height:1.55;}
 .ticket-status{
-  font-family:'Fredoka',sans-serif; font-size:10.5px; font-weight:700; padding:6px 12px; border-radius:99px; height:fit-content;
+  font-family:'Fredoka',sans-serif; font-size:calc(10.5px * var(--fs-scale)); font-weight:700; padding:6px 12px; border-radius:99px; height:fit-content;
   white-space:nowrap; border:2px solid var(--border);
 }
 .ticket-status.locked{background:#EDE7F7; color:#8577AC;}
@@ -322,9 +386,9 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 .ticket-stub-line::after{right:-29px;}
 
 .ticket-bottom{padding:14px 22px 20px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
-.ticket-bottom .mono{font-size:12px; color:var(--text-soft); font-weight:600;}
+.ticket-bottom .mono{font-size:calc(12px * var(--fs-scale)); color:var(--text-soft); font-weight:600;}
 .stamp{
-  font-family:'Fredoka',sans-serif; font-weight:700; font-size:11.5px;
+  font-family:'Fredoka',sans-serif; font-weight:700; font-size:calc(11.5px * var(--fs-scale));
   color:#fff; background:var(--coral); border:2.5px solid var(--border); border-radius:10px;
   padding:5px 10px; transform:rotate(-8deg); letter-spacing:0.03em;
 }
@@ -333,7 +397,7 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 #view-lesson{display:none;}
 .back-btn{
   display:inline-flex; align-items:center; gap:8px; background:none; border:none;
-  color:var(--purple-deep); font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; padding:18px 0 0; margin-bottom:6px;
+  color:var(--purple-deep); font-family:'Fredoka',sans-serif; font-weight:600; font-size:calc(14.5px * var(--fs-scale)); cursor:pointer; padding:18px 0 0; margin-bottom:6px;
 }
 .back-btn:hover{color:var(--pink-deep);}
 .lesson-header{padding:14px 0 20px; border-bottom:3px dashed var(--paper-2); margin-bottom:22px;}
@@ -345,7 +409,7 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
   display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; margin-bottom:26px;
 }
 .tab-btn{
-  background:var(--card); border:2.5px solid var(--border); padding:10px 16px; font-size:13.5px; font-weight:600;
+  background:var(--card); border:2.5px solid var(--border); padding:10px 16px; font-size:calc(13.5px * var(--fs-scale)); font-weight:600;
   font-family:'Fredoka',sans-serif;
   color:var(--text-soft); cursor:pointer; white-space:nowrap; border-radius:14px;
   display:flex; align-items:center; gap:7px;
@@ -355,7 +419,7 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 .tab-btn:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--border);}
 .tab-btn .num{
   width:19px;height:19px;border-radius:50%; background:var(--paper-2); color:var(--text-soft);
-  display:inline-flex; align-items:center; justify-content:center; font-size:10.5px; font-family:'Fredoka',sans-serif; font-weight:700;
+  display:inline-flex; align-items:center; justify-content:center; font-size:calc(10.5px * var(--fs-scale)); font-family:'Fredoka',sans-serif; font-weight:700;
 }
 .tab-btn.active{color:#fff; background:var(--purple-deep); border-color:var(--border);}
 .tab-btn.active .num{background:var(--yellow); color:var(--border);}
@@ -365,17 +429,20 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 
 /* content blocks */
 .content-block{background:var(--card); border:3px solid var(--border); border-radius:20px; padding:22px 24px; margin-bottom:18px; box-shadow:var(--shadow-hard-sm);}
-.content-block h4{margin:0 0 12px; font-size:16.5px; font-family:'Fredoka',sans-serif; font-weight:700; display:flex; align-items:center; gap:8px; color:var(--purple-deep);}
-.content-block h4::before{content:'🌟'; font-size:16px;}
-.content-block ul{margin:0; padding-left:20px; line-height:1.9; font-size:14.5px; color:var(--text);}
+.content-block h4{margin:0 0 12px; font-size:calc(16.5px * var(--fs-scale)); font-family:'Fredoka',sans-serif; font-weight:700; display:flex; align-items:center; gap:8px; color:var(--purple-deep);}
+.content-block h4::before{content:'🌟'; font-size:calc(16px * var(--fs-scale));}
+.content-block ul{margin:0; padding-left:20px; line-height:1.9; font-size:calc(14.5px * var(--fs-scale)); color:var(--text);}
 .content-block ul li b{color:var(--pink-deep);}
+.content-block ul li .th-translate{
+  display:block; color:var(--text-soft); font-size:calc(12.5px * var(--fs-scale)); margin-top:3px; font-style:italic; line-height:1.6;
+}
 .phrase-box{
   background:var(--ink); color:#fff; border-radius:20px; padding:22px 24px; margin-bottom:18px; border:3px solid var(--border); box-shadow:var(--shadow-hard-sm);
 }
-.phrase-box h4{margin:0 0 12px; font-size:15.5px; font-family:'Fredoka',sans-serif; font-weight:700; color:var(--yellow); display:flex; align-items:center; gap:8px;}
+.phrase-box h4{margin:0 0 12px; font-size:calc(15.5px * var(--fs-scale)); font-family:'Fredoka',sans-serif; font-weight:700; color:var(--yellow); display:flex; align-items:center; gap:8px;}
 .phrase-box ul{margin:0; padding-left:0; list-style:none;}
 .phrase-box li{
-  font-family:'Mali', sans-serif; font-size:14px; padding:9px 0; border-bottom:2px dashed rgba(255,255,255,0.2);
+  font-family:'Mali', sans-serif; font-size:calc(14px * var(--fs-scale)); padding:9px 0; border-bottom:2px dashed rgba(255,255,255,0.2);
   color:#F3ECFF;
 }
 .phrase-box li:before{content:'💬 '; }
@@ -385,28 +452,35 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 .video-wrap{background:var(--card); border:3px solid var(--border); border-radius:20px; padding:20px; margin-bottom:18px; box-shadow:var(--shadow-hard-sm);}
 .video-frame{position:relative; padding-bottom:56.25%; height:0; border-radius:14px; overflow:hidden; background:#000; border:2px solid var(--border);}
 .video-frame iframe{position:absolute; inset:0; width:100%; height:100%; border:0;}
-.video-wrap .video-title{font-weight:700; font-family:'Fredoka',sans-serif; margin:14px 2px 2px; font-size:14.5px; color:var(--purple-deep);}
-.video-wrap .video-note{color:var(--text-soft); font-size:13px; margin:4px 2px 0;}
+.video-wrap .video-title{font-weight:700; font-family:'Fredoka',sans-serif; margin:14px 2px 2px; font-size:calc(14.5px * var(--fs-scale)); color:var(--purple-deep);}
+.video-wrap .video-note{color:var(--text-soft); font-size:calc(13px * var(--fs-scale)); margin:4px 2px 0;}
+.video-fallback-link{
+  display:inline-flex; align-items:center; gap:6px; margin-top:12px;
+  font-family:'Fredoka',sans-serif; font-weight:600; font-size:calc(13px * var(--fs-scale));
+  color:var(--purple-deep); text-decoration:none; background:var(--paper-2);
+  border:2px solid var(--border); border-radius:99px; padding:8px 16px;
+}
+.video-fallback-link:hover{background:var(--yellow);}
 
 /* quiz */
 .quiz-progress{display:flex; gap:4px; margin-bottom:18px; flex-wrap:wrap;}
 .quiz-progress span{flex:1; min-width:8px; height:7px; border-radius:99px; background:var(--paper-2); border:1.5px solid var(--border);}
 .quiz-progress span.done{background:var(--yellow);}
 .quiz-card{background:var(--card); border:3px solid var(--border); border-radius:20px; padding:24px; margin-bottom:18px; box-shadow:var(--shadow-hard-sm);}
-.quiz-q{font-weight:700; font-family:'Fredoka',sans-serif; font-size:15.5px; margin-bottom:16px; color:var(--ink);}
+.quiz-q{font-weight:700; font-family:'Fredoka',sans-serif; font-size:calc(15.5px * var(--fs-scale)); margin-bottom:16px; color:var(--ink);}
 .quiz-q .qnum{color:var(--pink-deep); font-family:'Fredoka',sans-serif; margin-right:6px;}
 .opt-btn{
   display:block; width:100%; text-align:left; background:var(--paper-2); border:2.5px solid var(--border);
-  border-radius:14px; padding:12px 16px; margin-bottom:10px; font-size:14px; font-family:'Mali',sans-serif; cursor:pointer; transition:all .12s ease;
+  border-radius:14px; padding:12px 16px; margin-bottom:10px; font-size:calc(14px * var(--fs-scale)); font-family:'Mali',sans-serif; cursor:pointer; transition:all .12s ease;
 }
 .opt-btn:hover{background:#fff; transform:translate(-1px,-1px); box-shadow:2px 2px 0 var(--border);}
 .opt-btn.selected{border-color:var(--purple-deep); background:#EFE3FF;}
 .opt-btn.correct{border-color:var(--green-deep); background:#D8FBEC; color:var(--green-deep); font-weight:700;}
 .opt-btn.wrong{border-color:var(--coral-deep); background:#FFE2DE; color:var(--coral-deep); font-weight:700;}
 .opt-btn:disabled{cursor:default;}
-.quiz-explain{font-size:13px; color:var(--text-soft); margin-top:8px; padding-top:10px; border-top:2px dashed var(--paper-2);}
+.quiz-explain{font-size:calc(13px * var(--fs-scale)); color:var(--text-soft); margin-top:8px; padding-top:10px; border-top:2px dashed var(--paper-2);}
 .primary-btn{
-  background:var(--purple-deep); color:#fff; border:3px solid var(--border); font-family:'Fredoka',sans-serif; font-weight:700; font-size:14px;
+  background:var(--purple-deep); color:#fff; border:3px solid var(--border); font-family:'Fredoka',sans-serif; font-weight:700; font-size:calc(14px * var(--fs-scale));
   padding:12px 24px; border-radius:14px; cursor:pointer; box-shadow:var(--shadow-hard-sm);
   transition:transform .12s ease, box-shadow .12s ease;
 }
@@ -414,7 +488,7 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 .primary-btn:active{transform:translate(1px,1px); box-shadow:1px 1px 0 var(--border);}
 .primary-btn:disabled{background:#CFC5E8; color:#8577AC; cursor:not-allowed; box-shadow:var(--shadow-hard-sm); transform:none;}
 .ghost-btn{
-  background:#fff; border:2.5px solid var(--border); color:var(--text); font-family:'Fredoka',sans-serif; font-weight:600; font-size:13.5px;
+  background:#fff; border:2.5px solid var(--border); color:var(--text); font-family:'Fredoka',sans-serif; font-weight:600; font-size:calc(13.5px * var(--fs-scale));
   padding:10px 18px; border-radius:14px; cursor:pointer; box-shadow:var(--shadow-hard-sm);
 }
 .ghost-btn:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--border);}
@@ -423,18 +497,18 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
   background:linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%); color:#fff; border-radius:24px; padding:32px; text-align:center; margin-bottom:18px;
   border:3.5px solid var(--border); box-shadow:var(--shadow-hard);
 }
-.result-card .score{font-family:'Fredoka',sans-serif; font-size:50px; font-weight:700; color:var(--yellow); margin:6px 0; text-shadow:2px 2px 0 rgba(0,0,0,0.15);}
-.result-card p{color:#FFF0F7; margin:0 0 18px; font-size:14px;}
+.result-card .score{font-family:'Fredoka',sans-serif; font-size:calc(50px * var(--fs-scale)); font-weight:700; color:var(--yellow); margin:6px 0; text-shadow:2px 2px 0 rgba(0,0,0,0.15);}
+.result-card p{color:#FFF0F7; margin:0 0 18px; font-size:calc(14px * var(--fs-scale));}
 .compare-row{display:flex; justify-content:center; gap:36px; margin-top:18px; flex-wrap:wrap;}
 .compare-item{text-align:center;}
-.compare-item .cval{font-family:'Fredoka',sans-serif; font-size:26px; font-weight:700;}
-.compare-item .clabel{font-size:11px; color:#FFE3F0; text-transform:uppercase; letter-spacing:0.06em; font-family:'Fredoka',sans-serif; font-weight:600;}
+.compare-item .cval{font-family:'Fredoka',sans-serif; font-size:calc(26px * var(--fs-scale)); font-weight:700;}
+.compare-item .clabel{font-size:calc(11px * var(--fs-scale)); color:#FFE3F0; text-transform:uppercase; letter-spacing:0.06em; font-family:'Fredoka',sans-serif; font-weight:600;}
 
 /* games */
 .game-nav{display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap;}
 .game-chip{
   background:var(--card); border:2.5px solid var(--border); border-radius:99px; padding:9px 16px;
-  font-size:13px; font-family:'Fredoka',sans-serif; font-weight:600; cursor:pointer; color:var(--text-soft);
+  font-size:calc(13px * var(--fs-scale)); font-family:'Fredoka',sans-serif; font-weight:600; cursor:pointer; color:var(--text-soft);
   box-shadow:2px 2px 0 var(--border);
 }
 .game-chip.active{background:var(--purple-deep); color:#fff; border-color:var(--border);}
@@ -443,15 +517,15 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 .game-panel.active{display:block;}
 .game-card{background:var(--card); border:3px solid var(--border); border-radius:20px; padding:24px; box-shadow:var(--shadow-hard-sm);}
 .game-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; flex-wrap:wrap; gap:10px;}
-.game-head h4{margin:0; font-size:16px; font-family:'Fredoka',sans-serif; font-weight:700; color:var(--purple-deep);}
-.game-score{font-family:'Fredoka',sans-serif; font-weight:600; font-size:12.5px; background:var(--yellow); color:var(--border); padding:6px 12px; border-radius:99px; border:2px solid var(--border);}
-.game-timer{font-family:'Fredoka',sans-serif; font-weight:700; font-size:12.5px; background:var(--coral); color:#fff; padding:6px 12px; border-radius:99px; border:2px solid var(--border);}
+.game-head h4{margin:0; font-size:calc(16px * var(--fs-scale)); font-family:'Fredoka',sans-serif; font-weight:700; color:var(--purple-deep);}
+.game-score{font-family:'Fredoka',sans-serif; font-weight:600; font-size:calc(12.5px * var(--fs-scale)); background:var(--yellow); color:var(--border); padding:6px 12px; border-radius:99px; border:2px solid var(--border);}
+.game-timer{font-family:'Fredoka',sans-serif; font-weight:700; font-size:calc(12.5px * var(--fs-scale)); background:var(--coral); color:#fff; padding:6px 12px; border-radius:99px; border:2px solid var(--border);}
 
 .match-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
 @media (max-width:640px){ .match-grid{grid-template-columns:repeat(2,1fr);} }
 .match-tile{
   background:var(--paper-2); border:2.5px solid var(--border); border-radius:14px; padding:14px 10px;
-  font-size:13.5px; font-family:'Mali',sans-serif; text-align:center; cursor:pointer; min-height:56px; display:flex; align-items:center; justify-content:center;
+  font-size:calc(13.5px * var(--fs-scale)); font-family:'Mali',sans-serif; text-align:center; cursor:pointer; min-height:56px; display:flex; align-items:center; justify-content:center;
   transition:all .12s ease; box-shadow:2px 2px 0 var(--border);
 }
 .match-tile:hover{transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--border);}
@@ -461,11 +535,11 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 
 .fill-item{margin-bottom:20px; padding-bottom:18px; border-bottom:2px dashed var(--paper-2);}
 .fill-item:last-child{border-bottom:none; margin-bottom:0;}
-.fill-sentence{font-size:14.5px; margin-bottom:10px; line-height:1.7;}
+.fill-sentence{font-size:calc(14.5px * var(--fs-scale)); margin-bottom:10px; line-height:1.7;}
 .fill-sentence .blank{font-family:'Fredoka',sans-serif; font-weight:700; color:var(--pink-deep); border-bottom:3px solid var(--pink-deep); padding:0 4px;}
 .chip-row{display:flex; gap:8px; flex-wrap:wrap;}
 .fill-chip{
-  border:2.5px solid var(--border); background:var(--paper-2); border-radius:10px; padding:8px 14px; font-size:13px; font-family:'Mali',sans-serif; cursor:pointer;
+  border:2.5px solid var(--border); background:var(--paper-2); border-radius:10px; padding:8px 14px; font-size:calc(13px * var(--fs-scale)); font-family:'Mali',sans-serif; cursor:pointer;
   box-shadow:2px 2px 0 var(--border);
 }
 .fill-chip.selected{border-color:var(--purple-deep); background:#EFE3FF;}
@@ -474,16 +548,16 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 
 .scramble-item{margin-bottom:18px; padding-bottom:18px; border-bottom:2px dashed var(--paper-2);}
 .scramble-item:last-child{border-bottom:none;}
-.scramble-word{font-family:'Fredoka',sans-serif; font-size:23px; font-weight:700; letter-spacing:0.12em; color:var(--purple-deep); margin-bottom:6px;}
-.scramble-hint{font-size:12.5px; color:var(--text-soft); margin-bottom:10px;}
+.scramble-word{font-family:'Fredoka',sans-serif; font-size:calc(23px * var(--fs-scale)); font-weight:700; letter-spacing:0.12em; color:var(--purple-deep); margin-bottom:6px;}
+.scramble-hint{font-size:calc(12.5px * var(--fs-scale)); color:var(--text-soft); margin-bottom:10px;}
 .scramble-input-row{display:flex; gap:8px; flex-wrap:wrap; align-items:center;}
 .scramble-input{
-  border:2.5px solid var(--border); border-radius:10px; padding:9px 12px; font-size:14px; font-family:'Fredoka',sans-serif;
+  border:2.5px solid var(--border); border-radius:10px; padding:9px 12px; font-size:calc(14px * var(--fs-scale)); font-family:'Fredoka',sans-serif;
   width:200px; max-width:100%;
 }
 .scramble-input.correct{border-color:var(--green-deep); background:#D8FBEC;}
 .scramble-input.wrong{border-color:var(--coral-deep); background:#FFE2DE;}
-.check-icon{font-size:13px; font-weight:700; font-family:'Fredoka',sans-serif;}
+.check-icon{font-size:calc(13px * var(--fs-scale)); font-weight:700; font-family:'Fredoka',sans-serif;}
 
 /* sentence builder */
 .builder-item{margin-bottom:26px; padding-bottom:22px; border-bottom:2px dashed var(--paper-2);}
@@ -493,16 +567,16 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
   display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; background:var(--paper-2);
 }
 .builder-word-slot{
-  background:var(--yellow); border:2.5px solid var(--border); border-radius:10px; padding:7px 12px; font-size:13.5px; font-family:'Mali',sans-serif; cursor:pointer;
+  background:var(--yellow); border:2.5px solid var(--border); border-radius:10px; padding:7px 12px; font-size:calc(13.5px * var(--fs-scale)); font-family:'Mali',sans-serif; cursor:pointer;
 }
 .builder-bank{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px;}
 .bank-word{
-  background:#fff; border:2.5px solid var(--border); border-radius:10px; padding:7px 12px; font-size:13.5px; font-family:'Mali',sans-serif; cursor:pointer;
+  background:#fff; border:2.5px solid var(--border); border-radius:10px; padding:7px 12px; font-size:calc(13.5px * var(--fs-scale)); font-family:'Mali',sans-serif; cursor:pointer;
   box-shadow:2px 2px 0 var(--border);
 }
 .bank-word:disabled{opacity:0.35; cursor:default; box-shadow:none;}
 .builder-controls{display:flex; gap:10px; align-items:center;}
-.builder-feedback{font-size:12.5px; margin-left:4px; font-family:'Fredoka',sans-serif; font-weight:600;}
+.builder-feedback{font-size:calc(12.5px * var(--fs-scale)); margin-left:4px; font-family:'Fredoka',sans-serif; font-weight:600;}
 .builder-feedback.correct{color:var(--green-deep);}
 .builder-feedback.wrong{color:var(--coral-deep);}
 
@@ -510,20 +584,20 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 .speed-card{text-align:center;}
 .speed-timer-bar{height:10px; border-radius:99px; background:var(--paper-2); overflow:hidden; margin-bottom:20px; border:2px solid var(--border);}
 .speed-timer-fill{height:100%; background:var(--coral); width:100%; transition:width 1s linear;}
-.speed-term{font-family:'Fredoka',sans-serif; font-size:30px; font-weight:700; color:var(--purple-deep); margin:10px 0 22px;}
+.speed-term{font-family:'Fredoka',sans-serif; font-size:calc(30px * var(--fs-scale)); font-weight:700; color:var(--purple-deep); margin:10px 0 22px;}
 .speed-options{display:grid; grid-template-columns:1fr 1fr; gap:10px; max-width:520px; margin:0 auto;}
 @media (max-width:560px){ .speed-options{grid-template-columns:1fr;} }
 .speed-opt{
-  background:var(--paper-2); border:2.5px solid var(--border); border-radius:14px; padding:14px; font-size:13.5px; font-family:'Mali',sans-serif; cursor:pointer;
+  background:var(--paper-2); border:2.5px solid var(--border); border-radius:14px; padding:14px; font-size:calc(13.5px * var(--fs-scale)); font-family:'Mali',sans-serif; cursor:pointer;
   box-shadow:2px 2px 0 var(--border);
 }
 .speed-opt.correct{border-color:var(--green-deep); background:#D8FBEC;}
 .speed-opt.wrong{border-color:var(--coral-deep); background:#FFE2DE;}
 .speed-start{padding:30px 0;}
-.speed-final .score{font-family:'Fredoka',sans-serif; font-size:44px; font-weight:700; color:var(--pink-deep); margin:8px 0;}
+.speed-final .score{font-family:'Fredoka',sans-serif; font-size:calc(44px * var(--fs-scale)); font-weight:700; color:var(--pink-deep); margin:8px 0;}
 
 footer{
-  text-align:center; padding:34px 20px 50px; color:var(--text-soft); font-size:12.5px; line-height:1.9;
+  text-align:center; padding:34px 20px 50px; color:var(--text-soft); font-size:calc(12.5px * var(--fs-scale)); line-height:1.9;
 }
 footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
 </style>
@@ -537,6 +611,16 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
   </button>
   <div class="gate-track" id="gate-track"></div>
   <div class="topbar-right">
+    <div class="theme-group" title="เปลี่ยนธีมเว็บไซต์">
+      <button class="theme-btn active" id="theme-normal" data-theme="normal" title="โหมดปกติ">☀️</button>
+      <button class="theme-btn" id="theme-dark" data-theme="dark" title="โหมดมืด">🌙</button>
+      <button class="theme-btn" id="theme-eyecare" data-theme="eyecare" title="โหมดถนอมสายตา">📖</button>
+    </div>
+    <div class="fontsize-group" title="ปรับขนาดตัวอักษร">
+      <button class="fontsize-btn" id="fs-dec">A-</button>
+      <span class="fontsize-label" id="fs-label">100%</span>
+      <button class="fontsize-btn" id="fs-inc">A+</button>
+    </div>
     <button class="reset-btn" id="tutorial-btn" title="วิธีใช้งานเว็บไซต์">📖 วิธีใช้งาน</button>
     <button class="reset-btn" id="student-badge" title="แก้ไขชื่อผู้เรียน">👤</button>
     <div class="progress-pill" id="progress-pill">⭐ 0/4</div>
@@ -698,19 +782,19 @@ const LESSONS = [
       {
         heading: "บทสนทนา: Introducing yourself",
         items: [
-          "James: Good morning, I'm Distribution Manager. My name is James Miller. I'm working for Kenchinton in the Logistics department.",
-          "Steve: Good morning, James, I'm Steve, Steve White from the service engineer team from CNBE. Nice to meet you.",
-          "James: Nice to meet you too, Steve."
+          "James: Good morning, I'm Distribution Manager. My name is James Miller. I'm working for Kenchinton in the Logistics department.<br><span class=\"th-translate\">(เจมส์: สวัสดีตอนเช้าครับ ผมเป็นผู้จัดการฝ่ายกระจายสินค้า ผมชื่อเจมส์ มิลเลอร์ ผมทำงานให้บริษัทเคนชิงตันในแผนกโลจิสติกส์)</span>",
+          "Steve: Good morning, James, I'm Steve, Steve White from the service engineer team from CNBE. Nice to meet you.<br><span class=\"th-translate\">(สตีฟ: สวัสดีตอนเช้าครับ เจมส์ ผมสตีฟ สตีฟ ไวท์ จากทีมวิศวกรบริการของบริษัท CNBE ยินดีที่ได้รู้จักครับ)</span>",
+          "James: Nice to meet you too, Steve.<br><span class=\"th-translate\">(เจมส์: ยินดีที่ได้รู้จักเช่นกันครับ สตีฟ)</span>"
         ]
       },
       {
         heading: "บทสนทนา: How to say “Hello” and “Goodbye”",
         items: [
-          "Richard: Hey, Susan! Good to see you again.",
-          "Susan: Richard, hi. I didn't expect to see you here. How are you?",
-          "Richard: Thanks, fine. And you?",
-          "Susan: Not bad. Is Veronica coming too? — Richard: No. She can't come.",
-          "Susan: Ah look, here's Jasmin."
+          "Richard: Hey, Susan! Good to see you again.<br><span class=\"th-translate\">(ริชาร์ด: เฮ้ ซูซาน! ดีใจจังที่ได้เจอกันอีกครั้ง)</span>",
+          "Susan: Richard, hi. I didn't expect to see you here. How are you?<br><span class=\"th-translate\">(ซูซาน: ริชาร์ด ไงคะ ไม่คิดเลยว่าจะเจอคุณที่นี่ เป็นยังไงบ้าง)</span>",
+          "Richard: Thanks, fine. And you?<br><span class=\"th-translate\">(ริชาร์ด: ขอบคุณครับ สบายดี แล้วคุณล่ะ)</span>",
+          "Susan: Not bad. Is Veronica coming too? — Richard: No. She can't come.<br><span class=\"th-translate\">(ซูซาน: ก็ไม่เลวค่ะ เวโรนิก้าจะมาด้วยไหม — ริชาร์ด: ไม่มาครับ เธอมาไม่ได้)</span>",
+          "Susan: Ah look, here's Jasmin.<br><span class=\"th-translate\">(ซูซาน: อ้าว ดูสิคะ แจสมินมาแล้ว)</span>"
         ]
       }
     ],
@@ -792,12 +876,12 @@ const LESSONS = [
       {
         heading: "บทสนทนา: Introducing your responsibility",
         items: [
-          "John Willson: Hello, I'm Rachel. Can I join you? — Rachel Martin: Yes, of course.",
-          "John Willson: I hear you work for the production department. Is this your first time here?",
-          "Samanta Parker: No, I was here last year. Please take a seat.",
-          "Samanta Parker: Excuse me, Mr. Willson, where are you from?",
-          "John Willson: I'm originally from London, but now I live in Samut Prakan. I work for Thai Summit in the International Sales department. How about you?",
-          "Samanta Parker: I'm with Dycin. I'm in Marketing. I'm responsible for ___."
+          "John Willson: Hello, I'm Rachel. Can I join you? — Rachel Martin: Yes, of course.<br><span class=\"th-translate\">(จอห์น วิลสัน: สวัสดีครับ ผมเรเชล ขอนั่งด้วยได้ไหมครับ — เรเชล มาร์ติน: ได้ค่ะ เชิญเลย)</span>",
+          "John Willson: I hear you work for the production department. Is this your first time here?<br><span class=\"th-translate\">(จอห์น วิลสัน: ได้ยินมาว่าคุณทำงานแผนกผลิต นี่เป็นครั้งแรกที่มาที่นี่ใช่ไหมครับ)</span>",
+          "Samanta Parker: No, I was here last year. Please take a seat.<br><span class=\"th-translate\">(ซาแมนต้า ปาร์คเกอร์: เปล่าค่ะ ปีที่แล้วเคยมาแล้ว เชิญนั่งค่ะ)</span>",
+          "Samanta Parker: Excuse me, Mr. Willson, where are you from?<br><span class=\"th-translate\">(ซาแมนต้า ปาร์คเกอร์: ขอโทษนะคะ คุณวิลสัน คุณมาจากไหนคะ)</span>",
+          "John Willson: I'm originally from London, but now I live in Samut Prakan. I work for Thai Summit in the International Sales department. How about you?<br><span class=\"th-translate\">(จอห์น วิลสัน: ผมมาจากลอนดอนโดยกำเนิดครับ แต่ตอนนี้อาศัยอยู่ที่สมุทรปราการ ผมทำงานให้บริษัทไทยซัมมิทในแผนกขายต่างประเทศ แล้วคุณล่ะครับ)</span>",
+          "Samanta Parker: I'm with Dycin. I'm in Marketing. I'm responsible for ___.<br><span class=\"th-translate\">(ซาแมนต้า ปาร์คเกอร์: ฉันทำงานกับบริษัทไดซินค่ะ อยู่ฝ่ายการตลาด ฉันรับผิดชอบ ___)</span>"
         ]
       }
     ],
@@ -876,6 +960,18 @@ const LESSONS = [
           "<b>Transition</b> — คำหรือวลีที่ใช้เชื่อมโยงระหว่างหัวข้อ",
           "<b>Conclusion</b> — บทสรุปปิดท้ายการนำเสนอ"
         ]
+      },
+      {
+        heading: "บทสนทนา: Presenting a New Project",
+        items: [
+          "Somsak: Good morning, everyone. Let me introduce myself. I'm Somsak, from the Product Development team.<br><span class=\"th-translate\">(สมศักดิ์: สวัสดีตอนเช้าครับทุกคน ขอแนะนำตัวก่อนนะครับ ผมสมศักดิ์ จากทีมพัฒนาผลิตภัณฑ์)</span>",
+          "Somsak: What I'd like to present to you today is our new mobile application project.<br><span class=\"th-translate\">(สมศักดิ์: สิ่งที่ผมอยากนำเสนอให้ทุกคนฟังวันนี้คือโครงการแอปพลิเคชันมือถือตัวใหม่ของเรา)</span>",
+          "Somsak: The purpose of this presentation is to introduce the project timeline and expected outcomes.<br><span class=\"th-translate\">(สมศักดิ์: จุดประสงค์ของการนำเสนอครั้งนี้คือการแนะนำไทม์ไลน์ของโครงการและผลลัพธ์ที่คาดว่าจะได้รับ)</span>",
+          "Somsak: In my presentation, I'll focus on three major issues: the project scope, the budget, and the launch date.<br><span class=\"th-translate\">(สมศักดิ์: ในการนำเสนอนี้ ผมจะเน้นที่ 3 ประเด็นหลัก คือ ขอบเขตโครงการ งบประมาณ และวันเปิดตัว)</span>",
+          "Somsak: My presentation will take about 20 minutes, and I'll be happy to take questions at the end.<br><span class=\"th-translate\">(สมศักดิ์: การนำเสนอของผมจะใช้เวลาประมาณ 20 นาที และยินดีตอบคำถามช่วงท้ายครับ)</span>",
+          "Nid (audience): Thank you. Could you clarify the budget breakdown a bit more?<br><span class=\"th-translate\">(นิด (ผู้ฟัง): ขอบคุณค่ะ ขออธิบายรายละเอียดงบประมาณเพิ่มอีกนิดได้ไหมคะ)</span>",
+          "Somsak: Sure, I'll cover that in the next slide.<br><span class=\"th-translate\">(สมศักดิ์: ได้ครับ ผมจะพูดถึงเรื่องนั้นในสไลด์ถัดไปครับ)</span>"
+        ]
       }
     ],
     phrases: [
@@ -935,36 +1031,36 @@ const LESSONS = [
       {
         heading: "บทสนทนา Small Talk ในสถานการณ์ต่างๆ",
         items: [
-          "<b>At a networking event</b> — “Hi, I'm Sarah. Have you been to this event before?”",
-          "<b>In an elevator</b> — “Nice weather we're having today, isn't it?”",
-          "<b>Waiting in line at a coffee shop</b> — “I love their coffee here. Have you tried it before?”",
-          "<b>At a social gathering</b> — “Hi, I'm Mike. What brings you to this party?”",
-          "<b>In a shared office space</b> — “Do you work here often? I've seen you around.”",
-          "<b>On a flight</b> — “Are you traveling for business or pleasure?”",
-          "<b>In a gym or fitness class</b> — “This workout is intense, right?”",
-          "<b>At a community event</b> — “I'm excited about the upcoming festival. Have you been before?”",
-          "<b>Waiting for public transportation</b> — “The bus is running a bit late today, isn't it?”",
-          "<b>In a bookstore</b> — “I see you're browsing the fiction section. Any recommendations?”"
+          "<b>At a networking event</b> — “Hi, I'm Sarah. Have you been to this event before?”<br><span class=\"th-translate\">(ในงานสร้างเครือข่าย — สวัสดีค่ะ ฉันซาร่าห์ คุณเคยมางานนี้มาก่อนไหมคะ)</span>",
+          "<b>In an elevator</b> — “Nice weather we're having today, isn't it?”<br><span class=\"th-translate\">(ในลิฟต์ — วันนี้อากาศดีจังเลยเนอะ)</span>",
+          "<b>Waiting in line at a coffee shop</b> — “I love their coffee here. Have you tried it before?”<br><span class=\"th-translate\">(ระหว่างต่อคิวร้านกาแฟ — ฉันชอบกาแฟร้านนี้มากเลย คุณเคยลองไหม)</span>",
+          "<b>At a social gathering</b> — “Hi, I'm Mike. What brings you to this party?”<br><span class=\"th-translate\">(ในงานสังสรรค์ — สวัสดีครับ ผมไมค์ อะไรพาคุณมางานปาร์ตี้นี้ครับ)</span>",
+          "<b>In a shared office space</b> — “Do you work here often? I've seen you around.”<br><span class=\"th-translate\">(ในพื้นที่ทำงานร่วม — คุณมาทำงานที่นี่บ่อยไหมคะ เคยเห็นคุณแถวนี้)</span>",
+          "<b>On a flight</b> — “Are you traveling for business or pleasure?”<br><span class=\"th-translate\">(บนเครื่องบิน — คุณเดินทางเพื่อธุรกิจหรือพักผ่อนคะ)</span>",
+          "<b>In a gym or fitness class</b> — “This workout is intense, right?”<br><span class=\"th-translate\">(ในฟิตเนส — โปรแกรมออกกำลังกายนี้โหดเอาเรื่องเลยเนอะ)</span>",
+          "<b>At a community event</b> — “I'm excited about the upcoming festival. Have you been before?”<br><span class=\"th-translate\">(ในงานชุมชน — ฉันตื่นเต้นกับเทศกาลที่จะถึงนี้มากเลย คุณเคยมาก่อนไหม)</span>",
+          "<b>Waiting for public transportation</b> — “The bus is running a bit late today, isn't it?”<br><span class=\"th-translate\">(ระหว่างรอรถโดยสาร — วันนี้รถบัสมาช้าไปหน่อยเนอะ)</span>",
+          "<b>In a bookstore</b> — “I see you're browsing the fiction section. Any recommendations?”<br><span class=\"th-translate\">(ในร้านหนังสือ — เห็นคุณกำลังดูโซนนิยายอยู่ พอจะแนะนำเล่มไหนได้ไหมคะ)</span>"
         ]
       },
       {
         heading: "Would you mind...? (การขอร้องอย่างสุภาพ)",
         items: [
-          "“Would you mind closing the window?”",
-          "“Would you mind passing me the salt?”",
-          "“Would you mind if I borrowed your pen?”",
-          "“Would you mind holding the door for me?”",
-          "การตอบรับ: “No, I wouldn't mind at all.”"
+          "“Would you mind closing the window?”<br><span class=\"th-translate\">(คุณจะรังเกียจไหมถ้าจะช่วยปิดหน้าต่างให้หน่อย)</span>",
+          "“Would you mind passing me the salt?”<br><span class=\"th-translate\">(คุณจะรังเกียจไหมถ้าจะช่วยส่งเกลือให้หน่อย)</span>",
+          "“Would you mind if I borrowed your pen?”<br><span class=\"th-translate\">(คุณจะรังเกียจไหมถ้าฉันจะขอยืมปากกา)</span>",
+          "“Would you mind holding the door for me?”<br><span class=\"th-translate\">(คุณจะรังเกียจไหมถ้าจะช่วยเปิดประตูรอให้หน่อย)</span>",
+          "การตอบรับ: “No, I wouldn't mind at all.”<br><span class=\"th-translate\">(การตอบรับ: ไม่หรอก ไม่รังเกียจเลย)</span>"
         ]
       },
       {
         heading: "หัวข้อ Small Talk ในงานปาร์ตี้",
         items: [
-          "<b>Party Venue</b> — “This is a great venue for a party, isn't it?”",
-          "<b>Food and Drinks</b> — “Have you tried the appetizers? They're delicious!”",
-          "<b>Music</b> — “The music selection tonight is fantastic, don't you think?”",
-          "<b>Weekend plans</b> — “Any exciting plans for the weekend?”",
-          "<b>Hobbies/Interests</b> — “What do you enjoy doing in your free time?”"
+          "<b>Party Venue</b> — “This is a great venue for a party, isn't it?”<br><span class=\"th-translate\">(สถานที่จัดงาน — สถานที่นี้เหมาะกับงานปาร์ตี้มากเลยเนอะ)</span>",
+          "<b>Food and Drinks</b> — “Have you tried the appetizers? They're delicious!”<br><span class=\"th-translate\">(อาหารและเครื่องดื่ม — คุณลองอาหารเรียกน้ำย่อยหรือยัง อร่อยมากเลย)</span>",
+          "<b>Music</b> — “The music selection tonight is fantastic, don't you think?”<br><span class=\"th-translate\">(เพลง — เพลงที่เปิดคืนนี้เพราะมากเลย คุณว่าไหม)</span>",
+          "<b>Weekend plans</b> — “Any exciting plans for the weekend?”<br><span class=\"th-translate\">(แผนวันหยุดสุดสัปดาห์ — มีแผนสนุกๆ อะไรช่วงสุดสัปดาห์ไหม)</span>",
+          "<b>Hobbies/Interests</b> — “What do you enjoy doing in your free time?”<br><span class=\"th-translate\">(งานอดิเรก/ความสนใจ — เวลาว่างคุณชอบทำอะไรคะ)</span>"
         ]
       }
     ],
@@ -1275,13 +1371,15 @@ function renderContentTab(lesson){
 // ---------- VIDEO TAB ----------
 function renderVideoTab(lesson){
   const panel = document.getElementById('panel-video');
+  const watchUrl = `https://www.youtube.com/watch?v=${lesson.videoId}`;
   panel.innerHTML = `
     <div class="video-wrap">
       <div class="video-frame">
-        <iframe src="https://www.youtube.com/embed/${lesson.videoId}" title="${lesson.videoTitle}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe src="https://www.youtube-nocookie.com/embed/${lesson.videoId}" title="${lesson.videoTitle}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="video-title">${lesson.videoTitle}</div>
       <div class="video-note">ชมวิดีโอนี้ประกอบเนื้อหาบทเรียน แล้วลองสังเกตคำศัพท์และวลีที่ปรากฏในวิดีโอ</div>
+      <a class="video-fallback-link" href="${watchUrl}" target="_blank" rel="noopener">▶️ วิดีโอไม่ขึ้น? เปิดดูบน YouTube โดยตรง →</a>
     </div>
   `;
 }
@@ -1878,12 +1976,69 @@ document.getElementById('tutorial-next').addEventListener('click', () => {
   else{ closeTutorial(); }
 });
 
+// ============================================================
+// FONT SIZE CONTROL — ตั้งค่าการปรับขนาดตัวอักษรทั้งเว็บไซต์
+// ปรับผ่านตัวแปร CSS --fs-scale ซึ่งคูณเข้ากับทุกค่า font-size ในสไตล์ชีต
+// จำค่าที่ผู้ใช้เลือกไว้ใน localStorage ให้คงอยู่ในการเข้าชมครั้งถัดไป
+// ============================================================
+const FONT_SCALE_KEY = "qeng_font_scale";
+const FONT_SCALE_MIN = 0.85;
+const FONT_SCALE_MAX = 1.4;
+const FONT_SCALE_STEP = 0.1;
+let fontScale = 1;
+
+function applyFontScale(){
+  document.documentElement.style.setProperty('--fs-scale', fontScale);
+  document.getElementById('fs-label').textContent = Math.round(fontScale * 100) + '%';
+  try{ localStorage.setItem(FONT_SCALE_KEY, String(fontScale)); } catch(e){}
+}
+function loadFontScale(){
+  try{
+    const saved = parseFloat(localStorage.getItem(FONT_SCALE_KEY));
+    if(!isNaN(saved) && saved >= FONT_SCALE_MIN && saved <= FONT_SCALE_MAX) fontScale = saved;
+  } catch(e){}
+  applyFontScale();
+}
+document.getElementById('fs-inc').addEventListener('click', () => {
+  fontScale = Math.min(FONT_SCALE_MAX, Math.round((fontScale + FONT_SCALE_STEP) * 100) / 100);
+  applyFontScale();
+});
+document.getElementById('fs-dec').addEventListener('click', () => {
+  fontScale = Math.max(FONT_SCALE_MIN, Math.round((fontScale - FONT_SCALE_STEP) * 100) / 100);
+  applyFontScale();
+});
+
+// ============================================================
+// THEME SWITCHER — สลับธีมเว็บไซต์ระหว่างโหมดปกติ / โหมดมืด / โหมดถนอมสายตา
+// ปรับผ่าน data-theme บน <html> ซึ่งไปเปลี่ยนค่าตัวแปร CSS ทั้งชุดให้อัตโนมัติ
+// ============================================================
+const THEME_KEY = "qeng_theme";
+function applyTheme(theme){
+  if(theme === 'normal'){ document.documentElement.removeAttribute('data-theme'); }
+  else{ document.documentElement.setAttribute('data-theme', theme); }
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
+  try{ localStorage.setItem(THEME_KEY, theme); } catch(e){}
+}
+function loadTheme(){
+  let theme = 'normal';
+  try{
+    const saved = localStorage.getItem(THEME_KEY);
+    if(saved === 'normal' || saved === 'dark' || saved === 'eyecare') theme = saved;
+  } catch(e){}
+  applyTheme(theme);
+}
+document.querySelectorAll('.theme-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
+});
+
 // ---------- INIT ----------
 loadProgress();
 getStudentName();
 renderStudentBadge();
 renderChrome();
 renderHome();
+loadFontScale();
+loadTheme();
 
 // เปิดสอนใช้งานอัตโนมัติเฉพาะการเข้าชมครั้งแรกของเบราว์เซอร์เครื่องนี้
 (function autoShowTutorialOnFirstVisit(){
