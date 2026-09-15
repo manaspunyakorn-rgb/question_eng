@@ -358,9 +358,8 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
   position:relative;
   transition:transform .15s ease, box-shadow .15s ease;
 }
-.ticket.locked{opacity:0.6; filter:saturate(0.55);}
-.ticket:not(.locked){cursor:pointer;}
-.ticket:not(.locked):hover{transform:translate(-3px,-3px); box-shadow:8px 8px 0 var(--border);}
+.ticket{cursor:pointer;}
+.ticket:hover{transform:translate(-3px,-3px); box-shadow:8px 8px 0 var(--border);}
 
 .ticket-top{padding:22px 22px 18px; display:flex; justify-content:space-between; gap:12px;}
 .ticket-gate{font-family:'Fredoka',sans-serif; font-size:calc(11.5px * var(--fs-scale)); font-weight:700; color:#fff; letter-spacing:0.04em; margin-bottom:8px;
@@ -371,7 +370,6 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
   font-family:'Fredoka',sans-serif; font-size:calc(10.5px * var(--fs-scale)); font-weight:700; padding:6px 12px; border-radius:99px; height:fit-content;
   white-space:nowrap; border:2px solid var(--border);
 }
-.ticket-status.locked{background:#EDE7F7; color:#8577AC;}
 .ticket-status.open{background:var(--yellow); color:var(--border);}
 .ticket-status.passed{background:var(--green); color:#fff;}
 
@@ -604,45 +602,64 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
 </head>
 <body>
 
+<!-- ============================================================
+     แถบเมนูด้านบน (Topbar) — แสดงอยู่ทุกหน้า ทุกเวลา (position: sticky)
+     ประกอบด้วย: โลโก้/ปุ่มกลับหน้าแรก, แถบแสดงสถานะ 4 ด่าน (gate-track),
+     ปุ่มเปลี่ยนธีม, ปุ่มปรับขนาดตัวอักษร, ปุ่มเปิดคู่มือใช้งาน,
+     ปุ่มแก้ไขชื่อผู้เรียน, ป้ายจำนวนดาวที่สะสมได้, ปุ่มรีเซ็ตความคืบหน้า
+     ============================================================ -->
 <header class="topbar">
+  <!-- โลโก้ + ชื่อเว็บไซต์ : กดแล้วกลับหน้าแรกได้จากทุกหน้า (ผูกกับ goHome() ใน JS) -->
   <button class="brand" id="brand-home-btn">
     <span class="brand-mark">EN</span>
     <span class="brand-text"><b>Question ENG 🎈</b><span>English for Career Skills</span></span>
   </button>
+  <!-- แถบวงกลมแสดงสถานะด่านเรียนทั้ง 4 ด่าน (พร้อมเรียน/ผ่านแล้ว) — เติมเนื้อหาโดย renderChrome() -->
   <div class="gate-track" id="gate-track"></div>
   <div class="topbar-right">
+    <!-- ปุ่มสลับธีม 3 แบบ: ปกติ/มืด/ถนอมสายตา — ทำงานร่วมกับ applyTheme() ใน JS -->
     <div class="theme-group" title="เปลี่ยนธีมเว็บไซต์">
       <button class="theme-btn active" id="theme-normal" data-theme="normal" title="โหมดปกติ">☀️</button>
       <button class="theme-btn" id="theme-dark" data-theme="dark" title="โหมดมืด">🌙</button>
       <button class="theme-btn" id="theme-eyecare" data-theme="eyecare" title="โหมดถนอมสายตา">📖</button>
     </div>
+    <!-- ปุ่มปรับขนาดตัวอักษรทั้งเว็บไซต์ (85%-140%) — ทำงานร่วมกับ applyFontScale() ใน JS -->
     <div class="fontsize-group" title="ปรับขนาดตัวอักษร">
       <button class="fontsize-btn" id="fs-dec">A-</button>
       <span class="fontsize-label" id="fs-label">100%</span>
       <button class="fontsize-btn" id="fs-inc">A+</button>
     </div>
+    <!-- ปุ่มเปิดหน้าต่างสอนใช้งานเว็บไซต์ (Tutorial) — ผูกกับ openTutorial() ใน JS -->
     <button class="reset-btn" id="tutorial-btn" title="วิธีใช้งานเว็บไซต์">📖 วิธีใช้งาน</button>
+    <!-- ปุ่มแสดง/แก้ไขชื่อผู้เรียนที่ใช้บันทึกคะแนนลงฐานข้อมูล — ผูกกับ changeStudentName() ใน JS -->
     <button class="reset-btn" id="student-badge" title="แก้ไขชื่อผู้เรียน">👤</button>
+    <!-- ป้ายแสดงจำนวนด่านที่ผ่านแล้วจากทั้งหมด 4 ด่าน — อัปเดตค่าโดย renderChrome() -->
     <div class="progress-pill" id="progress-pill">⭐ 0/4</div>
+    <!-- ปุ่มล้างความคืบหน้าทั้งหมดในเครื่องนี้ — ผูกกับ resetProgress() ใน JS -->
     <button class="reset-btn" id="reset-btn" title="ล้างคะแนนและความคืบหน้าทั้งหมด">รีเซ็ตความคืบหน้า</button>
   </div>
 </header>
 
 <main>
 
-  <!-- ============ HOME VIEW ============ -->
+  <!-- ============================================================
+       หน้าหลัก (Home View) — หน้าแรกที่ผู้ใช้เห็นเมื่อเปิดเว็บไซต์
+       แสดง/ซ่อนสลับกับ #view-lesson ผ่านฟังก์ชัน goHome() / openLesson()
+       ============================================================ -->
   <section id="view-home">
+    <!-- บัตรผ่านทางแนะนำระบบ (Hero) : ภาพรวมหลักสูตร + ปุ่มเริ่มด่านแรก + กล่องแสดงจำนวนดาวที่สะสมได้ -->
     <div class="hero-wrap">
       <div class="hero-ticket">
         <div class="hero-main">
           <div class="hero-eyebrow">🎉 Your Learning Adventure · Business English</div>
           <h1>เตรียมความพร้อมสู่โลกการทำงาน<br>ด้วยภาษาอังกฤษ 4 ด่านสุดสนุก!</h1>
-          <p class="lead">สื่อการเรียนรู้สำหรับนักศึกษาบริหารธุรกิจ สาขาคอมพิวเตอร์ธุรกิจ ครอบคลุมการแนะนำตัว การพูดถึงความรับผิดชอบ การนำเสนอโครงการ และการเข้าสังคมในที่ทำงาน — เรียนเนื้อหา ทำแบบทดสอบ 5 ข้อ ดูวิดีโอ และฝึกฝนผ่าน 5 เกมสุดมันส์ในทุกบท คะแนนของคุณจะถูกบันทึกลงฐานข้อมูลโดยอัตโนมัติ</p>
+          <p class="lead">สื่อการเรียนรู้สำหรับนักศึกษาบริหารธุรกิจ สาขาคอมพิวเตอร์ธุรกิจ ครอบคลุมการแนะนำตัว การพูดถึงความรับผิดชอบ การนำเสนอโครงการ และการเข้าสังคมในที่ทำงาน — เรียนเนื้อหา ทำแบบทดสอบ 10 ข้อ ดูวิดีโอ และฝึกฝนผ่าน 5 เกมสุดมันส์ในทุกบท คะแนนของคุณจะถูกบันทึกลงฐานข้อมูลโดยอัตโนมัติ</p>
           <div class="route-row">
             <div class="route-node">🐣 STUDENT<small>Gate 00</small></div>
             <div class="route-dash"></div>
             <div class="route-node">🏆 PROFESSIONAL<small>Gate 04</small></div>
           </div>
+          <!-- ปุ่มเริ่มด่านแรก : เข้าสู่บทเรียนที่ 1 ทันที (เรียก openLesson(LESSONS[0].id)) -->
           <button class="hero-cta" id="hero-start-btn">เริ่มด่านแรก · Introducing Yourself →</button>
         </div>
         <div class="hero-stub">
@@ -657,6 +674,8 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
       </div>
     </div>
 
+    <!-- แบนเนอร์ชวนทำ "แบบทดสอบก่อนเรียน" (ลิงก์ Google Form ภายนอก) — แสดงก่อนรายการด่านเรียน
+         เพื่อให้ผู้เรียนทำแบบวัดผลก่อนเริ่มบทเรียนที่ 1 (ใช้สำหรับเก็บข้อมูลวิจัยเปรียบเทียบก่อน-หลังเรียน) -->
     <a class="pretest-banner" href="https://docs.google.com/forms/d/e/1FAIpQLSe8lzbpY2cgAgFywl_tzstxg8yeA5ggtr9OcblVBz9DIQRdhQ/viewform?usp=dialog" target="_blank" rel="noopener">
       <div class="pretest-icon">📋</div>
       <div class="pretest-text">
@@ -667,8 +686,12 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
     </a>
 
     <div class="section-label">Your Journey · เส้นทาง 4 ด่านสู่การทำงาน</div>
+    <!-- การ์ดแสดงด่านเรียนทั้ง 4 ด่าน (บทที่ 1-4) — เนื้อหาถูกสร้างแบบไดนามิกโดย renderHome()
+         โดยดึงข้อมูลจากอาร์เรย์ LESSONS (นิยามไว้ในสคริปต์ข้อมูลด้านล่าง) -->
     <div class="lesson-grid" id="lesson-grid"></div>
 
+    <!-- ส่วนแบบประเมินผลท้ายหลักสูตร : ลิงก์ไปแบบทดสอบวัดผลสัมฤทธิ์ + แบบสอบถามความพึงพอใจ (Google Forms)
+         #eval-banner จะเปลี่ยนข้อความอัตโนมัติเมื่อผู้เรียนผ่านครบทั้ง 4 ด่าน (ดู renderEvalBanner() ใน JS) -->
     <div class="eval-wrap">
       <div class="section-label">📝 แบบประเมินผล · Evaluation</div>
       <div id="eval-banner"></div>
@@ -689,15 +712,22 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
     </div>
   </section>
 
-  <!-- ============ LESSON VIEW ============ -->
+  <!-- ============================================================
+       หน้าบทเรียน (Lesson View) — แสดงเมื่อผู้ใช้คลิกเข้าด่านใดด่านหนึ่ง
+       สลับแสดง/ซ่อนกับ #view-home ผ่าน openLesson() / goHome()
+       เนื้อหาภายในแบ่งเป็น 5 แท็บ ตรงกับข้อมูลของแต่ละบทใน LESSONS
+       ============================================================ -->
   <section id="view-lesson">
+    <!-- ปุ่มย้อนกลับไปหน้ารวมด่าน — ผูกกับ goHome() -->
     <button class="back-btn" id="back-btn">← กลับหน้ารวมด่าน</button>
+    <!-- ส่วนหัวบทเรียน : รหัสด่าน/ชื่อบท/คำอธิบาย — เติมค่าโดย openLesson() จากข้อมูล lesson.gate, lesson.title, lesson.subtitle -->
     <div class="lesson-header">
       <div class="ticket-gate mono" id="lv-gate"></div>
       <h2 id="lv-title"></h2>
       <p id="lv-subtitle"></p>
     </div>
 
+    <!-- แถบแท็บสลับเนื้อหา 5 ส่วนของบทเรียน — คลิกแล้วสลับด้วย switchTab() -->
     <div class="tab-bar" id="tab-bar">
       <button class="tab-btn" data-tab="pre"><span class="num">1</span> ทดสอบก่อนเรียน</button>
       <button class="tab-btn" data-tab="content"><span class="num">2</span> เนื้อหาบทเรียน</button>
@@ -706,6 +736,11 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
       <button class="tab-btn" data-tab="post"><span class="num">5</span> ทดสอบหลังเรียน</button>
     </div>
 
+    <!-- กล่องเนื้อหาของแต่ละแท็บ (แสดงทีละกล่องตาม data-panel ที่ตรงกับแท็บที่เลือก)
+         panel-pre/panel-post  -> เติมเนื้อหาโดย renderQuizPanel() (แบบทดสอบก่อน/หลังเรียน 10 ข้อ)
+         panel-content         -> เติมเนื้อหาโดย renderContentTab() (คำศัพท์ + บทสนทนา + วลีที่ใช้ได้จริง)
+         panel-video           -> เติมเนื้อหาโดย renderVideoTab() (ฝังวิดีโอ YouTube ประกอบบทเรียน)
+         panel-games           -> เติมเนื้อหาโดย renderGamesTab() (เกมฝึกทักษะ 5 รูปแบบ) -->
     <div class="tab-panel" data-panel="pre" id="panel-pre"></div>
     <div class="tab-panel" data-panel="content" id="panel-content"></div>
     <div class="tab-panel" data-panel="video" id="panel-video"></div>
@@ -715,15 +750,21 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
 
 </main>
 
+<!-- ท้ายเว็บไซต์ : ข้อมูลโครงงาน ผู้จัดทำ อาจารย์ที่ปรึกษา และคำอธิบายการบันทึกคะแนน -->
 <footer>
   <div><b>Question ENG 🎈</b> — สื่อการเรียนการสอนภาษาอังกฤษเพื่อการทำงาน</div>
   <div>โครงงานปริญญาตรี คณะบริหารธุรกิจ สาขาคอมพิวเตอร์ธุรกิจ</div>
   <div>ผู้จัดทำ: นายกิจพงษ์ เบญจดำรงกิจ รหัสนักศึกษา 6614012620057 · นายปัญญากร มีเสน รหัสนักศึกษา 6614012620154</div>
   <div>อาจารย์ที่ปรึกษา: ดร.กนกวรรณ ไทยประดิษฐ · ปีการศึกษา 2569</div>
-  <div>คะแนนของคุณจะถูกส่งไปบันทึกลงฐานข้อมูล (Google Sheet) โดยอัตโนมัติทุกครั้งที่ทำแบบทดสอบหรือเล่นเกมจบ พร้อมเก็บความคืบหน้าการปลดล็อกด่านไว้ในเบราว์เซอร์นี้ด้วย กด "รีเซ็ตความคืบหน้า" ด้านบนเพื่อเริ่มใหม่ในเครื่องนี้</div>
+  <div>คะแนนของคุณจะถูกส่งไปบันทึกลงฐานข้อมูล (Google Sheet) โดยอัตโนมัติทุกครั้งที่ทำแบบทดสอบหรือเล่นเกมจบ พร้อมเก็บความคืบหน้าการเรียนไว้ในเบราว์เซอร์นี้ด้วย กด "รีเซ็ตความคืบหน้า" ด้านบนเพื่อเริ่มใหม่ในเครื่องนี้</div>
 </footer>
 
-<!-- ============ TUTORIAL / ONBOARDING MODAL ============ -->
+<!-- ============================================================
+     หน้าต่างสอนใช้งานเว็บไซต์ (Tutorial / Onboarding Modal)
+     ซ่อนอยู่เป็นค่าเริ่มต้น (display:none) — แสดงอัตโนมัติในการเข้าชมครั้งแรก
+     หรือเปิดเองได้ทุกเมื่อผ่านปุ่ม "📖 วิธีใช้งาน" บนแถบเมนู
+     ควบคุมการทำงานโดยกลุ่มฟังก์ชัน openTutorial()/closeTutorial()/renderTutorialStep()
+     ============================================================ -->
 <div class="tutorial-overlay" id="tutorial-overlay" style="display:none;">
   <div class="tutorial-modal">
     <button class="tutorial-close" id="tutorial-close" title="ปิด">✕</button>
@@ -742,14 +783,28 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
 
 <script>
 // ============================================================
-// LESSON DATA
-// เนื้อหา คำศัพท์ แบบทดสอบ (5 ข้อ) และข้อมูลเกม สำหรับทั้ง 4 บทเรียน
+// LESSON DATA — ข้อมูลเนื้อหาหลักของเว็บไซต์ทั้งหมด
+// เนื้อหา คำศัพท์ แบบทดสอบ (10 ข้อ) และข้อมูลเกม สำหรับทั้ง 4 บทเรียน
 // อ้างอิงจากเอกสารประกอบการสอนจริง:
 // บทที่ 1 Introducing Yourself
 // บทที่ 2 Talking about Responsibility
 // บทที่ 3 Presentation New Project
 // บทที่ 4 Socialization
-// แก้ไข/เพิ่มเนื้อหาได้จากไฟล์นี้ไฟล์เดียว โดยไม่ต้องแตะ app.js
+// แก้ไข/เพิ่มเนื้อหาได้จากไฟล์นี้ไฟล์เดียว โดยไม่ต้องแตะโค้ดส่วนแสดงผล (สคริปต์ที่ 2 ด้านล่าง)
+//
+// โครงสร้างของแต่ละบทเรียน (object หนึ่งตัวในอาร์เรย์ LESSONS) มีฟิลด์ดังนี้:
+//   id            - รหัสบทเรียน (1-4) ใช้อ้างอิงตอนบันทึกคะแนน/แสดงตราประทับผ่านด่าน
+//   gate          - ข้อความป้ายรหัสด่าน เช่น "GATE 01 · INTRO-01" (แสดงบนการ์ดและหัวบทเรียน)
+//   title/subtitle- ชื่อบทเรียนและคำอธิบายสั้น (แสดงบนการ์ดหน้าแรกและหัวบทเรียน)
+//   videoId       - รหัสวิดีโอ YouTube ที่ใช้ฝังในแท็บ "วิดีโอ" (ดู renderVideoTab)
+//   videoTitle    - ชื่อวิดีโอที่แสดงใต้กรอบวิดีโอ
+//   contentBlocks - เนื้อหาบทเรียน (คำศัพท์/บทสนทนา) แสดงในแท็บ "เนื้อหาบทเรียน" (ดู renderContentTab)
+//   phrases       - รายการวลีสำคัญ แสดงในกล่อง "วลีที่ใช้ได้จริง" ท้ายแท็บเนื้อหา
+//   sentenceBuilder - ประโยคสำหรับเกม "เรียงประโยค" (ดู buildSentenceBuilderGame)
+//   vocab         - คำศัพท์คู่ (อังกฤษ-ไทย) ใช้ในเกม "จับคู่คำศัพท์" และ "ทายความหมายเร็ว"
+//   fillBlank     - โจทย์เติมคำในประโยค ใช้ในเกม "เติมคำในประโยค" (ดู buildFillGame)
+//   scramble      - คำศัพท์สำหรับเกม "เรียงตัวอักษร" (ดู buildScrambleGame)
+//   quiz          - ชุดคำถามปรนัย 10 ข้อ ใช้ทั้งแบบทดสอบก่อนเรียนและหลังเรียน (ดู buildQuiz)
 // ============================================================
 
 const LESSONS = [
@@ -839,7 +894,12 @@ const LESSONS = [
       { q: "“Accountability” means...", options: ["Ignoring your mistakes", "Accepting responsibility for your actions and decisions", "Taking a vacation", "Avoiding teamwork"], answer: 1, explain: "Accountability คือการยอมรับผิดชอบต่อการกระทำและการตัดสินใจของตนเอง" },
       { q: "“Hierarchy” best means...", options: ["A system of levels of authority within an organization", "A type of software", "A company holiday", "A sales discount"], answer: 0, explain: "Hierarchy คือระบบลำดับชั้นของอำนาจภายในองค์กร" },
       { q: "“Communication” in the workplace means...", options: ["The exchange of information, ideas, and feedback among people", "Working completely alone", "Taking a day off", "Signing a contract"], answer: 0, explain: "Communication คือการแลกเปลี่ยนข้อมูล ความคิด และความคิดเห็นระหว่างกัน" },
-      { q: "When introducing yourself in a business setting, it's best to...", options: ["State your name and position clearly", "Avoid saying your name", "Talk only about your hobbies", "Ignore the other person"], answer: 0, explain: "การแนะนำตัวที่ดีควรบอกชื่อและตำแหน่งอย่างชัดเจน" }
+      { q: "When introducing yourself in a business setting, it's best to...", options: ["State your name and position clearly", "Avoid saying your name", "Talk only about your hobbies", "Ignore the other person"], answer: 0, explain: "การแนะนำตัวที่ดีควรบอกชื่อและตำแหน่งอย่างชัดเจน" },
+      { q: "“Decision-making” is best described as...", options: ["The process of selecting the best course of action to achieve a goal", "Taking a lunch break", "Writing an email", "Attending a party"], answer: 0, explain: "Decision-making คือกระบวนการเลือกแนวทางที่ดีที่สุดเพื่อบรรลุเป้าหมาย" },
+      { q: "“Delegation” means...", options: ["Assigning tasks to others while remaining accountable for the outcome", "Refusing to do any work", "Quitting a job", "Ignoring instructions"], answer: 0, explain: "Delegation คือการมอบหมายงานโดยยังรับผิดชอบผลลัพธ์โดยรวม" },
+      { q: "“Chain of command” refers to...", options: ["The formal line of authority within an organization", "A list of public holidays", "Employee salaries", "A type of software"], answer: 0, explain: "Chain of command คือสายการบังคับบัญชาอย่างเป็นทางการภายในองค์กร" },
+      { q: "“Organizational structure” refers to...", options: ["The arrangement of roles, responsibilities, and relationships within an organization", "A company's logo design", "An employee's lunch break", "A type of business card"], answer: 0, explain: "Organizational structure คือการจัดวางบทบาทและความสัมพันธ์ภายในองค์กร" },
+      { q: "“Efficiency” means...", options: ["Accomplishing tasks with the least wasted resources, time, or effort", "Working as slowly as possible", "Avoiding all responsibility", "Ignoring deadlines"], answer: 0, explain: "Efficiency คือความสามารถในการทำงานให้สำเร็จโดยสูญเสียทรัพยากรน้อยที่สุด" }
     ]
   },
 
@@ -926,7 +986,12 @@ const LESSONS = [
       { q: "“Duties” refers to...", options: ["Vacation days", "Tasks expected as part of your job", "Salary amount", "Company logo"], answer: 1, explain: "Duties คือหน้าที่หรืองานที่คาดหวังให้ทำในตำแหน่งงาน" },
       { q: "A strong “work ethic” means...", options: ["Avoiding responsibility", "Performing work diligently and with dedication", "Arriving late often", "Refusing teamwork"], answer: 1, explain: "Work ethic คือค่านิยมที่ทำให้ทำงานอย่างขยันขันแข็งและทุ่มเท" },
       { q: "“Integrity” means...", options: ["Adhering to strong moral and ethical principles", "Working the longest hours", "Having the highest salary", "Avoiding teamwork"], answer: 0, explain: "Integrity คือการยึดมั่นในหลักจริยธรรมและความซื่อสัตย์" },
-      { q: "A “positive work environment” is characterized by...", options: ["Cooperation, respect, and support among colleagues", "Constant conflict and blame", "No communication at all", "Strict silence at all times"], answer: 0, explain: "สภาพแวดล้อมการทำงานเชิงบวกส่งเสริมความร่วมมือและความเคารพซึ่งกันและกัน" }
+      { q: "A “positive work environment” is characterized by...", options: ["Cooperation, respect, and support among colleagues", "Constant conflict and blame", "No communication at all", "Strict silence at all times"], answer: 0, explain: "สภาพแวดล้อมการทำงานเชิงบวกส่งเสริมความร่วมมือและความเคารพซึ่งกันและกัน" },
+      { q: "“Obligation” best means...", options: ["A moral or legal duty to fulfill responsibilities", "A vacation request", "A salary increase", "A resignation letter"], answer: 0, explain: "Obligation คือพันธะทางศีลธรรมหรือกฎหมายที่ต้องปฏิบัติตาม" },
+      { q: "“Ownership” of a task means...", options: ["Taking full responsibility and control over it", "Ignoring it completely", "Giving it to someone else without follow-up", "Refusing to discuss it"], answer: 0, explain: "Ownership คือการรับผิดชอบและควบคุมงานที่ได้รับมอบหมายอย่างเต็มที่" },
+      { q: "“Collaboration” at work means...", options: ["Competing against colleagues", "Working together to achieve common goals", "Working completely alone", "Ignoring feedback"], answer: 1, explain: "Collaboration คือการทำงานร่วมกับผู้อื่นเพื่อบรรลุเป้าหมายร่วมกัน" },
+      { q: "“Professional development” refers to...", options: ["Activities to enhance knowledge and skills related to one's job", "A company's holiday calendar", "A type of resignation", "An employee's commute"], answer: 0, explain: "หมายถึงกิจกรรมเพื่อพัฒนาความรู้และทักษะในสายอาชีพ" },
+      { q: "“Adaptation” means...", options: ["The ability to adjust to changes in the work environment", "Refusing any change", "A fixed daily schedule", "A type of job offer"], answer: 0, explain: "Adaptation คือความสามารถในการปรับตัวต่อการเปลี่ยนแปลง" }
     ]
   },
 
@@ -1015,7 +1080,12 @@ const LESSONS = [
       { q: "“The purpose of this presentation is to...” is used to...", options: ["End the presentation", "State the objective/aim of the talk", "Introduce yourself", "Ask a question"], answer: 1, explain: "ใช้บอกจุดประสงค์ของการนำเสนอ" },
       { q: "“First, I'll be looking at..., second..., and third...” is an example of...", options: ["Sequencing", "Timing", "Closing", "Small talk"], answer: 0, explain: "เป็นการเรียงลำดับหัวข้อที่จะพูดถึง (Sequencing)" },
       { q: "“My presentation will take about 30 minutes” tells the audience about...", options: ["The topic", "The timing", "The speaker's name", "The purpose"], answer: 1, explain: "บอกระยะเวลาที่ใช้ในการนำเสนอ (Timing)" },
-      { q: "Which is NOT a good way to begin a presentation?", options: ["“Good morning, ladies and gentlemen.”", "“Let me introduce myself.”", "“Give me your attention now!”", "“The purpose of this presentation is to...”"], answer: 2, explain: "“Give me your attention now!” ฟังดูไม่สุภาพสำหรับการเปิดการนำเสนอ" }
+      { q: "Which is NOT a good way to begin a presentation?", options: ["“Good morning, ladies and gentlemen.”", "“Let me introduce myself.”", "“Give me your attention now!”", "“The purpose of this presentation is to...”"], answer: 2, explain: "“Give me your attention now!” ฟังดูไม่สุภาพสำหรับการเปิดการนำเสนอ" },
+      { q: "An “Objective” in a presentation is...", options: ["The goal or aim of the presentation", "The name of the speaker", "The length of the talk", "The location of the meeting"], answer: 0, explain: "Objective คือจุดประสงค์หรือเป้าหมายของการนำเสนอ" },
+      { q: "An “Overview” at the start of a presentation gives the audience...", options: ["A summary of what will be presented", "The speaker's contact information", "A detailed budget report", "A list of attendees"], answer: 0, explain: "Overview คือภาพรวมของสิ่งที่จะนำเสนอ" },
+      { q: "An “Audience” is...", options: ["The people listening to a presentation", "The speaker's notes", "A type of slide", "A meeting agenda"], answer: 0, explain: "Audience คือผู้ฟังหรือผู้ชมการนำเสนอ" },
+      { q: "A “Transition” in a presentation is used to...", options: ["Move smoothly from one point to another", "End the presentation abruptly", "Introduce yourself", "State the timing"], answer: 0, explain: "Transition คือคำหรือวลีที่ใช้เชื่อมโยงระหว่างหัวข้อ" },
+      { q: "A “Conclusion” is...", options: ["The closing summary of a presentation", "The opening greeting", "A type of slide template", "The speaker's job title"], answer: 0, explain: "Conclusion คือบทสรุปปิดท้ายการนำเสนอ" }
     ]
   },
 
@@ -1105,7 +1175,12 @@ const LESSONS = [
       { q: "“Are you traveling for business or pleasure?” is small talk typically used...", options: ["On a flight", "At a funeral", "During a job interview", "In a job application letter"], answer: 0, explain: "เป็นบทสนทนาที่ใช้บ่อยระหว่างการเดินทางโดยเครื่องบิน" },
       { q: "An “Acquaintance” is...", options: ["Someone you know, but not very well", "Your best friend", "A total stranger", "A family member"], answer: 0, explain: "Acquaintance คือคนรู้จักที่ไม่ได้สนิทมาก" },
       { q: "“Rapport” means...", options: ["A good relationship or familiarity with someone", "A type of report document", "A salary negotiation", "A job resignation"], answer: 0, explain: "Rapport คือความสัมพันธ์อันดีหรือความคุ้นเคยกัน" },
-      { q: "The general purpose of small talk is to...", options: ["Build rapport and feel comfortable in a conversation", "Negotiate a business contract", "Give a formal presentation", "File a complaint"], answer: 0, explain: "Small talk ช่วยสร้างความสัมพันธ์อันดีและความสบายใจในการสนทนา" }
+      { q: "The general purpose of small talk is to...", options: ["Build rapport and feel comfortable in a conversation", "Negotiate a business contract", "Give a formal presentation", "File a complaint"], answer: 0, explain: "Small talk ช่วยสร้างความสัมพันธ์อันดีและความสบายใจในการสนทนา" },
+      { q: "A “Networking” event is mainly for...", options: ["Meeting new people and building professional connections", "Sleeping", "Filing taxes", "Repairing computers"], answer: 0, explain: "Networking คือการสร้างเครือข่ายและพบปะผู้คนใหม่ๆ" },
+      { q: "An “Icebreaker” is...", options: ["A question or comment used to start a conversation", "A type of cold drink", "A formal contract", "A job title"], answer: 0, explain: "Icebreaker คือบทสนทนาที่ใช้เปิดตัวหรือละลายพฤติกรรม" },
+      { q: "A “Hobby” is...", options: ["An activity done for pleasure in one's free time", "A type of job interview", "A formal business meeting", "A salary bonus"], answer: 0, explain: "Hobby คืองานอดิเรกที่ทำเพื่อความเพลิดเพลินในเวลาว่าง" },
+      { q: "“Recommend” means...", options: ["To suggest something as good or suitable", "To refuse something", "To delete something", "To postpone something"], answer: 0, explain: "Recommend คือการแนะนำสิ่งที่ดีหรือเหมาะสม" },
+      { q: "Which is an appropriate response to “Would you mind if I borrowed your pen?”", options: ["“No, I wouldn't mind at all.”", "“Yes, go away.”", "“I don't know you.”", "“That's illegal.”"], answer: 0, explain: "“No, I wouldn't mind at all.” เป็นการตอบรับคำขอร้องอย่างสุภาพ" }
     ]
   }
 ];
@@ -1131,6 +1206,8 @@ LESSONS.forEach(l => {
   PROGRESS[l.id] = { preScore: null, postScore: null, gamesDone: { match:false, fill:false, scramble:false, builder:false, speed:false } };
 });
 
+// โหลดความคืบหน้า (คะแนนก่อน/หลังเรียน + สถานะเกมที่เล่นจบ) จาก localStorage กลับเข้า PROGRESS
+// เรียกครั้งเดียวตอนเปิดเว็บ (ดู INIT ท้ายไฟล์) เพื่อให้การ์ดด่านในหน้าแรกแสดงสถานะถูกต้องตั้งแต่โหลดหน้า
 function loadProgress(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -1146,11 +1223,14 @@ function loadProgress(){
     });
   } catch(e){ /* localStorage unavailable — continue with in-memory defaults */ }
 }
+// บันทึกตัวแปร PROGRESS ปัจจุบันลง localStorage — เรียกทุกครั้งที่คะแนนเปลี่ยน (ตรวจคำตอบ/เล่นเกมจบ)
+// ใช้คำนวณว่าการ์ดด่านไหนในหน้าแรกควรแสดงตราประทับ "ผ่านแล้ว" (ดู isPassed ด้านล่าง — ทุกด่านเข้าเรียนได้อิสระอยู่แล้ว)
 function saveProgress(){
   try{
     localStorage.setItem(STORAGE_KEY, JSON.stringify(PROGRESS));
   } catch(e){ /* storage blocked — progress stays in-memory for this session only */ }
 }
+// ล้างความคืบหน้าทั้งหมดกลับสู่ค่าเริ่มต้น แล้วพากลับหน้าแรก — ผูกกับปุ่ม "รีเซ็ตความคืบหน้า" บนแถบเมนู
 function resetProgress(){
   LESSONS.forEach(l => { PROGRESS[l.id] = { preScore: null, postScore: null, gamesDone: { match:false, fill:false, scramble:false, builder:false, speed:false } }; });
   try{ localStorage.removeItem(STORAGE_KEY); } catch(e){}
@@ -1162,7 +1242,7 @@ function resetProgress(){
 // DATABASE LOGGING (Google Sheet ผ่าน Google Apps Script Web App)
 // คะแนนแบบทดสอบก่อนเรียน/หลังเรียน และผลเกมทุกครั้ง จะถูกส่งไปบันทึก
 // เป็นแถวใหม่ในชีตออนไลน์ทันที (นอกเหนือจาก localStorage ที่ยังใช้เก็บ
-// ความคืบหน้าในเครื่องเพื่อคำนวณการปลดล็อกด่านตามเดิม)
+// ความคืบหน้าในเครื่องเพื่อแสดงตราประทับ "ผ่านแล้ว" บนการ์ดแต่ละด่าน)
 //
 // วิธีเปิดใช้งาน: ผู้จัดทำต้อง deploy Google Apps Script เป็น Web App
 // แล้วนำ URL ที่ได้มาแทนที่ค่า SHEET_WEBAPP_URL ด้านล่างนี้
@@ -1173,6 +1253,8 @@ function resetProgress(){
 const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzA6X2SatkS0nWdDpvevplw56YgVQgSF-l7gR3sOQmbKTlqhAe_Y3hO7s824-ZbJUn1/exec";
 const STUDENT_KEY = "qeng_student_name";
 
+// ดึงชื่อผู้เรียนจาก localStorage ถ้ายังไม่เคยตั้งชื่อ จะถามผ่านกล่องโต้ตอบ (prompt) ครั้งแรกที่ใช้งาน
+// ชื่อนี้จะถูกแนบไปกับทุกคะแนนที่ส่งเข้าฐานข้อมูล (ดู logToDB) เพื่อแยกผลของแต่ละคนในชีต
 function getStudentName(){
   let name = null;
   try{ name = localStorage.getItem(STUDENT_KEY); } catch(e){}
@@ -1183,6 +1265,7 @@ function getStudentName(){
   }
   return name;
 }
+// เปิดกล่องโต้ตอบให้แก้ไขชื่อผู้เรียน — ผูกกับปุ่ม 👤 บนแถบเมนู แล้วอัปเดตป้ายชื่อทันที
 function changeStudentName(){
   const current = getStudentName();
   const next = (window.prompt("แก้ไขชื่อ-นามสกุลของคุณ", current === "ไม่ระบุชื่อ" ? "" : current) || "").trim();
@@ -1191,11 +1274,15 @@ function changeStudentName(){
     renderStudentBadge();
   }
 }
+// แสดงชื่อผู้เรียนปัจจุบันบนปุ่ม 👤 ที่แถบเมนูด้านบน
 function renderStudentBadge(){
   const el = document.getElementById('student-badge');
   if(el) el.textContent = `👤 ${getStudentName()}`;
 }
 
+// ส่งผลคะแนน 1 รายการ (แบบทดสอบก่อน/หลังเรียน หรือผลเกม) ไปบันทึกเป็นแถวใหม่ในฐานข้อมูล Google Sheet
+// ถูกเรียกจากทุกจุดที่มีการ "ตรวจคำตอบ" ในเว็บไซต์ — ดูจุดเรียกใช้ในฟังก์ชัน buildQuiz และ build*Game ทั้งหมดด้านล่าง
+// record ที่ส่งเข้ามาต้องมี: lessonId, lessonTitle, type ("pretest"/"posttest"/"game"), gameName, score, total
 function logToDB(record){
   if(!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.indexOf("PASTE_YOUR") === 0){
     return; // ยังไม่ได้ตั้งค่า URL ฐานข้อมูล — ข้ามการบันทึกแบบเงียบๆ
@@ -1216,6 +1303,7 @@ let currentLessonId = null;
 let currentTab = 'pre';
 
 // ---------- helpers ----------
+// สลับตำแหน่งสมาชิกในอาร์เรย์แบบสุ่ม (Fisher-Yates) — ใช้ทั่วไปในทุกเกมเพื่อสุ่มลำดับคำ/ตัวเลือก
 function shuffle(arr){
   const a = arr.slice();
   for(let i=a.length-1;i>0;i--){
@@ -1224,6 +1312,8 @@ function shuffle(arr){
   }
   return a;
 }
+// สลับตัวอักษรของคำศัพท์ให้เป็นคำปนกัน ใช้ในเกม "เรียงตัวอักษร" (ดู buildScrambleGame)
+// มีการวนซ้ำกันคำที่สลับแล้วบังเอิญออกมาเหมือนคำเดิม
 function scrambleWord(word){
   let letters;
   do{
@@ -1231,26 +1321,28 @@ function scrambleWord(word){
   } while(letters.join('') === word && word.length > 1);
   return letters.join('');
 }
+// คำนวณร้อยละจากคะแนนที่ได้ / คะแนนเต็ม — ใช้แสดงผลคะแนนแบบทดสอบและตัดสิน "ผ่านด่าน" (เกณฑ์ 60%)
 function pct(score,total){ return total ? Math.round((score/total)*100) : 0; }
 
+// ตรวจสอบว่าด่านเรียน (บทเรียน) นี้เข้าเรียนได้หรือไม่
+// (เดิมมีระบบล็อกด่านตามลำดับ ต้องผ่านด่านก่อนหน้าก่อน — ปัจจุบันปลดล็อกให้เข้าเรียนได้ทุกด่านอิสระจากกัน ไม่ต้องเรียงตามลำดับ)
 function isUnlocked(lessonId){
-  if(lessonId === LESSONS[0].id) return true;
-  const idx = LESSONS.findIndex(l=>l.id===lessonId);
-  const prevLesson = LESSONS[idx-1];
-  const prevProg = PROGRESS[prevLesson.id];
-  if(!prevProg || prevProg.postScore==null) return false;
-  return pct(prevProg.postScore, prevLesson.quiz.length) >= 60;
+  return true;
 }
+// ตรวจสอบว่าด่านนี้ "ผ่านแล้ว" หรือยัง (ทำโพสต์เทสต์ได้ ≥60%) — ใช้แสดงตราประทับ PASSED บนการ์ดหน้าแรก
 function isPassed(lessonId){
   const p = PROGRESS[lessonId];
   if(!p || p.postScore==null) return false;
   return pct(p.postScore, LESSON_BY_ID[lessonId].quiz.length) >= 60;
 }
+// นับจำนวนด่านที่ผ่านแล้วทั้งหมด (postScore ≥60%) — ใช้แสดงป้าย "STAMPS x/4" และตัดสินว่าครบหลักสูตรหรือยัง (ดู renderEvalBanner)
 function passedCount(){
   return LESSONS.filter(l=>isPassed(l.id)).length;
 }
 
-// ---------- top chrome (gate track + progress pill + hero stub) ----------
+// วาดวงกลมแสดงสถานะทั้ง 4 ด่าน (gate-track) บนแถบเมนูด้านบน + อัปเดตป้าย "STAMPS x/4"
+// และตัวเลขดาวสะสมในกล่อง hero-stub — เรียกทุกครั้งที่มีการเปลี่ยนหน้าหรือคะแนนอัปเดต
+// (คลิกวงกลมแต่ละอันเพื่อเข้าบทเรียนนั้นได้โดยตรงจากทุกหน้า)
 function renderChrome(){
   const track = document.getElementById('gate-track');
   track.innerHTML = '';
@@ -1272,16 +1364,18 @@ function renderChrome(){
 }
 
 // ---------- HOME VIEW ----------
+// สร้างการ์ดบทเรียนทั้ง 4 ใบในหน้าแรก (#lesson-grid) จากข้อมูลอาร์เรย์ LESSONS
+// แต่ละการ์ดแสดง: รหัสด่าน/ชื่อบท/คำอธิบาย, ป้ายสถานะ (พร้อมเรียน/ผ่านด่านแล้ว), % คะแนนโพสต์เทสต์ล่าสุด
+// คลิกการ์ดเพื่อเข้าสู่บทเรียนนั้น (openLesson) — เรียกซ้ำทุกครั้งที่กลับมาหน้าแรกเพื่อให้สถานะล่าสุดเสมอ
 function renderHome(){
   const grid = document.getElementById('lesson-grid');
   grid.innerHTML = '';
   LESSONS.forEach(l => {
-    const unlocked = isUnlocked(l.id);
     const passed = isPassed(l.id);
     const card = document.createElement('div');
-    card.className = 'ticket' + (unlocked ? '' : ' locked');
-    const statusClass = passed ? 'passed' : (unlocked ? 'open' : 'locked');
-    const statusText = passed ? 'ผ่านด่านแล้ว' : (unlocked ? 'พร้อมเรียน' : 'ล็อกอยู่');
+    card.className = 'ticket';
+    const statusClass = passed ? 'passed' : 'open';
+    const statusText = passed ? 'ผ่านด่านแล้ว' : 'พร้อมเรียน';
     card.innerHTML = `
       <div class="ticket-top">
         <div>
@@ -1293,18 +1387,18 @@ function renderHome(){
       </div>
       <div class="ticket-stub-line"></div>
       <div class="ticket-bottom">
-        <span class="mono">${unlocked ? (passed ? `Post-test: ${pct(PROGRESS[l.id].postScore, l.quiz.length)}%` : 'เริ่มได้เลย →') : 'ผ่านด่านก่อนหน้า ≥ 60% เพื่อปลดล็อก'}</span>
+        <span class="mono">${passed ? `Post-test: ${pct(PROGRESS[l.id].postScore, l.quiz.length)}%` : 'เริ่มได้เลย →'}</span>
         ${passed ? '<span class="stamp">PASSED</span>' : ''}
       </div>
     `;
-    if(unlocked){
-      card.addEventListener('click', () => openLesson(l.id));
-    }
+    card.addEventListener('click', () => openLesson(l.id));
     grid.appendChild(card);
   });
   renderEvalBanner();
 }
 
+// อัปเดตข้อความในแบนเนอร์ "แบบประเมินผล" ท้ายหน้าแรก — เปลี่ยนเป็นข้อความแสดงความยินดีเมื่อผู้เรียน
+// ผ่านครบทั้ง 4 ด่านแล้ว เพื่อกระตุ้นให้ไปทำแบบทดสอบวัดผลสัมฤทธิ์/แบบสอบถามความพึงพอใจ (ลิงก์ Google Form)
 function renderEvalBanner(){
   const el = document.getElementById('eval-banner');
   if(!el) return;
@@ -1315,6 +1409,7 @@ function renderEvalBanner(){
     : '💡 เมื่อเรียนครบทุกด่านแล้ว สามารถทำแบบทดสอบวัดผลสัมฤทธิ์และแบบสอบถามความพึงพอใจด้านล่างนี้ได้ทุกเมื่อ';
 }
 
+// สลับกลับไปแสดงหน้าแรก (#view-home) และซ่อนหน้าบทเรียน — ผูกกับปุ่มโลโก้และปุ่ม "กลับหน้ารวมด่าน"
 function goHome(){
   currentLessonId = null;
   document.getElementById('view-lesson').style.display = 'none';
@@ -1325,6 +1420,9 @@ function goHome(){
 }
 
 // ---------- LESSON VIEW ----------
+// เปิดเข้าสู่บทเรียนที่เลือก (id 1-4) : ซ่อนหน้าแรก แสดงหน้าบทเรียน เติมหัวข้อ/คำอธิบาย
+// แล้วสั่งสร้างเนื้อหาทั้ง 5 แท็บล่วงหน้าทีเดียว (เนื้อหา/วิดีโอ/เกม/ทดสอบก่อน-หลังเรียน)
+// ก่อนเปิดแท็บ "ทดสอบก่อนเรียน" เป็นค่าเริ่มต้น — เรียกจากการคลิกการ์ดบทเรียนหรือปุ่ม "เริ่มด่านแรก"
 function openLesson(id){
   currentLessonId = id;
   const lesson = LESSON_BY_ID[id];
@@ -1346,6 +1444,8 @@ function openLesson(id){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
+// สลับแท็บที่แสดงอยู่ภายในหน้าบทเรียน (ทดสอบก่อนเรียน/เนื้อหา/วิดีโอ/เกม/ทดสอบหลังเรียน)
+// โดยสลับคลาส .active ทั้งที่ปุ่มแท็บและกล่องเนื้อหาที่มี data-tab/data-panel ตรงกัน
 function switchTab(tab){
   currentTab = tab;
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
@@ -1358,6 +1458,8 @@ document.getElementById('tab-bar').addEventListener('click', e => {
 });
 
 // ---------- CONTENT TAB ----------
+// สร้างเนื้อหาแท็บ "เนื้อหาบทเรียน" จาก lesson.contentBlocks (คำศัพท์/บทสนทนา ตามที่นิยามไว้ในสคริปต์ข้อมูล LESSONS)
+// และปิดท้ายด้วยกล่อง "วลีที่ใช้ได้จริง" จาก lesson.phrases — เนื้อหาส่วนนี้เป็นเนื้อหาความรู้ล้วน ไม่มีการให้คะแนน
 function renderContentTab(lesson){
   const panel = document.getElementById('panel-content');
   let html = '';
@@ -1369,6 +1471,8 @@ function renderContentTab(lesson){
 }
 
 // ---------- VIDEO TAB ----------
+// ฝังวิดีโอ YouTube ประกอบบทเรียน (lesson.videoId) ผ่าน iframe แบบ youtube-nocookie.com (โหมดเสริมความเป็นส่วนตัว
+// ช่วยลดโอกาสถูกตัวบล็อกโฆษณาบล็อก) พร้อมลิงก์สำรอง "เปิดดูบน YouTube โดยตรง" กรณีวิดีโอฝังไม่ขึ้นในเครื่องผู้ใช้
 function renderVideoTab(lesson){
   const panel = document.getElementById('panel-video');
   const watchUrl = `https://www.youtube.com/watch?v=${lesson.videoId}`;
@@ -1384,16 +1488,21 @@ function renderVideoTab(lesson){
   `;
 }
 
-// ---------- QUIZ (PRE / POST — 5 ข้อ) ----------
+// ---------- QUIZ (PRE / POST — 10 ข้อ) ----------
+// เตรียมหัวข้อ/คำอธิบายของแท็บทดสอบ (ก่อนเรียนหรือหลังเรียน แยกกันด้วยพารามิเตอร์ mode)
+// แล้วส่งต่อให้ buildQuiz() สร้างชุดคำถามจริงลงในกล่อง #quiz-body-pre หรือ #quiz-body-post
 function renderQuizPanel(lesson, mode){
   const panel = document.getElementById(mode === 'pre' ? 'panel-pre' : 'panel-post');
   const introText = mode === 'pre'
     ? `ทำแบบทดสอบก่อนเรียน ${lesson.quiz.length} ข้อ เพื่อประเมินความรู้พื้นฐานของคุณก่อนเข้าสู่บทเรียนนี้`
-    : `ทำแบบทดสอบหลังเรียน ${lesson.quiz.length} ข้อ เพื่อวัดผลการเรียนรู้ — ต้องได้คะแนน 60% ขึ้นไปเพื่อปลดล็อกด่านถัดไป`;
+    : `ทำแบบทดสอบหลังเรียน ${lesson.quiz.length} ข้อ เพื่อวัดผลการเรียนรู้และดูพัฒนาการเทียบกับคะแนนก่อนเรียน`;
   panel.innerHTML = `<p style="color:var(--text-soft); margin:0 0 18px; font-size:14px;">${introText}</p><div id="quiz-body-${mode}"></div>`;
   buildQuiz(lesson, mode, document.getElementById(`quiz-body-${mode}`));
 }
 
+// สร้างแบบทดสอบปรนัย 10 ข้อ (จาก lesson.quiz) ลงในกล่อง mount ที่ระบุ — ใช้ได้ทั้งโหมดก่อนเรียนและหลังเรียน
+// ผู้เรียนต้องเลือกคำตอบให้ครบทุกข้อก่อนปุ่ม "ตรวจคำตอบ" จะกดได้ เมื่อกดแล้วจะไฮไลต์ถูก/ผิดทุกข้อพร้อมคำอธิบาย
+// บันทึกคะแนนลง PROGRESS + ส่งเข้าฐานข้อมูล (logToDB) แล้วเรียก renderQuizResult() แสดงสรุปผล
 function buildQuiz(lesson, mode, mount){
   const total = lesson.quiz.length;
   const answers = new Array(total).fill(null);
@@ -1456,6 +1565,10 @@ function buildQuiz(lesson, mode, mount){
   });
 }
 
+// แสดงการ์ดสรุปผลคะแนนหลังตรวจคำตอบเสร็จ (คะแนน/ร้อยละ) — ถ้าเป็นโหมดหลังเรียน (post) จะมีกราฟเทียบ
+// คะแนนก่อน-หลังเรียนเพิ่มเติม และข้อความให้กำลังใจตามผลคะแนน มีปุ่ม "ทำแบบทดสอบใหม่อีกครั้ง"
+// (หมายเหตุ: เกณฑ์ 60% ที่นี่ใช้เพื่อแสดงตราประทับ "PASSED" บนการ์ดหน้าแรกเท่านั้น ไม่ได้ใช้ล็อก/ปลดล็อกด่านถัดไปแล้ว
+//  ทุกด่านเข้าเรียนได้อิสระตั้งแต่ต้น ดู isUnlocked() ด้านบน)
 function renderQuizResult(slot, lesson, mode, score, total, onRetake){
   const percent = pct(score, total);
   const passed = percent >= 60;
@@ -1471,8 +1584,8 @@ function renderQuizResult(slot, lesson, mode, score, total, onRetake){
         </div>`;
     }
     extra += passed
-      ? `<p style="margin-top:18px;">🎉 ยินดีด้วย! คุณปลดล็อกด่านถัดไปแล้ว</p>`
-      : `<p style="margin-top:18px;">ยังไม่ถึง 60% ลองทบทวนเนื้อหาและเล่นเกมฝึกทักษะอีกครั้ง แล้วทำแบบทดสอบใหม่</p>`;
+      ? `<p style="margin-top:18px;">🎉 ยินดีด้วย! คุณผ่านเกณฑ์ 60% แล้ว ได้รับตราประทับ PASSED บนการ์ดหน้าแรก</p>`
+      : `<p style="margin-top:18px;">ยังไม่ถึง 60% ลองทบทวนเนื้อหาและเล่นเกมฝึกทักษะอีกครั้ง แล้วทำแบบทดสอบใหม่ได้ทุกเมื่อ</p>`;
   }
   slot.innerHTML = `
     <div class="result-card">
@@ -1489,6 +1602,9 @@ function renderQuizResult(slot, lesson, mode, score, total, onRetake){
 }
 
 // ---------- GAMES TAB ----------
+// สร้างโครงแท็บ "เกมฝึกทักษะ" : แถบปุ่มเลือกเกม (game-chip) 5 ปุ่ม + กล่องเนื้อหาเกม 5 กล่อง
+// คลิกปุ่มแล้วสลับกล่องที่ active ด้วยกัน (คล้ายกลไกเดียวกับ switchTab) จากนั้นสร้างเกมทั้ง 5 แบบ
+// ล่วงหน้าทีเดียวโดยเรียก build*Game() แต่ละตัว ซึ่งดึงคำศัพท์/ประโยคจากข้อมูลของ lesson นั้นๆ โดยตรง
 function renderGamesTab(lesson){
   const panel = document.getElementById('panel-games');
   panel.innerHTML = `
@@ -1519,7 +1635,10 @@ function renderGamesTab(lesson){
   buildSpeedRoundGame(lesson, panel.querySelector('[data-game-panel="speed"]'));
 }
 
-// --- Game 1: Word Match ---
+// --- Game 1: Word Match (จับคู่คำศัพท์) ---
+// ใช้ข้อมูลจาก lesson.vocab (คำศัพท์คู่ อังกฤษ-ไทย) สร้างการ์ด 2 เท่าของจำนวนคำ (คำศัพท์ฝั่งหนึ่ง ความหมายอีกฝั่ง)
+// สลับตำแหน่งแบบสุ่มด้วย shuffle() ผู้เล่นคลิกเลือก 2 การ์ดที่เป็นคู่กัน ถ้าถูกจะล็อกไว้ ถ้าผิดจะสั่นแล้วรีเซ็ต
+// เมื่อจับคู่ครบทุกคู่ จะบันทึกสถานะเกมสำเร็จ (PROGRESS...gamesDone.match) และส่งผลเข้าฐานข้อมูล
 function buildMatchGame(lesson, mount){
   const pairs = lesson.vocab.map((v, i) => ({ pairIndex: i, term: v.term, meaning: v.meaning }));
   let tiles = shuffle([
@@ -1584,7 +1703,9 @@ function buildMatchGame(lesson, mount){
   });
 }
 
-// --- Game 2: Fill in the Blank ---
+// --- Game 2: Fill in the Blank (เติมคำในประโยค) ---
+// ใช้ข้อมูลจาก lesson.fillBlank (ประโยคมีช่องว่าง + ตัวเลือกคำ) ผู้เล่นเลือกคำที่ถูกต้องเติมทีละข้อ
+// กดตรวจคำตอบครั้งเดียวตรวจทุกข้อพร้อมกัน ไฮไลต์ถูก/ผิด แล้วส่งคะแนนเข้าฐานข้อมูลทุกครั้งที่กดตรวจ
 function buildFillGame(lesson, mount){
   mount.innerHTML = `
     <div class="game-card">
@@ -1636,7 +1757,9 @@ function buildFillGame(lesson, mount){
   });
 }
 
-// --- Game 3: Word Scramble ---
+// --- Game 3: Word Scramble (เรียงตัวอักษร) ---
+// ใช้ข้อมูลจาก lesson.scramble (คำศัพท์ + คำใบ้ภาษาไทย) สลับตัวอักษรด้วย scrambleWord() แสดงให้ผู้เล่นพิมพ์คำตอบ
+// ตรวจคำตอบแบบไม่สนตัวพิมพ์เล็ก-ใหญ่ (เทียบด้วย toUpperCase) แล้วส่งคะแนนเข้าฐานข้อมูลเมื่อกดตรวจ
 function buildScrambleGame(lesson, mount){
   mount.innerHTML = `
     <div class="game-card">
@@ -1682,7 +1805,10 @@ function buildScrambleGame(lesson, mount){
   });
 }
 
-// --- Game 4: Sentence Builder ---
+// --- Game 4: Sentence Builder (เรียงประโยค) ---
+// ใช้ข้อมูลจาก lesson.sentenceBuilder (ประโยคที่ตัดแบ่งเป็นคำๆ) สลับลำดับคำด้วย shuffle() ไว้ในคลังคำด้านล่าง
+// ผู้เล่นคลิกคำตามลำดับเพื่อประกอบกลับเป็นประโยคในกรอบด้านบน ระบบตรวจลำดับคำแบบเข้มงวด (ต้องตรงเป๊ะ)
+// เมื่อเรียงถูกครบทุกประโยคจะถือว่าเกมนี้สำเร็จ บันทึกสถานะและส่งคะแนนเข้าฐานข้อมูล
 function buildSentenceBuilderGame(lesson, mount){
   mount.innerHTML = `
     <div class="game-card">
@@ -1785,7 +1911,9 @@ function buildSentenceBuilderGame(lesson, mount){
   });
 }
 
-// --- Game 5: Speed Round (timed vocabulary quiz) ---
+// --- Game 5: Speed Round (ทายความหมายเร็ว) ---
+// เกมจับเวลา 30 วินาที สุ่มคำถามจาก lesson.vocab ทีละคำ พร้อมตัวเลือกความหมาย 4 ข้อ (เฉลย 1 + ตัวลวง 3 คำจากบทเดียวกัน)
+// นับคะแนนสะสมระหว่างเล่น เมื่อหมดเวลาหรือตอบครบทุกคำจะสรุปผลและส่งคะแนนเข้าฐานข้อมูล (ผ่านเกณฑ์ ≥60% จึงจะถือว่าเกมสำเร็จ)
 function buildSpeedRoundGame(lesson, mount){
   const ROUND_SECONDS = 30;
   renderStart();
@@ -1915,7 +2043,7 @@ const TUTORIAL_STEPS = [
   {
     icon: "🗺️",
     title: "หน้าหลักและด่านเรียนทั้ง 4 ด่าน",
-    text: "ในหน้าหลักจะเห็นการ์ดบทเรียน 4 ใบ แต่ละใบมีสถานะ “ล็อกอยู่ / พร้อมเรียน / ผ่านด่านแล้ว” ต้องทำแบบทดสอบหลังเรียนของด่านก่อนหน้าให้ได้คะแนน ≥60% จึงจะปลดล็อกด่านถัดไป"
+    text: "ในหน้าหลักจะเห็นการ์ดบทเรียน 4 ใบ เข้าเรียนด่านไหนก่อนก็ได้อิสระ ไม่ต้องเรียงตามลำดับ เมื่อทำแบบทดสอบหลังเรียนได้คะแนน ≥60% การ์ดจะได้ตราประทับ “PASSED” ไว้เป็นเครื่องหมายว่าผ่านบทนั้นแล้ว"
   },
   {
     icon: "📋",
@@ -1935,7 +2063,7 @@ const TUTORIAL_STEPS = [
   {
     icon: "⭐",
     title: "คะแนนถูกบันทึกอัตโนมัติ",
-    text: "ทุกครั้งที่ทำแบบทดสอบหรือเล่นเกมจบ คะแนนจะถูกบันทึกลงฐานข้อมูลโดยอัตโนมัติ และความคืบหน้าการปลดล็อกด่านจะถูกจำไว้ในเบราว์เซอร์เครื่องนี้"
+    text: "ทุกครั้งที่ทำแบบทดสอบหรือเล่นเกมจบ คะแนนจะถูกบันทึกลงฐานข้อมูลโดยอัตโนมัติ และความคืบหน้าการเรียนของคุณจะถูกจำไว้ในเบราว์เซอร์เครื่องนี้"
   },
   {
     icon: "📝",
@@ -1945,6 +2073,8 @@ const TUTORIAL_STEPS = [
 ];
 let tutorialIndex = 0;
 
+// วาดเนื้อหาขั้นตอนปัจจุบันของหน้าต่างสอนใช้งาน (ไอคอน/หัวข้อ/ข้อความ/จุดไข่ปลาบอกตำแหน่ง/ปุ่มย้อนกลับ-ถัดไป)
+// เรียกทุกครั้งที่เปิดหน้าต่างหรือกดเปลี่ยนขั้นตอน โดยอ่านข้อมูลจาก TUTORIAL_STEPS[tutorialIndex]
 function renderTutorialStep(){
   const step = TUTORIAL_STEPS[tutorialIndex];
   document.getElementById('tutorial-icon').textContent = step.icon;
@@ -1956,11 +2086,13 @@ function renderTutorialStep(){
   document.getElementById('tutorial-prev').style.visibility = tutorialIndex === 0 ? 'hidden' : 'visible';
   document.getElementById('tutorial-next').textContent = tutorialIndex === TUTORIAL_STEPS.length - 1 ? 'เริ่มใช้งานเลย! 🚀' : 'ถัดไป →';
 }
+// เปิดหน้าต่างสอนใช้งาน เริ่มจากขั้นตอนแรกเสมอ — เรียกจากปุ่ม "📖 วิธีใช้งาน" หรืออัตโนมัติตอนเข้าเว็บครั้งแรก
 function openTutorial(){
   tutorialIndex = 0;
   renderTutorialStep();
   document.getElementById('tutorial-overlay').style.display = 'flex';
 }
+// ปิดหน้าต่างสอนใช้งาน แล้วจำไว้ใน localStorage ว่าเคยดูแล้ว (จะได้ไม่เด้งขึ้นอัตโนมัติอีกในครั้งถัดไป)
 function closeTutorial(){
   document.getElementById('tutorial-overlay').style.display = 'none';
   try{ localStorage.setItem(TUTORIAL_SEEN_KEY, '1'); } catch(e){}
@@ -1987,11 +2119,14 @@ const FONT_SCALE_MAX = 1.4;
 const FONT_SCALE_STEP = 0.1;
 let fontScale = 1;
 
+// ตั้งค่าตัวแปร CSS --fs-scale ตามค่า fontScale ปัจจุบัน (ตัวคูณของทุกค่า font-size ในสไตล์ชีต — ดูนิยาม :root ด้านบนสุด)
+// อัปเดตป้ายเปอร์เซ็นต์บนแถบเมนู แล้วจำค่าไว้ใน localStorage ให้คงอยู่เมื่อเปิดเว็บครั้งถัดไป
 function applyFontScale(){
   document.documentElement.style.setProperty('--fs-scale', fontScale);
   document.getElementById('fs-label').textContent = Math.round(fontScale * 100) + '%';
   try{ localStorage.setItem(FONT_SCALE_KEY, String(fontScale)); } catch(e){}
 }
+// โหลดขนาดตัวอักษรที่เคยตั้งไว้จาก localStorage (ถ้ามีและอยู่ในช่วงที่กำหนด) แล้วนำไปใช้ทันที — เรียกครั้งเดียวตอนเปิดเว็บ
 function loadFontScale(){
   try{
     const saved = parseFloat(localStorage.getItem(FONT_SCALE_KEY));
@@ -1999,6 +2134,7 @@ function loadFontScale(){
   } catch(e){}
   applyFontScale();
 }
+// ปุ่ม A+ / A- บนแถบเมนู : เพิ่ม/ลดขนาดตัวอักษรทีละ 10% ภายในขอบเขต 85%-140%
 document.getElementById('fs-inc').addEventListener('click', () => {
   fontScale = Math.min(FONT_SCALE_MAX, Math.round((fontScale + FONT_SCALE_STEP) * 100) / 100);
   applyFontScale();
@@ -2011,14 +2147,18 @@ document.getElementById('fs-dec').addEventListener('click', () => {
 // ============================================================
 // THEME SWITCHER — สลับธีมเว็บไซต์ระหว่างโหมดปกติ / โหมดมืด / โหมดถนอมสายตา
 // ปรับผ่าน data-theme บน <html> ซึ่งไปเปลี่ยนค่าตัวแปร CSS ทั้งชุดให้อัตโนมัติ
+// (ดูค่าสีของแต่ละธีมที่ html[data-theme="dark"] และ html[data-theme="eyecare"] ในส่วน CSS ด้านบนสุดของไฟล์)
 // ============================================================
 const THEME_KEY = "qeng_theme";
+// สลับธีม : ใส่/ถอด attribute data-theme บน <html> (โหมดปกติไม่ต้องใส่ attribute เลย ใช้ค่าเริ่มต้นจาก :root)
+// อัปเดตปุ่มที่ active บนแถบเมนู แล้วจำธีมที่เลือกไว้ใน localStorage
 function applyTheme(theme){
   if(theme === 'normal'){ document.documentElement.removeAttribute('data-theme'); }
   else{ document.documentElement.setAttribute('data-theme', theme); }
   document.querySelectorAll('.theme-btn').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
   try{ localStorage.setItem(THEME_KEY, theme); } catch(e){}
 }
+// โหลดธีมที่เคยเลือกไว้จาก localStorage (ค่าเริ่มต้น = ปกติ ถ้ายังไม่เคยตั้ง) แล้วนำไปใช้ทันที — เรียกครั้งเดียวตอนเปิดเว็บ
 function loadTheme(){
   let theme = 'normal';
   try{
@@ -2027,11 +2167,14 @@ function loadTheme(){
   } catch(e){}
   applyTheme(theme);
 }
+// ปุ่ม ☀️/🌙/📖 บนแถบเมนู : คลิกแล้วสลับไปธีมที่ตรงกับ data-theme ของปุ่มนั้น
 document.querySelectorAll('.theme-btn').forEach(btn => {
   btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
 });
 
-// ---------- INIT ----------
+// ============================================================
+// INIT — ลำดับการทำงานตอนเปิดเว็บไซต์ครั้งแรก (ทำงานทันทีเมื่อโหลดสคริปต์นี้จบ)
+// ============================================================
 loadProgress();
 getStudentName();
 renderStudentBadge();
