@@ -604,7 +604,7 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
 
 <!-- ============================================================
      แถบเมนูด้านบน (Topbar) — แสดงอยู่ทุกหน้า ทุกเวลา (position: sticky)
-     ประกอบด้วย: โลโก้/ปุ่มกลับหน้าแรก, แถบแสดงสถานะ 4 ด่าน (gate-track),
+     ประกอบด้วย: โลโก้/ปุ่มกลับหน้าแรก, แถบแสดงสถานะ 5 ด่าน (gate-track),
      ปุ่มเปลี่ยนธีม, ปุ่มปรับขนาดตัวอักษร, ปุ่มเปิดคู่มือใช้งาน,
      ปุ่มแก้ไขชื่อผู้เรียน, ป้ายจำนวนดาวที่สะสมได้, ปุ่มรีเซ็ตความคืบหน้า
      ============================================================ -->
@@ -614,7 +614,7 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
     <span class="brand-mark">EN</span>
     <span class="brand-text"><b>Question ENG 🎈</b><span>English for Career Skills</span></span>
   </button>
-  <!-- แถบวงกลมแสดงสถานะด่านเรียนทั้ง 4 ด่าน (พร้อมเรียน/ผ่านแล้ว) — เติมเนื้อหาโดย renderChrome() -->
+  <!-- แถบวงกลมแสดงสถานะด่านเรียนทั้ง 5 ด่าน (พร้อมเรียน/ผ่านแล้ว) — เติมเนื้อหาโดย renderChrome() -->
   <div class="gate-track" id="gate-track"></div>
   <div class="topbar-right">
     <!-- ปุ่มสลับธีม 3 แบบ: ปกติ/มืด/ถนอมสายตา — ทำงานร่วมกับ applyTheme() ใน JS -->
@@ -633,8 +633,8 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
     <button class="reset-btn" id="tutorial-btn" title="วิธีใช้งานเว็บไซต์">📖 วิธีใช้งาน</button>
     <!-- ปุ่มแสดง/แก้ไขชื่อผู้เรียนที่ใช้บันทึกคะแนนลงฐานข้อมูล — ผูกกับ changeStudentName() ใน JS -->
     <button class="reset-btn" id="student-badge" title="แก้ไขชื่อผู้เรียน">👤</button>
-    <!-- ป้ายแสดงจำนวนด่านที่ผ่านแล้วจากทั้งหมด 4 ด่าน — อัปเดตค่าโดย renderChrome() -->
-    <div class="progress-pill" id="progress-pill">⭐ 0/4</div>
+    <!-- ป้ายแสดงจำนวนด่านที่ผ่านแล้วจากทั้งหมด 5 ด่าน — อัปเดตค่าโดย renderChrome() -->
+    <div class="progress-pill" id="progress-pill">⭐ 0/5</div>
     <!-- ปุ่มล้างความคืบหน้าทั้งหมดในเครื่องนี้ — ผูกกับ resetProgress() ใน JS -->
     <button class="reset-btn" id="reset-btn" title="ล้างคะแนนและความคืบหน้าทั้งหมด">รีเซ็ตความคืบหน้า</button>
   </div>
@@ -652,12 +652,12 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
       <div class="hero-ticket">
         <div class="hero-main">
           <div class="hero-eyebrow">🎉 Your Learning Adventure · Business English</div>
-          <h1>เตรียมความพร้อมสู่โลกการทำงาน<br>ด้วยภาษาอังกฤษ 4 ด่านสุดสนุก!</h1>
-          <p class="lead">สื่อการเรียนรู้สำหรับนักศึกษาบริหารธุรกิจ สาขาคอมพิวเตอร์ธุรกิจ ครอบคลุมการแนะนำตัว การพูดถึงความรับผิดชอบ การนำเสนอโครงการ และการเข้าสังคมในที่ทำงาน — เรียนเนื้อหา ทำแบบทดสอบ 10 ข้อ ดูวิดีโอ และฝึกฝนผ่าน 5 เกมสุดมันส์ในทุกบท คะแนนของคุณจะถูกบันทึกลงฐานข้อมูลโดยอัตโนมัติ</p>
+          <h1>เตรียมความพร้อมสู่โลกการทำงาน<br>ด้วยภาษาอังกฤษ 5 ด่านสุดสนุก!</h1>
+          <p class="lead">สื่อการเรียนรู้สำหรับนักศึกษาบริหารธุรกิจ สาขาคอมพิวเตอร์ธุรกิจ ครอบคลุมการแนะนำตัว การพูดถึงความรับผิดชอบ การนำเสนอโครงการ การเข้าสังคมในที่ทำงาน และการวางแผนธุรกิจ — เรียนเนื้อหา ทำแบบทดสอบ 10 ข้อ ดูวิดีโอ และฝึกฝนผ่าน 5 เกมสุดมันส์ในทุกบท คะแนนของคุณจะถูกบันทึกลงฐานข้อมูลโดยอัตโนมัติ</p>
           <div class="route-row">
             <div class="route-node">🐣 STUDENT<small>Gate 00</small></div>
             <div class="route-dash"></div>
-            <div class="route-node">🏆 PROFESSIONAL<small>Gate 04</small></div>
+            <div class="route-node">🏆 PROFESSIONAL<small>Gate 05</small></div>
           </div>
           <!-- ปุ่มเริ่มด่านแรก : เข้าสู่บทเรียนที่ 1 ทันที (เรียก openLesson(LESSONS[0].id)) -->
           <button class="hero-cta" id="hero-start-btn">เริ่มด่านแรก · Introducing Yourself →</button>
@@ -667,7 +667,7 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
             <div class="stub-label">Player</div>
             <div class="stub-value" id="stub-name">STUDENT</div>
             <div class="stub-label">Stars Collected</div>
-            <div class="stub-value mono" id="stub-progress" style="font-family:'Fredoka',sans-serif; font-size:20px;">0 / 4</div>
+            <div class="stub-value mono" id="stub-progress" style="font-family:'Fredoka',sans-serif; font-size:20px;">0 / 5</div>
           </div>
           <div class="barcode"></div>
         </div>
@@ -685,13 +685,13 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
       <span class="pretest-btn">ทำแบบทดสอบก่อนเรียน →</span>
     </a>
 
-    <div class="section-label">Your Journey · เส้นทาง 4 ด่านสู่การทำงาน</div>
-    <!-- การ์ดแสดงด่านเรียนทั้ง 4 ด่าน (บทที่ 1-4) — เนื้อหาถูกสร้างแบบไดนามิกโดย renderHome()
+    <div class="section-label">Your Journey · เส้นทาง 5 ด่านสู่การทำงาน</div>
+    <!-- การ์ดแสดงด่านเรียนทั้ง 5 ด่าน (บทที่ 1-5) — เนื้อหาถูกสร้างแบบไดนามิกโดย renderHome()
          โดยดึงข้อมูลจากอาร์เรย์ LESSONS (นิยามไว้ในสคริปต์ข้อมูลด้านล่าง) -->
     <div class="lesson-grid" id="lesson-grid"></div>
 
     <!-- ส่วนแบบประเมินผลท้ายหลักสูตร : ลิงก์ไปแบบทดสอบวัดผลสัมฤทธิ์ + แบบสอบถามความพึงพอใจ (Google Forms)
-         #eval-banner จะเปลี่ยนข้อความอัตโนมัติเมื่อผู้เรียนผ่านครบทั้ง 4 ด่าน (ดู renderEvalBanner() ใน JS) -->
+         #eval-banner จะเปลี่ยนข้อความอัตโนมัติเมื่อผู้เรียนผ่านครบทั้ง 5 ด่าน (ดู renderEvalBanner() ใน JS) -->
     <div class="eval-wrap">
       <div class="section-label">📝 แบบประเมินผล · Evaluation</div>
       <div id="eval-banner"></div>
@@ -784,7 +784,7 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
 <script>
 // ============================================================
 // LESSON DATA — ข้อมูลเนื้อหาหลักของเว็บไซต์ทั้งหมด
-// เนื้อหา คำศัพท์ แบบทดสอบ (10 ข้อ) และข้อมูลเกม สำหรับทั้ง 4 บทเรียน
+// เนื้อหา คำศัพท์ แบบทดสอบ (10 ข้อ) และข้อมูลเกม สำหรับทั้ง 5 บทเรียน
 // อ้างอิงจากเอกสารประกอบการสอนจริง:
 // บทที่ 1 Introducing Yourself
 // บทที่ 2 Talking about Responsibility
@@ -1182,6 +1182,101 @@ const LESSONS = [
       { q: "“Recommend” means...", options: ["To suggest something as good or suitable", "To refuse something", "To delete something", "To postpone something"], answer: 0, explain: "Recommend คือการแนะนำสิ่งที่ดีหรือเหมาะสม" },
       { q: "Which is an appropriate response to “Would you mind if I borrowed your pen?”", options: ["“No, I wouldn't mind at all.”", "“Yes, go away.”", "“I don't know you.”", "“That's illegal.”"], answer: 0, explain: "“No, I wouldn't mind at all.” เป็นการตอบรับคำขอร้องอย่างสุภาพ" }
     ]
+  },
+
+  // ============ LESSON 5 : MAKING PLANS ============
+  {
+    id: 5,
+    gate: "GATE 05 · PLANS-05",
+    title: "บทที่ 5 · การวางแผนธุรกิจ (Making Plans)",
+    subtitle: "เรียนรู้คำศัพท์การเขียนแผนธุรกิจ และฝึกพูดถึงเป้าหมายของบริษัทด้วยโครงสร้าง “going to”",
+    videoId: "79Yxp84s0KI",
+    videoTitle: "Future Plans in English Conversation | Will, Going to, Present Continuous",
+    contentBlocks: [
+      {
+        heading: "Vocabulary: Crafting a Comprehensive Business Plan",
+        items: [
+          "<b>Business plan</b> — แผนธุรกิจ เอกสารสรุปเป้าหมาย กลยุทธ์ การคาดการณ์ทางการเงิน และรายละเอียดการดำเนินงานของธุรกิจ",
+          "<b>Venture</b> — กิจการ/โครงการใหม่ที่ริเริ่มขึ้นเพื่อมุ่งสู่ความสำเร็จและผลกำไร",
+          "<b>Market research</b> — การวิจัยตลาด กระบวนการเก็บและวิเคราะห์ข้อมูลลูกค้าเป้าหมาย คู่แข่ง และแนวโน้มอุตสาหกรรม",
+          "<b>Financial projections</b> — การคาดการณ์ทางการเงิน การประมาณผลการดำเนินงานในอนาคต เช่น รายได้ ค่าใช้จ่าย กำไรหรือขาดทุน",
+          "<b>Mission</b> — พันธกิจ จุดประสงค์หลักหรือเหตุผลในการมีอยู่ของธุรกิจ",
+          "<b>Vision</b> — วิสัยทัศน์ ข้อความบรรยายสภาพในอนาคตหรือความมุ่งหวังระยะยาวของธุรกิจ",
+          "<b>Value proposition</b> — คุณค่าที่นำเสนอ จุดเด่นเฉพาะตัวของสินค้า/บริการที่สร้างคุณค่าให้ลูกค้าและทำให้ต่างจากคู่แข่ง",
+          "<b>Strategic planning</b> — การวางแผนเชิงกลยุทธ์ กระบวนการตั้งเป้าหมาย กำหนดกลยุทธ์ และจัดสรรทรัพยากร",
+          "<b>Market analysis</b> — การวิเคราะห์ตลาด การประเมินสภาพตลาด ความต้องการลูกค้า คู่แข่ง และแนวโน้มอุตสาหกรรม",
+          "<b>Marketing and sales strategy</b> — กลยุทธ์การตลาดและการขาย แผนการโปรโมทสินค้า เข้าถึงลูกค้า และสร้างยอดขาย",
+          "<b>Financial section</b> — ส่วนข้อมูลการเงินในแผนธุรกิจ ครอบคลุมต้นทุนเริ่มต้น การคาดการณ์รายได้ งบกำไรขาดทุน และกระแสเงินสด",
+          "<b>Investor</b> — นักลงทุน บุคคลหรือองค์กรที่ให้เงินทุนสนับสนุนธุรกิจเพื่อแลกกับส่วนแบ่งหรือผลตอบแทน",
+          "<b>Funding</b> — เงินทุน ทรัพยากรทางการเงินที่มอบให้ธุรกิจเพื่อเริ่มต้น ดำเนินงาน หรือขยายกิจการ",
+          "<b>Decision-making</b> — การตัดสินใจ กระบวนการเลือกแนวทางที่ดีที่สุดจากทางเลือกต่างๆ โดยอาศัยข้อมูลและการวิเคราะห์",
+          "<b>Market viability</b> — ความเป็นไปได้ในตลาด ศักยภาพของสินค้าหรือธุรกิจที่จะประสบความสำเร็จ พิจารณาจากความต้องการ คู่แข่ง และผลกำไร"
+        ]
+      },
+      {
+        heading: "บทสนทนา: Talking about Company Objectives",
+        items: [
+          "A: Let me tell you about the new project. We're going to build the new Reef Hotel in Taipei. We plan to open in three years' time.<br><span class=\"th-translate\">(เอ: ขอเล่าเรื่องโครงการใหม่ให้ฟังนะครับ เรากำลังจะสร้างโรงแรมรีฟแห่งใหม่ในไทเป เราวางแผนจะเปิดในอีกสามปีข้างหน้า)</span>",
+          "B: What's it going to be like?<br><span class=\"th-translate\">(บี: มันจะเป็นแบบไหนคะ)</span>",
+          "A: It's going to be amazing. It will be a luxury five-star hotel, completely modern, with 25 floors and 270 rooms.<br><span class=\"th-translate\">(เอ: มันจะยอดเยี่ยมมากครับ จะเป็นโรงแรมห้าดาวสุดหรู ทันสมัยทั้งหมด มี 25 ชั้น 270 ห้อง)</span>",
+          "B: What about transport? How are people going to get there?<br><span class=\"th-translate\">(บี: แล้วเรื่องการเดินทางล่ะคะ คนจะไปถึงที่นั่นได้ยังไง)</span>",
+          "A: That's not going to be a problem. It's going to be in the suburbs. We plan to provide bus and limousine services from the airport.<br><span class=\"th-translate\">(เอ: เรื่องนั้นไม่ใช่ปัญหาครับ มันจะตั้งอยู่ในย่านชานเมือง เราวางแผนจะจัดบริการรถบัสและรถลีมูซีนจากสนามบิน)</span>",
+          "B: What else will it have?<br><span class=\"th-translate\">(บี: แล้วจะมีอะไรอีกคะ)</span>",
+          "A: The very latest sports facilities are a swimming pool, two tennis courts, a fitness center, and a spa. And we'll have three bars and four restaurants.<br><span class=\"th-translate\">(เอ: สิ่งอำนวยความสะดวกด้านกีฬาที่ทันสมัยที่สุด มีสระว่ายน้ำ สนามเทนนิสสองสนาม ฟิตเนส และสปา แล้วก็จะมีบาร์สามแห่งและร้านอาหารสี่ร้านครับ)</span>",
+          "B: How about conference facilities?<br><span class=\"th-translate\">(บี: แล้วสิ่งอำนวยความสะดวกด้านการประชุมล่ะคะ)</span>",
+          "A: Ah, yes. There'll be a business center, internet access in all the rooms, three meeting rooms, and there are going to be two conference rooms as well.<br><span class=\"th-translate\">(เอ: อ๋อ ใช่ครับ จะมีศูนย์ธุรกิจ อินเทอร์เน็ตในทุกห้อง ห้องประชุมย่อยสามห้อง และจะมีห้องประชุมใหญ่อีกสองห้องด้วย)</span>",
+          "B: It sounds fantastic.<br><span class=\"th-translate\">(บี: ฟังดูยอดเยี่ยมมากเลยค่ะ)</span>",
+          "A: Thank you. It will be! It's going to cost over 250 million US dollars, but it's going to be worth it — people will travel the world to stay here.<br><span class=\"th-translate\">(เอ: ขอบคุณครับ มันจะเป็นแบบนั้นจริงๆ! มันจะใช้งบประมาณกว่า 250 ล้านดอลลาร์สหรัฐ แต่ก็คุ้มค่าแน่นอน ผู้คนจะเดินทางมาจากทั่วโลกเพื่อพักที่นี่)</span>"
+        ]
+      }
+    ],
+    phrases: [
+      "We're going to build the new Reef Hotel in Taipei.",
+      "It's going to be amazing.",
+      "That's not going to be a problem.",
+      "There'll be a business center and three meeting rooms.",
+      "It's going to be worth it."
+    ],
+    sentenceBuilder: [
+      { answer: "What's it going to be like?" },
+      { answer: "It's going to be amazing." },
+      { answer: "It sounds fantastic." },
+      { answer: "That's not going to be a problem." }
+    ],
+    vocab: [
+      { term: "Business plan", meaning: "แผนธุรกิจ" },
+      { term: "Venture", meaning: "กิจการ / โครงการใหม่" },
+      { term: "Investor", meaning: "นักลงทุน" },
+      { term: "Funding", meaning: "เงินทุน" },
+      { term: "Mission", meaning: "พันธกิจ" },
+      { term: "Vision", meaning: "วิสัยทัศน์" }
+    ],
+    fillBlank: [
+      { sentence: "A ___ outlines the goals, strategies, and financial projections of a business.", answer: "business plan", options: ["business plan", "investor", "funding", "mission"] },
+      { sentence: "Investors provide ___ to help a business start or grow.", answer: "funding", options: ["funding", "vision", "venture", "mission"] },
+      { sentence: "The company's ___ is to make quality education accessible to everyone.", answer: "mission", options: ["mission", "funding", "investor", "venture"] },
+      { sentence: "An ___ gives money to a business in exchange for ownership or a return.", answer: "investor", options: ["investor", "venture", "vision", "mission"] },
+      { sentence: "Starting a new restaurant is an exciting ___ for the two friends.", answer: "venture", options: ["venture", "funding", "mission", "investor"] }
+    ],
+    scramble: [
+      { word: "VENTURE", hint: "กิจการ / โครงการใหม่" },
+      { word: "INVESTOR", hint: "นักลงทุน" },
+      { word: "FUNDING", hint: "เงินทุน" },
+      { word: "MISSION", hint: "พันธกิจ" },
+      { word: "VISION", hint: "วิสัยทัศน์" }
+    ],
+    quiz: [
+      { q: "A “Business plan” is best described as...", options: ["A comprehensive document outlining goals, strategies, and financial projections", "A type of bank loan", "An employee handbook", "A marketing poster"], answer: 0, explain: "Business plan คือเอกสารสรุปเป้าหมาย กลยุทธ์ และการคาดการณ์ทางการเงินของธุรกิจ" },
+      { q: "“Market research” involves...", options: ["Gathering and analyzing data about customers, competitors, and industry trends", "Hiring new employees", "Filing annual taxes", "Designing a company logo"], answer: 0, explain: "Market research คือการเก็บและวิเคราะห์ข้อมูลลูกค้า คู่แข่ง และแนวโน้มอุตสาหกรรม" },
+      { q: "“Financial projections” are...", options: ["Forecasts of a business's future revenue, expenses, and profit or loss", "A company's past tax records", "A list of office supplies", "An employee benefits package"], answer: 0, explain: "Financial projections คือการคาดการณ์ผลการดำเนินงานทางการเงินในอนาคต" },
+      { q: "The “Mission” of a business refers to...", options: ["Its core purpose or reason for existing", "Its office location", "Its logo design", "Its annual holiday schedule"], answer: 0, explain: "Mission คือพันธกิจหรือจุดประสงค์หลักในการมีอยู่ของธุรกิจ" },
+      { q: "A company's “Vision” describes...", options: ["Its desired future state or long-term aspirations", "Its current profit margin", "Its office dress code", "Its daily task list"], answer: 0, explain: "Vision คือวิสัยทัศน์หรือความมุ่งหวังระยะยาวของธุรกิจ" },
+      { q: "A “Value proposition” is...", options: ["The unique value a business offers that sets it apart from competitors", "A type of business loan", "A employee's job title", "A government tax form"], answer: 0, explain: "Value proposition คือคุณค่าเฉพาะตัวที่ทำให้ธุรกิจแตกต่างจากคู่แข่ง" },
+      { q: "An “Investor” is someone who...", options: ["Provides financial support to a business in exchange for ownership or a return", "Manages daily office cleaning", "Designs company websites", "Delivers office mail"], answer: 0, explain: "Investor คือผู้ให้เงินทุนสนับสนุนธุรกิจเพื่อแลกกับส่วนแบ่งหรือผลตอบแทน" },
+      { q: "“Funding” refers to...", options: ["Financial resources provided to a business for startup or growth", "A company's employee list", "A type of office furniture", "A marketing slogan"], answer: 0, explain: "Funding คือเงินทุนที่มอบให้ธุรกิจเพื่อเริ่มต้นหรือขยายกิจการ" },
+      { q: "“Market viability” refers to...", options: ["The potential of a product or business to succeed in the marketplace", "The size of a company's office", "The number of employees in a company", "The color scheme of a brand"], answer: 0, explain: "Market viability คือศักยภาพของสินค้าหรือธุรกิจที่จะประสบความสำเร็จในตลาด" },
+      { q: "Which sentence correctly talks about a future company plan using “going to”?", options: ["“We're going to build a new hotel next year.”", "“We built a hotel last year.”", "“We have built many hotels.”", "“We build hotels sometimes.”"], answer: 0, explain: "โครงสร้าง “going to” ใช้พูดถึงแผนหรือความตั้งใจในอนาคตที่วางแผนไว้ล่วงหน้า" }
+    ]
   }
 ];
 
@@ -1335,12 +1430,12 @@ function isPassed(lessonId){
   if(!p || p.postScore==null) return false;
   return pct(p.postScore, LESSON_BY_ID[lessonId].quiz.length) >= 60;
 }
-// นับจำนวนด่านที่ผ่านแล้วทั้งหมด (postScore ≥60%) — ใช้แสดงป้าย "STAMPS x/4" และตัดสินว่าครบหลักสูตรหรือยัง (ดู renderEvalBanner)
+// นับจำนวนด่านที่ผ่านแล้วทั้งหมด (postScore ≥60%) — ใช้แสดงป้าย "STAMPS x/5" และตัดสินว่าครบหลักสูตรหรือยัง (ดู renderEvalBanner)
 function passedCount(){
   return LESSONS.filter(l=>isPassed(l.id)).length;
 }
 
-// วาดวงกลมแสดงสถานะทั้ง 4 ด่าน (gate-track) บนแถบเมนูด้านบน + อัปเดตป้าย "STAMPS x/4"
+// วาดวงกลมแสดงสถานะทั้ง 5 ด่าน (gate-track) บนแถบเมนูด้านบน + อัปเดตป้าย "STAMPS x/5"
 // และตัวเลขดาวสะสมในกล่อง hero-stub — เรียกทุกครั้งที่มีการเปลี่ยนหน้าหรือคะแนนอัปเดต
 // (คลิกวงกลมแต่ละอันเพื่อเข้าบทเรียนนั้นได้โดยตรงจากทุกหน้า)
 function renderChrome(){
@@ -1364,7 +1459,7 @@ function renderChrome(){
 }
 
 // ---------- HOME VIEW ----------
-// สร้างการ์ดบทเรียนทั้ง 4 ใบในหน้าแรก (#lesson-grid) จากข้อมูลอาร์เรย์ LESSONS
+// สร้างการ์ดบทเรียนทั้ง 5 ใบในหน้าแรก (#lesson-grid) จากข้อมูลอาร์เรย์ LESSONS
 // แต่ละการ์ดแสดง: รหัสด่าน/ชื่อบท/คำอธิบาย, ป้ายสถานะ (พร้อมเรียน/ผ่านด่านแล้ว), % คะแนนโพสต์เทสต์ล่าสุด
 // คลิกการ์ดเพื่อเข้าสู่บทเรียนนั้น (openLesson) — เรียกซ้ำทุกครั้งที่กลับมาหน้าแรกเพื่อให้สถานะล่าสุดเสมอ
 function renderHome(){
@@ -1398,7 +1493,7 @@ function renderHome(){
 }
 
 // อัปเดตข้อความในแบนเนอร์ "แบบประเมินผล" ท้ายหน้าแรก — เปลี่ยนเป็นข้อความแสดงความยินดีเมื่อผู้เรียน
-// ผ่านครบทั้ง 4 ด่านแล้ว เพื่อกระตุ้นให้ไปทำแบบทดสอบวัดผลสัมฤทธิ์/แบบสอบถามความพึงพอใจ (ลิงก์ Google Form)
+// ผ่านครบทั้ง 5 ด่านแล้ว เพื่อกระตุ้นให้ไปทำแบบทดสอบวัดผลสัมฤทธิ์/แบบสอบถามความพึงพอใจ (ลิงก์ Google Form)
 function renderEvalBanner(){
   const el = document.getElementById('eval-banner');
   if(!el) return;
@@ -2038,12 +2133,12 @@ const TUTORIAL_STEPS = [
   {
     icon: "👋",
     title: "ยินดีต้อนรับสู่ Question ENG!",
-    text: "เว็บไซต์นี้ช่วยฝึกภาษาอังกฤษเพื่อการทำงาน 4 บทเรียน ผ่านเนื้อหา วิดีโอ แบบทดสอบ และเกม ก่อนเริ่มใช้งานจริง เรามาทำความรู้จักส่วนต่างๆ ของเว็บกันสั้นๆ ครับ"
+    text: "เว็บไซต์นี้ช่วยฝึกภาษาอังกฤษเพื่อการทำงาน 5 บทเรียน ผ่านเนื้อหา วิดีโอ แบบทดสอบ และเกม ก่อนเริ่มใช้งานจริง เรามาทำความรู้จักส่วนต่างๆ ของเว็บกันสั้นๆ ครับ"
   },
   {
     icon: "🗺️",
-    title: "หน้าหลักและด่านเรียนทั้ง 4 ด่าน",
-    text: "ในหน้าหลักจะเห็นการ์ดบทเรียน 4 ใบ เข้าเรียนด่านไหนก่อนก็ได้อิสระ ไม่ต้องเรียงตามลำดับ เมื่อทำแบบทดสอบหลังเรียนได้คะแนน ≥60% การ์ดจะได้ตราประทับ “PASSED” ไว้เป็นเครื่องหมายว่าผ่านบทนั้นแล้ว"
+    title: "หน้าหลักและด่านเรียนทั้ง 5 ด่าน",
+    text: "ในหน้าหลักจะเห็นการ์ดบทเรียน 5 ใบ เข้าเรียนด่านไหนก่อนก็ได้อิสระ ไม่ต้องเรียงตามลำดับ เมื่อทำแบบทดสอบหลังเรียนได้คะแนน ≥60% การ์ดจะได้ตราประทับ “PASSED” ไว้เป็นเครื่องหมายว่าผ่านบทนั้นแล้ว"
   },
   {
     icon: "📋",
