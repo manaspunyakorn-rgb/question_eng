@@ -75,6 +75,26 @@ html[data-theme="eyecare"]{
 html[data-theme="eyecare"] body{
   background: var(--paper);
 }
+
+/* ============ COFFEE THEME (ธีมกาแฟ) ============ */
+html[data-theme="coffee"]{
+  --ink:#3E2723; --ink-2:#5D4037;
+  --paper:#EFE6DA; --paper-2:#E3D5C0; --card:#FAF3E8;
+  --pink:#C97B63; --pink-deep:#A85D46;
+  --yellow:#D4A24C; --yellow-deep:#B5822E;
+  --blue:#7C9885; --blue-deep:#5C7A67;
+  --purple:#8B6F5C; --purple-deep:#6F5645;
+  --green:#8FA876; --green-deep:#6B8552;
+  --coral:#C1694F; --coral-deep:#9C4F3A;
+  --text:#3E2723; --text-soft:#8D6E5C;
+  --border:#3E2723;
+}
+html[data-theme="coffee"] body{
+  background: var(--paper);
+}
+html[data-theme="coffee"] .section-label::before{content:'☕';}
+html[data-theme="coffee"] .route-dash::after{content:'☕';}
+html[data-theme="coffee"] .content-block h4::before{content:'🫘';}
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
@@ -108,6 +128,7 @@ button{font-family:inherit;}
   color:#fff;
   padding:14px 20px;
   display:flex; align-items:center; justify-content:space-between; gap:16px;
+  flex-wrap:wrap; row-gap:10px;
   border-bottom:4px solid var(--border);
 }
 .brand{display:flex; align-items:center; gap:10px; cursor:pointer; background:none; border:none; color:#fff; padding:0;}
@@ -138,7 +159,7 @@ button{font-family:inherit;}
 .gate-dot.passed{background:var(--green); border-color:#fff; color:#fff;}
 .gate-line{width:16px; height:3px; border-radius:2px; background:rgba(255,255,255,0.35);}
 .gate-line.filled{background:var(--yellow);}
-.topbar-right{display:flex; align-items:center; gap:10px;}
+.topbar-right{display:flex; align-items:center; gap:10px; flex-wrap:wrap; row-gap:8px;}
 .progress-pill{
   font-family:'Fredoka',sans-serif; font-size:calc(12px * var(--fs-scale)); font-weight:600;
   background:var(--yellow); color:var(--border); padding:7px 14px; border-radius:99px;
@@ -177,6 +198,14 @@ button{font-family:inherit;}
 
 @media (max-width:760px){
   .gate-track{display:none;}
+  .topbar{justify-content:center; padding:12px 16px;}
+  .topbar-right{justify-content:center; width:100%;}
+}
+@media (max-width:480px){
+  .brand-text span{display:none;}
+  .reset-btn#reset-btn{font-size:0;}
+  .reset-btn#reset-btn::after{content:"🔄"; font-size:14px;}
+  .reset-btn#tutorial-btn{font-size:calc(11.5px * var(--fs-scale));}
 }
 
 /* ============ LAYOUT ============ */
@@ -622,6 +651,7 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
       <button class="theme-btn active" id="theme-normal" data-theme="normal" title="โหมดปกติ">☀️</button>
       <button class="theme-btn" id="theme-dark" data-theme="dark" title="โหมดมืด">🌙</button>
       <button class="theme-btn" id="theme-eyecare" data-theme="eyecare" title="โหมดถนอมสายตา">📖</button>
+      <button class="theme-btn" id="theme-coffee" data-theme="coffee" title="โหมดกาแฟ">☕</button>
     </div>
     <!-- ปุ่มปรับขนาดตัวอักษรทั้งเว็บไซต์ (85%-140%) — ทำงานร่วมกับ applyFontScale() ใน JS -->
     <div class="fontsize-group" title="ปรับขนาดตัวอักษร">
@@ -651,13 +681,13 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
     <div class="hero-wrap">
       <div class="hero-ticket">
         <div class="hero-main">
-          <div class="hero-eyebrow">🎉 Your Learning Adventure · Business English</div>
+          <div class="hero-eyebrow"><span class="theme-icon" data-icon="eyebrow">🎉</span> Your Learning Adventure · Business English</div>
           <h1>เตรียมความพร้อมสู่โลกการทำงาน<br>ด้วยภาษาอังกฤษ 5 ด่านสุดสนุก!</h1>
           <p class="lead">สื่อการเรียนรู้สำหรับนักศึกษาบริหารธุรกิจ สาขาคอมพิวเตอร์ธุรกิจ ครอบคลุมการแนะนำตัว การพูดถึงความรับผิดชอบ การนำเสนอโครงการ การเข้าสังคมในที่ทำงาน และการวางแผนธุรกิจ — เรียนเนื้อหา ทำแบบทดสอบ 10 ข้อ ดูวิดีโอ และฝึกฝนผ่าน 5 เกมสุดมันส์ในทุกบท คะแนนของคุณจะถูกบันทึกลงฐานข้อมูลโดยอัตโนมัติ</p>
           <div class="route-row">
-            <div class="route-node">🐣 STUDENT<small>Gate 00</small></div>
+            <div class="route-node"><span class="theme-icon" data-icon="student">🐣</span> STUDENT<small>Gate 00</small></div>
             <div class="route-dash"></div>
-            <div class="route-node">🏆 PROFESSIONAL<small>Gate 05</small></div>
+            <div class="route-node"><span class="theme-icon" data-icon="professional">🏆</span> PROFESSIONAL<small>Gate 05</small></div>
           </div>
           <!-- ปุ่มเริ่มด่านแรก : เข้าสู่บทเรียนที่ 1 ทันที (เรียก openLesson(LESSONS[0].id)) -->
           <button class="hero-cta" id="hero-start-btn">เริ่มด่านแรก · Introducing Yourself →</button>
@@ -2240,17 +2270,35 @@ document.getElementById('fs-dec').addEventListener('click', () => {
 });
 
 // ============================================================
-// THEME SWITCHER — สลับธีมเว็บไซต์ระหว่างโหมดปกติ / โหมดมืด / โหมดถนอมสายตา
+// THEME SWITCHER — สลับธีมเว็บไซต์ระหว่างโหมดปกติ / โหมดมืด / โหมดถนอมสายตา / โหมดกาแฟ
 // ปรับผ่าน data-theme บน <html> ซึ่งไปเปลี่ยนค่าตัวแปร CSS ทั้งชุดให้อัตโนมัติ
-// (ดูค่าสีของแต่ละธีมที่ html[data-theme="dark"] และ html[data-theme="eyecare"] ในส่วน CSS ด้านบนสุดของไฟล์)
+// (ดูค่าสีของแต่ละธีมที่ html[data-theme="dark"], "eyecare", "coffee" ในส่วน CSS ด้านบนสุดของไฟล์)
 // ============================================================
 const THEME_KEY = "qeng_theme";
+
+// ไอคอนที่เปลี่ยนตามธีม (นอกเหนือจากไอคอนที่เปลี่ยนอัตโนมัติผ่าน CSS ::before/::after เช่น
+// .section-label, .route-dash, .content-block h4 ซึ่งกำหนดไว้ใน CSS ของแต่ละธีมโดยตรงแล้ว)
+// เฉพาะธีมกาแฟเท่านั้นที่มีชุดไอคอนพิเศษ (เปรียบเสมือนเมล็ดกาแฟ 🌱 เติบโตเป็นกาแฟที่ชงเสร็จ ☕)
+// ธีมอื่นทั้งหมด (ปกติ/มืด/ถนอมสายตา) ใช้ไอคอนดั้งเดิมเหมือนกันหมด
+const THEME_ICONS = {
+  coffee: { eyebrow: '☕', student: '🌱', professional: '☕' }
+};
+const DEFAULT_ICONS = { eyebrow: '🎉', student: '🐣', professional: '🏆' };
+// อัปเดตไอคอนทุกจุดที่มี class="theme-icon" ให้ตรงกับธีมปัจจุบัน — เรียกจาก applyTheme() ทุกครั้งที่สลับธีม
+function applyThemeIcons(theme){
+  const icons = THEME_ICONS[theme] || DEFAULT_ICONS;
+  document.querySelectorAll('.theme-icon').forEach(el => {
+    const key = el.dataset.icon;
+    el.textContent = icons[key] || DEFAULT_ICONS[key];
+  });
+}
 // สลับธีม : ใส่/ถอด attribute data-theme บน <html> (โหมดปกติไม่ต้องใส่ attribute เลย ใช้ค่าเริ่มต้นจาก :root)
-// อัปเดตปุ่มที่ active บนแถบเมนู แล้วจำธีมที่เลือกไว้ใน localStorage
+// อัปเดตปุ่มที่ active บนแถบเมนู, สลับไอคอนพิเศษ (applyThemeIcons) แล้วจำธีมที่เลือกไว้ใน localStorage
 function applyTheme(theme){
   if(theme === 'normal'){ document.documentElement.removeAttribute('data-theme'); }
   else{ document.documentElement.setAttribute('data-theme', theme); }
   document.querySelectorAll('.theme-btn').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
+  applyThemeIcons(theme);
   try{ localStorage.setItem(THEME_KEY, theme); } catch(e){}
 }
 // โหลดธีมที่เคยเลือกไว้จาก localStorage (ค่าเริ่มต้น = ปกติ ถ้ายังไม่เคยตั้ง) แล้วนำไปใช้ทันที — เรียกครั้งเดียวตอนเปิดเว็บ
@@ -2258,11 +2306,11 @@ function loadTheme(){
   let theme = 'normal';
   try{
     const saved = localStorage.getItem(THEME_KEY);
-    if(saved === 'normal' || saved === 'dark' || saved === 'eyecare') theme = saved;
+    if(saved === 'normal' || saved === 'dark' || saved === 'eyecare' || saved === 'coffee') theme = saved;
   } catch(e){}
   applyTheme(theme);
 }
-// ปุ่ม ☀️/🌙/📖 บนแถบเมนู : คลิกแล้วสลับไปธีมที่ตรงกับ data-theme ของปุ่มนั้น
+// ปุ่ม ☀️/🌙/📖/☕ บนแถบเมนู : คลิกแล้วสลับไปธีมที่ตรงกับ data-theme ของปุ่มนั้น
 document.querySelectorAll('.theme-btn').forEach(btn => {
   btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
 });
