@@ -352,6 +352,47 @@ main{max-width:1080px; margin:0 auto; padding:0 20px 80px;}
   .tutorial-nav{flex-direction:column-reverse;}
   .tutorial-nav > *{width:100%;}
 }
+
+/* ============ SETTINGS MODAL ============ */
+/* ใช้โครงเดียวกับ .tutorial-overlay/.tutorial-modal (พื้นหลังมืดครึ่งจอ + การ์ดกึ่งกลาง) แต่เนื้อหาเป็นแถวรายการตั้งค่าแทน */
+.settings-overlay{
+  position:fixed; inset:0; z-index:100; background:rgba(59,44,99,0.55);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+  animation:fadein-ov .2s ease;
+}
+.settings-modal{
+  background:var(--card); border:4px solid var(--border); border-radius:26px;
+  max-width:420px; width:100%; padding:30px 26px 26px; position:relative;
+  box-shadow:9px 9px 0 var(--border);
+  animation:popin .25s cubic-bezier(.34,1.56,.64,1);
+}
+.settings-title{
+  margin:0 0 20px; font-size:calc(19px * var(--fs-scale)); font-family:'Fredoka',sans-serif; font-weight:700; color:var(--ink);
+}
+.settings-row{
+  display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  padding:14px 0; border-bottom:2px dashed var(--paper-2);
+}
+.settings-row:last-child{border-bottom:none; padding-bottom:0;}
+.settings-label{
+  font-family:'Fredoka',sans-serif; font-weight:600; font-size:calc(13.5px * var(--fs-scale)); color:var(--text);
+}
+.settings-danger .settings-label{color:var(--coral-deep);}
+.reset-btn.danger{border-color:var(--coral-deep); color:var(--coral-deep);}
+.reset-btn.danger:hover{background:var(--coral); color:#fff;}
+/* ปุ่ม .reset-btn เดิมออกแบบไว้ใช้บนพื้นหลังเข้มของแถบเมนู พอย้ายมาอยู่ในหน้าต่างตั้งค่า (พื้นหลังสว่าง) ต้องปรับสีให้มองเห็นชัดเจน */
+.settings-modal .reset-btn{
+  background:var(--paper-2); color:var(--text); border:2px solid var(--border);
+}
+.settings-modal .reset-btn:hover{background:var(--yellow);}
+.settings-modal .reset-btn.danger{background:#fff; color:var(--coral-deep); border-color:var(--coral-deep);}
+.settings-modal .reset-btn.danger:hover{background:var(--coral); color:#fff;}
+.settings-modal .theme-btn{opacity:0.55;}
+.settings-modal .theme-group,
+.settings-modal .fontsize-group{
+  background:var(--paper-2); border-color:var(--border);
+}
+.settings-modal .fontsize-label{color:var(--text);}
 .eval-banner{
   border-radius:20px; padding:18px 22px; margin-bottom:20px; border:3px solid var(--border);
   font-family:'Fredoka',sans-serif; font-weight:600; font-size:calc(14.5px * var(--fs-scale));
@@ -645,30 +686,66 @@ footer b{color:var(--purple-deep); font-family:'Fredoka',sans-serif;}
   </button>
   <!-- แถบวงกลมแสดงสถานะด่านเรียนทั้ง 5 ด่าน (พร้อมเรียน/ผ่านแล้ว) — เติมเนื้อหาโดย renderChrome() -->
   <div class="gate-track" id="gate-track"></div>
+  <!-- แถบขวา : เหลือเฉพาะป้ายสถานะสด (STAMPS) และปุ่มตั้งค่าเดียว — ส่วนที่ปรับแต่งได้ทั้งหมดย้ายไปอยู่ในหน้าต่างตั้งค่า (ดูด้านล่าง) เพื่อไม่ให้แถบเมนูรก -->
   <div class="topbar-right">
-    <!-- ปุ่มสลับธีม 3 แบบ: ปกติ/มืด/ถนอมสายตา — ทำงานร่วมกับ applyTheme() ใน JS -->
-    <div class="theme-group" title="เปลี่ยนธีมเว็บไซต์">
-      <button class="theme-btn active" id="theme-normal" data-theme="normal" title="โหมดปกติ">☀️</button>
-      <button class="theme-btn" id="theme-dark" data-theme="dark" title="โหมดมืด">🌙</button>
-      <button class="theme-btn" id="theme-eyecare" data-theme="eyecare" title="โหมดถนอมสายตา">📖</button>
-      <button class="theme-btn" id="theme-coffee" data-theme="coffee" title="โหมดกาแฟ">☕</button>
-    </div>
-    <!-- ปุ่มปรับขนาดตัวอักษรทั้งเว็บไซต์ (85%-140%) — ทำงานร่วมกับ applyFontScale() ใน JS -->
-    <div class="fontsize-group" title="ปรับขนาดตัวอักษร">
-      <button class="fontsize-btn" id="fs-dec">A-</button>
-      <span class="fontsize-label" id="fs-label">100%</span>
-      <button class="fontsize-btn" id="fs-inc">A+</button>
-    </div>
-    <!-- ปุ่มเปิดหน้าต่างสอนใช้งานเว็บไซต์ (Tutorial) — ผูกกับ openTutorial() ใน JS -->
-    <button class="reset-btn" id="tutorial-btn" title="วิธีใช้งานเว็บไซต์">📖 วิธีใช้งาน</button>
-    <!-- ปุ่มแสดง/แก้ไขชื่อผู้เรียนที่ใช้บันทึกคะแนนลงฐานข้อมูล — ผูกกับ changeStudentName() ใน JS -->
-    <button class="reset-btn" id="student-badge" title="แก้ไขชื่อผู้เรียน">👤</button>
     <!-- ป้ายแสดงจำนวนด่านที่ผ่านแล้วจากทั้งหมด 5 ด่าน — อัปเดตค่าโดย renderChrome() -->
     <div class="progress-pill" id="progress-pill">⭐ 0/5</div>
-    <!-- ปุ่มล้างความคืบหน้าทั้งหมดในเครื่องนี้ — ผูกกับ resetProgress() ใน JS -->
-    <button class="reset-btn" id="reset-btn" title="ล้างคะแนนและความคืบหน้าทั้งหมด">รีเซ็ตความคืบหน้า</button>
+    <!-- ปุ่มเปิดหน้าต่างตั้งค่า (รวมธีม/ขนาดตัวอักษร/ชื่อผู้เรียน/วิธีใช้งาน/รีเซ็ต) — ผูกกับ openSettings() ใน JS -->
+    <button class="reset-btn" id="settings-btn" title="ตั้งค่า">⚙️ ตั้งค่า</button>
   </div>
 </header>
+
+<!-- ============================================================
+     หน้าต่างตั้งค่า (Settings Modal) — รวมทุกส่วนที่ผู้ใช้ปรับแต่งเองได้ไว้ที่เดียว
+     เพื่อให้แถบเมนูด้านบนโล่ง ไม่รก : ธีม, ขนาดตัวอักษร, ชื่อผู้เรียน, วิธีใช้งาน, รีเซ็ตความคืบหน้า
+     ซ่อนอยู่เป็นค่าเริ่มต้น (display:none) เปิด/ปิดผ่าน openSettings()/closeSettings() ใน JS
+     ============================================================ -->
+<div class="settings-overlay" id="settings-overlay" style="display:none;">
+  <div class="settings-modal">
+    <button class="tutorial-close" id="settings-close" title="ปิด">✕</button>
+    <h3 class="settings-title">⚙️ ตั้งค่า</h3>
+
+    <div class="settings-row">
+      <div class="settings-label">🎨 ธีมเว็บไซต์</div>
+      <!-- ปุ่มสลับธีม 4 แบบ: ปกติ/มืด/ถนอมสายตา/กาแฟ — ทำงานร่วมกับ applyTheme() ใน JS -->
+      <div class="theme-group" title="เปลี่ยนธีมเว็บไซต์">
+        <button class="theme-btn active" id="theme-normal" data-theme="normal" title="โหมดปกติ">☀️</button>
+        <button class="theme-btn" id="theme-dark" data-theme="dark" title="โหมดมืด">🌙</button>
+        <button class="theme-btn" id="theme-eyecare" data-theme="eyecare" title="โหมดถนอมสายตา">📖</button>
+        <button class="theme-btn" id="theme-coffee" data-theme="coffee" title="โหมดกาแฟ">☕</button>
+      </div>
+    </div>
+
+    <div class="settings-row">
+      <div class="settings-label">🔤 ขนาดตัวอักษร</div>
+      <!-- ปุ่มปรับขนาดตัวอักษรทั้งเว็บไซต์ (85%-140%) — ทำงานร่วมกับ applyFontScale() ใน JS -->
+      <div class="fontsize-group" title="ปรับขนาดตัวอักษร">
+        <button class="fontsize-btn" id="fs-dec">A-</button>
+        <span class="fontsize-label" id="fs-label">100%</span>
+        <button class="fontsize-btn" id="fs-inc">A+</button>
+      </div>
+    </div>
+
+    <div class="settings-row">
+      <div class="settings-label">👤 ชื่อผู้เรียน</div>
+      <!-- ปุ่มแสดง/แก้ไขชื่อผู้เรียนที่ใช้บันทึกคะแนนลงฐานข้อมูล — ผูกกับ changeStudentName() ใน JS -->
+      <button class="reset-btn" id="student-badge" title="แก้ไขชื่อผู้เรียน">👤 แก้ไขชื่อ</button>
+    </div>
+
+    <div class="settings-row">
+      <div class="settings-label">📖 วิธีใช้งาน</div>
+      <!-- ปุ่มเปิดหน้าต่างสอนใช้งานเว็บไซต์ (Tutorial) — ผูกกับ openTutorial() ใน JS -->
+      <button class="reset-btn" id="tutorial-btn" title="วิธีใช้งานเว็บไซต์">📖 เปิดคู่มือใช้งาน</button>
+    </div>
+
+    <div class="settings-row settings-danger">
+      <div class="settings-label">⚠️ ล้างความคืบหน้า</div>
+      <!-- ปุ่มล้างความคืบหน้าทั้งหมดในเครื่องนี้ — ผูกกับ resetProgress() ใน JS -->
+      <button class="reset-btn danger" id="reset-btn" title="ล้างคะแนนและความคืบหน้าทั้งหมด">รีเซ็ตความคืบหน้า</button>
+    </div>
+  </div>
+</div>
+
 
 <main>
 
@@ -2149,6 +2226,7 @@ document.getElementById('hero-start-btn').addEventListener('click', () => openLe
 document.getElementById('reset-btn').addEventListener('click', () => {
   if(confirm('ต้องการล้างคะแนนและความคืบหน้าทั้งหมดหรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้')){
     resetProgress();
+    closeSettings();
   }
 });
 document.getElementById('student-badge').addEventListener('click', changeStudentName);
@@ -2224,6 +2302,26 @@ function closeTutorial(){
 }
 document.getElementById('tutorial-btn').addEventListener('click', openTutorial);
 document.getElementById('tutorial-close').addEventListener('click', closeTutorial);
+
+// ============================================================
+// SETTINGS PANEL — หน้าต่างตั้งค่าที่รวมธีม/ขนาดตัวอักษร/ชื่อผู้เรียน/วิธีใช้งาน/รีเซ็ตไว้ที่เดียว
+// เปิดผ่านปุ่มเฟือง ⚙️ บนแถบเมนู เพื่อไม่ให้แถบเมนูหลักรกด้วยปุ่มย่อยจำนวนมาก
+// ============================================================
+// เปิดหน้าต่างตั้งค่า — ผูกกับปุ่ม "⚙️ ตั้งค่า" บนแถบเมนู
+function openSettings(){
+  document.getElementById('settings-overlay').style.display = 'flex';
+}
+// ปิดหน้าต่างตั้งค่า — ผูกกับปุ่ม ✕ ในหน้าต่าง หรือคลิกพื้นหลังนอกกล่อง
+function closeSettings(){
+  document.getElementById('settings-overlay').style.display = 'none';
+}
+document.getElementById('settings-btn').addEventListener('click', openSettings);
+document.getElementById('settings-close').addEventListener('click', closeSettings);
+// คลิกพื้นหลังมืดรอบกล่อง (นอกกล่องตั้งค่า) ให้ปิดหน้าต่างได้เลย เหมือนพฤติกรรม modal ทั่วไป
+document.getElementById('settings-overlay').addEventListener('click', (e) => {
+  if(e.target.id === 'settings-overlay') closeSettings();
+});
+
 document.getElementById('tutorial-skip').addEventListener('click', closeTutorial);
 document.getElementById('tutorial-prev').addEventListener('click', () => {
   if(tutorialIndex > 0){ tutorialIndex--; renderTutorialStep(); }
